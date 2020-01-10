@@ -18,7 +18,7 @@ Alt Taxonomy
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Alt Taxonomy</h2>
+        <h2>Alt Service Taxonomy</h2>
         <button class="btn btn-block btn-primary btn-md pull-right" style="width: 80px;" id="btn-add"><i class="fa fa-plus text-white"></i> Add</button>
         <div class="clearfix"></div>  
       </div>
