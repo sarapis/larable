@@ -189,6 +189,9 @@ ul#ui-id-1 {
                 @if($contact_info)
                 <div class="card page-project">
                     <div class="card-block">
+                        <h4 class="card-title">
+                            <b>Contacts</b>                        
+                        </h4>
                         @if($contact_info->contact_name)
                         <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
                         @endif
@@ -219,6 +222,12 @@ ul#ui-id-1 {
                 <div class="card">
                     <div id="map" style="width:initial;margin: 0;height: 50vh;"></div>
                     <div class="card-block">
+                        <h4 class="card-title">
+                            <b>Locations</b>
+                            <a href="/location/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
+                        </h4>
                         <div class="p-10">
                             @if(isset($service->locations))
                                 @if($service->locations != null)
