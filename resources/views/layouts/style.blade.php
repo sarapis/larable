@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="../../frontend/global/vend/waves/waves.css">
   <link rel="stylesheet" href="../../frontend/assets/examples/css/uikit/dropdowns.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
   
   <!-- Fonts -->
   <link rel="stylesheet" href="../../../../frontend/global/fonts/web-icons/web-icons.css">

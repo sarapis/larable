@@ -11,6 +11,8 @@
   <script src="../../frontend/global/vend/asscrollable/jquery-asScrollable.js"></script>
   <script src="../../frontend/global/vend/ashoverscroll/jquery-asHoverScroll.js"></script>
   <script src="../../frontend/global/vend/waves/waves.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
   <!-- Plugins -->
 <script src="../../frontend/global/vend/switchery/switchery.min.js"></script>
   <script src="../../frontend/global/vend/intro-js/intro.js"></script>
