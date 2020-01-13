@@ -52,6 +52,9 @@ ul#ui-id-1 {
                     <div class="card-block">
                         <h4 class="card-title">
                             <a href="#">{{$service->service_name}}</a>
+                            <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
                         </h4>
                         @if(isset($service->service_alternate_name))
                         <h4><span><b>Alternate Name:</b></span> {{$service->service_alternate_name}}</h4>
