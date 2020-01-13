@@ -43,6 +43,10 @@ Edit Service
     h1 {
         text-align: center;
     }
+    button[data-id="service_organization"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
 
 </style>
 
@@ -150,6 +154,16 @@ Edit Service
                     <div class="col-md-12 col-sm-12 col-xs-12 service-licenses-div">
                         <input class="form-control selectpicker"  type="text" id="service_licenses" name="service_licenses" value="{{$service->service_licenses}}">
                     </div>
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Organization: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-organization-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="service_organization" name="service_organization">
+                            @foreach($service_organization_list as $key => $service_org)                                
+                                <option value="{{$service_org->organization_recordid}}" @if ($service->service_organization == $service_org->organization_recordid) selected @endif>{{$service_org->organization_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
                 </div>
 
                 <div class="form-group"> 

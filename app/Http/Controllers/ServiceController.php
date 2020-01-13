@@ -12,6 +12,7 @@ use App\Servicedetail;
 use App\Serviceaddress;
 use App\Serviceorganization;
 use App\Servicecontact;
+use App\Organization;
 use App\Servicetaxonomy;
 use App\Alt_taxonomy;
 use App\Serviceschedule;
@@ -723,6 +724,8 @@ class ServiceController extends Controller
     public function edit($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first(); 
+        $service_organization_list = Organization::select('organization_recordid', 'organization_name')->get();
+         
 
         $service_address_id = $service->service_address;
         $service_address_street = Address::where('address_recordid', '=', $service_address_id)->select('address_1')->first();
@@ -730,7 +733,7 @@ class ServiceController extends Controller
         $service_address_state = Address::where('address_recordid', '=', $service_address_id)->select('address_state_province')->first();
         $service_address_postal_code = Address::where('address_recordid', '=', $service_address_id)->select('address_postal_code')->first();
         $map = Map::find(1);
-        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code'));
+        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list'));
     }
 
     /**
