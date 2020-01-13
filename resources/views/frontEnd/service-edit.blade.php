@@ -109,7 +109,48 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="service_address_postal_code" name="service_address_postal_code" value="{{$service_address_postal_code->address_postal_code}}">
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Status: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-status-div">
+                        <input class="form-control selectpicker"  type="text" id="service_status" name="service_status" value="{{$service->service_status}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Application Process: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-application-process-div">
+                        <input class="form-control selectpicker"  type="text" id="service_application_process" name="service_application_process" value="{{$service->service_application_process}}">
+                    </div>
+                </div>
+             <!--    <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Interpretation Services: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-interpretation-services-div">
+                        <input class="form-control selectpicker"  type="text" id="service_interpretation_services" name="service_interpretation_services" value="{{$service->service_interpretation_services}}">
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Wait Time: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-wait-time-div">
+                        <input class="form-control selectpicker"  type="text" id="service_wait_time" name="service_wait_time" value="{{$service->service_wait_time}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Fees: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-fees-div">
+                        <input class="form-control selectpicker"  type="text" id="service_fees" name="service_fees" value="{{$service->service_fees}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Accreditations: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-accreditations-div">
+                        <input class="form-control selectpicker"  type="text" id="service_accreditations" name="service_accreditations" value="{{$service->service_accreditations}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Licenses: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-licenses-div">
+                        <input class="form-control selectpicker"  type="text" id="service_licenses" name="service_licenses" value="{{$service->service_licenses}}">
+                    </div>
+                </div>
 
                 <div class="form-group"> 
                     <div class="col-md-12">
