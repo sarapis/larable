@@ -721,7 +721,9 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = Service::where('service_recordid', '=', $id)->first(); 
+        $map = Map::find(1);
+        return view('frontEnd.service-edit', compact('service', 'map'));
     }
 
     /**
