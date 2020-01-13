@@ -752,6 +752,34 @@ class ServiceController extends Controller
         $service->service_url = $request->service_url;
         $service->service_email = $request->service_email;
 
+        $service_address_info = $request->service_address;
+        $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();
+
+        $full_address_info_list = array();
+        foreach ($address_infos as $key => $value) {
+            $full_address_info = $value->address_1.', '.$value->address_city.', '.$value->address_state_province.', '.$value->address_postal_code;
+            array_push($full_address_info_list, $full_address_info);
+        }
+        $full_address_info_list = array_unique($full_address_info_list);      
+        if (!in_array($service_address_info, $full_address_info_list)) {
+            $new_recordid = Address::max('address_recordid') + 1;  
+            $service->service_address = $new_recordid;
+            $address = new Address();
+            $address->address_recordid = $new_recordid;
+            $address->address_1 = explode(', ', $service_address_info)[0];
+            $address->address_city = explode(', ', $service_address_info)[1];
+            $address->address_state_province = explode(', ', $service_address_info)[2];
+            $address->address_postal_code = explode(', ', $service_address_info)[3];
+            $address->save();
+        } else {
+            foreach ($address_infos as $key => $value) {
+                $full_address_info = $value->address_1.', '.$value->address_city.', '.$value->address_state_province.', '.$value->address_postal_code;
+                if ($full_address_info == $service_address_info) {
+                    $service->service_address = $value->address_recordid;
+                }
+            }
+        }
+
         $service->save();
 
         return redirect('service/'.$id);
