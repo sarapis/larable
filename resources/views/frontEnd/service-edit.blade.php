@@ -57,10 +57,60 @@ Edit Service
             <div class="row"> 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-details-div">
-                        <input class="form-control selectpicker"  type="text" id="service_service_name" name="service_service_name" value="{{$service->service_name}}">
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-name-div">
+                        <input class="form-control selectpicker"  type="text" id="service_name" name="service_name" value="{{$service->service_name}}">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Alternate Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-alternate-name-div">
+                        <input class="form-control selectpicker"  type="text" id="service_alternate_name" name="service_alternate_name" value="{{$service->service_alternate_name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Description: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-description-div">
+                        <input class="form-control selectpicker"  type="text" id="service_description" name="service_description" value="{{$service->service_description}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">URL: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-url-div">
+                        <input class="form-control selectpicker"  type="text" id="service_url" name="service_url" value="{{$service->service_url}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Email: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-email-div">
+                        <input class="form-control selectpicker"  type="text" id="service_email" name="service_email" value="{{$service->service_email}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Street in Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-address-street-div">
+                        <input class="form-control selectpicker"  type="text" id="service_address_street" name="service_address_street" value="{{$service_address_street->address_1}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">City in Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-address-street-div">
+                        <input class="form-control selectpicker"  type="text" id="service_address_city" name="service_address_city" value="{{$service_address_city->address_city}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">State in Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-address-street-div">
+                        <input class="form-control selectpicker"  type="text" id="service_address_state" name="service_address_state" value="{{$service_address_state->address_state_province}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Postal Code in Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-address-street-div">
+                        <input class="form-control selectpicker"  type="text" id="service_address_postal_code" name="service_address_postal_code" value="{{$service_address_postal_code->address_postal_code}}">
+                    </div>
+                </div>
+
+
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-service-btn"><i class="fa fa-save"></i>Save</button>

@@ -17,6 +17,7 @@ use App\Alt_taxonomy;
 use App\Serviceschedule;
 use App\Location;
 use App\Contact;
+use App\Address;
 use App\Phone;
 use App\Airtables;
 use App\CSV_Source;
@@ -722,8 +723,14 @@ class ServiceController extends Controller
     public function edit($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first(); 
+
+        $service_address_id = $service->service_address;
+        $service_address_street = Address::where('address_recordid', '=', $service_address_id)->select('address_1')->first();
+        $service_address_city = Address::where('address_recordid', '=', $service_address_id)->select('address_city')->first();
+        $service_address_state = Address::where('address_recordid', '=', $service_address_id)->select('address_state_province')->first();
+        $service_address_postal_code = Address::where('address_recordid', '=', $service_address_id)->select('address_postal_code')->first();
         $map = Map::find(1);
-        return view('frontEnd.service-edit', compact('service', 'map'));
+        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code'));
     }
 
     /**
