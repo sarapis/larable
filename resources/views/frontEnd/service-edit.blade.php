@@ -165,7 +165,16 @@ Edit Service
                         </select>
                     </div>           
                 </div>
-
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Locations: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-locations-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="service_locations" name="service_locations">
+                            @foreach($service_location_list as $key => $service_loc)                                
+                                <option value="{{$service_loc->location_recordid}}" @if ($service->service_locations == $service_loc->location_recordid) selected @endif>{{$service_loc->location_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-service-btn"><i class="fa fa-save"></i>Save</button>
