@@ -12,6 +12,7 @@ use App\Locationphone;
 use App\Locationschedule;
 use App\Accessibility;
 use App\Airtables;
+use App\Map;
 use App\CSV_Source;
 use App\Source_data;
 use App\Services\Stringtoint;
@@ -326,7 +327,9 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $map = Map::find(1);
+        $facility = Location::where('location_recordid', '=', $id)->first();
+        return view('frontEnd.location-edit', compact('facility', 'map'));
     }
 
     /**
