@@ -746,24 +746,15 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $service = Service::find($id);
-        // $project = Project::where('id', '=', $id)->first();
         $service->service_name = $request->service_name;
         $service->service_alternate_name = $request->service_alternate_name;
         $service->service_description = $request->service_description;
         $service->service_url = $request->service_url;
         $service->service_email = $request->service_email;
-        $service->service_status = $request->service_status;
-        $service->service_application_process = $request->service_application_process;
-        $service->service_wait_time = $request->service_wait_time;
-        $service->service_fees = $request->service_fees;
-        $service->service_accreditations = $request->service_accreditations;
-        $service->service_metadata = $request->service_metadata;
 
-        $service->flag = 'modified';
         $service->save();
-        // var_dump($project);
-        // exit();
-        return response()->json($service);
+
+        return redirect('service/'.$id);
     }
 
     /**
