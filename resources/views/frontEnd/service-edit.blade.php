@@ -158,24 +158,24 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="service_licenses" name="service_licenses" value="{{$service->service_licenses}}">
                     </div>
                 </div>
-            
+
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Organization: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-organization-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="service_organization" name="service_organization">
+                        <select class="form-control selectpicker" data-live-search="true" id="service_organization" data-size="5" name="service_organization">
                             @foreach($service_organization_list as $key => $service_org)                                
-                                <option value="{{$service_org->organization_recordid}}"> {{$service_org->organization_name}}</option>
+                                <option value="{{$service_org->organization_recordid}}" @if ($service->service_organization == $service_org->organization_recordid) selected @endif>{{$service_org->organization_name}}</option>
                             @endforeach
                         </select>
                     </div>           
                 </div>
-              
+            
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Locations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-locations-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="service_locations" name="service_locations">
+                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_locations" name="service_locations">
                             @foreach($service_location_list as $key => $service_loc)                                
-                                <option value="{{$service_loc->location_recordid}}">{{$service_loc->location_name}}</option>
+                                <option value="{{$service_loc->location_recordid}}" @if ($service->service_locations == $service_loc->location_recordid) selected @endif>{{$service_loc->location_name}}</option>
                             @endforeach
                         </select>
                     </div>           
