@@ -121,7 +121,7 @@ Organization Edit
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Services: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-services-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" id="organization_services" data-size="5" name="organization_services">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="organization_services" data-size="5" name="organization_services[]">
                             @foreach($services_info_list as $key => $services_info)                                
                                 <option value="{{$services_info->service_recordid}}" @if (in_array($services_info->service_recordid, $organization_service_list)) selected @endif>{{$services_info->service_name}}</option>
                             @endforeach
