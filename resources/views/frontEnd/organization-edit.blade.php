@@ -15,26 +15,11 @@ Organization Edit
         width: 100%;
     }  
 
-    button[data-id="organization_organization_type"] {
+    button[data-id="organization_services"] {
         height: 100%;
         border: 1px solid #ddd;
     }
-    button[data-id="organization_organization_religion"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="organization_organization_faith_tradition"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="organization_organization_denomination"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="organization_organization_judicatory_body"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
+   
     
     .form-group button {
         width: 32.96%;
@@ -64,6 +49,7 @@ Organization Edit
     h1 {
         text-align: center;
     }
+
 
 </style>
 
@@ -131,7 +117,18 @@ Organization Edit
                         <input class="form-control selectpicker"  type="text" id="organization_year_incorporated" name="organization_year_incorporated" value="{{$organization->organization_year_incorporated}}">
                     </div>
                 </div>
-                
+
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Services: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-services-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="organization_services" data-size="5" name="organization_services">
+                            @foreach($services_info_list as $key => $services_info)                                
+                                <option value="{{$services_info->service_recordid}}" @if (in_array($services_info->service_recordid, $organization_service_list)) selected @endif>{{$services_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-organization-btn"><i class="fa fa-save"></i>Save</button>
@@ -168,6 +165,9 @@ Organization Edit
 </div>
 
 <script>  
+	$(document).ready(function() {
+        $("#organization_services").selectpicker("");       
+    });
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#organization_recordid').val(value);

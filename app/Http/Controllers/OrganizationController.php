@@ -463,8 +463,10 @@ class OrganizationController extends Controller
     {
         $map = Map::find(1);
         $organization = Organization::where('organization_recordid', '=', $id)->first(); 
+        $organization_service_list = explode(',', $organization->organization_services);
+        $services_info_list = Service::select('service_recordid', 'service_name')->get();
 
-        return view('frontEnd.organization-edit', compact('organization', 'map'));
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list'));
     }
 
     /**
@@ -486,6 +488,7 @@ class OrganizationController extends Controller
         $organization->organization_tax_status = $request->organization_tax_status;
         $organization->organization_tax_id = $request->organization_tax_id;
         $organization->organization_year_incorporated = $request->organization_year_incorporated;
+
        
         $organization->save();
 
