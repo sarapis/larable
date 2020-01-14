@@ -50,6 +50,18 @@ Edit Service
         height: 100%;
         border: 1px solid #ddd;
     }
+    button[data-id="service_contacts"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="service_taxonomy"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="service_details"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
 
 </style>
 
@@ -95,7 +107,7 @@ Edit Service
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Address: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-address-div">
-                        <input class="form-control selectpicker"  type="text" id="service_address" name="service_address" value="{{$service_address_street->address_1}}, {{$service_address_city->address_city}}, {{$service_address_state->address_state_province}}, {{$service_address_postal_code->address_postal_code}}">
+                        <input class="form-control selectpicker"  type="text" id="service_address" name="service_address" @if($service_address_city) value="{{$service_address_street->address_1}}, {{$service_address_city->address_city}}, {{$service_address_state->address_state_province}}, {{$service_address_postal_code->address_postal_code}} @endif">
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,6 +187,36 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="service_phone2" name="service_phone2" @if($service_phone2) value="{{$service_phone2->phone_number}}" @endif>
                     </div>  
                 </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Contacts: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-contacts-div">
+                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_contacts" name="service_contacts">
+                            @foreach($service_contacts_list as $key => $service_cont)                                
+                                <option value="{{$service_cont->contact_recordid}}" @if ($service->service_locations == $service_cont->contact_recordid) selected @endif>{{$service_cont->contact_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Taxonomy: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-taxonomy-div">
+                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_taxonomy" name="service_taxonomy">
+                            @foreach($service_taxonomy_list as $key => $service_taxo)                                
+                                <option value="{{$service_taxo->taxonomy_recordid}}" @if ($service->service_taxonomy == $service_taxo->taxonomy_recordid) selected @endif>{{$service_taxo->taxonomy_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Details: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_details" name="service_details">
+                            @foreach($service_details_list as $key => $service_det)                                
+                                <option value="{{$service_det->detail_recordid}}" @if ($service->service_details == $service_det->detail_recordid) selected @endif>{{$service_det->detail_value}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
 
                 <div class="form-group"> 
                     <div class="col-md-12">
@@ -215,6 +257,9 @@ Edit Service
     $(document).ready(function() {
         $("#service_organization").selectpicker("");
         $("#service_locations").selectpicker("");
+        $("#service_contacts").selectpicker("");
+        $("#service_taxonomy").selectpicker("");
+        $("#service_details").selectpicker("");
     }); 
 
     $('button.delete-td').on('click', function() {
