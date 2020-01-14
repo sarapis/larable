@@ -341,6 +341,9 @@ class OrganizationController extends Controller
     {
         $organization = Organization::where('organization_recordid', '=', $id)->first();
         $locations = Location::with('services', 'address', 'phones')->where('location_organization', '=', $id)->get();
+        $organization_services_recordid_list = explode(',', $organization->organization_services);
+        $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
+
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
@@ -405,7 +408,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info', 'organization_services'));
     }
 
     public function download($id)
