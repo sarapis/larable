@@ -11,6 +11,7 @@ use App\Taxonomy;
 use App\Alt_taxonomy;
 use App\Servicetaxonomy;
 use App\Service;
+use App\Contact;
 use App\Location;
 use App\Airtablekeyinfo;
 use App\Layout;
@@ -352,6 +353,8 @@ class OrganizationController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
+        $contact_info = Contact::where('contact_recordid', '=', $organization->organization_contact)->first();
+
         //=====================updated tree==========================//
 
         $grandparent_taxonomies = Alt_taxonomy::all();
@@ -402,7 +405,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info'));
     }
 
     public function download($id)

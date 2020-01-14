@@ -60,6 +60,11 @@ ul#ui-id-1 {
                             <h4 class="card-title">
                   							<a href="">@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif
                   							</a>
+                                @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                                <a href="/organization/{{$organization->organization_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                </a>
+                                @endif
                             </h4>
                             <h4>
                   							<span class="badge bg-red pl-0 organize_font"><b>Status:</b></span> 
@@ -97,6 +102,11 @@ ul#ui-id-1 {
             						<div class="card-block">
               							<h4 class="card-title">
               								  <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
+                                @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                                <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                </a>
+                                @endif
               							</h4>
             							  <h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
                             <h4 style="line-height: inherit;">
@@ -178,6 +188,31 @@ ul#ui-id-1 {
                     </div>
                     @endforeach
                     @endif
+
+                    @if($contact_info)
+                    <div class="card page-project">
+                        <div class="card-block">
+                            <h4 class="card-title">
+                                <b>Contacts</b>                        
+                            </h4>
+                            @if($contact_info->contact_name)
+                            <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
+                            @endif
+                            @if($contact_info->contact_title)
+                            <h4><span><b>Title:</b></span> {{$contact_info->contact_title}}</h4>
+                            @endif
+                            @if($contact_info->contact_department)
+                            <h4><span><b>Department:</b></span> {{$contact_info->contact_department}}</h4>
+                            @endif
+                            @if($contact_info->contact_email)
+                            <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
+                            @endif
+                            @if($contact_phone)
+                            <h4><span><b>Phone:</b></span> {{$contact_phone->phone_number}}</h4>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
               </div>
 
               <div class="col-md-4 property">
@@ -191,6 +226,14 @@ ul#ui-id-1 {
           				<div class="card">
           					<div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
           					<div class="card-block">
+                      <h4 class="card-title">
+                          <b>Locations</b>
+                          @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                          <a href="/facility/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                              <i class="icon md-edit" style="margin-right: 0px;"></i>
+                          </a>
+                          @endif
+                      </h4>
           						<div class="p-10">
           						@if(isset($organization->location))
           							@foreach($organization->location as $location)
