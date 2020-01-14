@@ -461,7 +461,10 @@ class OrganizationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $map = Map::find(1);
+        $organization = Organization::where('organization_recordid', '=', $id)->first(); 
+
+        return view('frontEnd.organization-edit', compact('organization', 'map'));
     }
 
     /**
@@ -475,19 +478,10 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $organization->organization_name = $request->organization_name;
-        $organization->organization_alternate_name = $request->organization_alternate_name;
-        $organization->organization_x_uid = $request->organization_x_uid;
-        $organization->organization_description = $request->organization_description;
-        $organization->organization_email = $request->organization_email;
-        $organization->organization_url = $request->organization_url;
-        $organization->organization_legal_status = $request->legal_status;
-        $organization->organization_tax_status = $request->organization_tax_status;
-        $organization->organization_tax_id = $request->organization_tax_id;
-        $organization->organization_year_incorporated = $request->organization_year_incorporated;
-        $organization->flag = 'modified';
+       
         $organization->save();
 
-        return response()->json($organization);
+        return redirect('organization/'.$id);
     }
 
     /**

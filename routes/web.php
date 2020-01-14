@@ -40,6 +40,8 @@ Route::group(['middleware' => ['web', 'auth' ] ], function () {
 
     Route::get('/organizations', 'OrganizationController@organizations');
     Route::get('/organization/{id}', 'OrganizationController@organization');
+    Route::get('/organization/{id}/edit', 'OrganizationController@edit');
+    Route::get('/organization/{id}/update', 'OrganizationController@update');
 
     Route::get('/category/{id}', 'ServiceController@taxonomy');
 
