@@ -775,8 +775,9 @@ class ServiceController extends Controller
         $service->service_licenses = $request->service_licenses;
         $service->service_organization = $request->service_organization;
         $service->service_locations = $request->service_locations;
-        
         $service->service_contacts = $request->service_contacts;
+        $service->service_taxonomy = $request->service_taxonomy;
+        $service->service_details = $request->service_details;
 
         $service_address_info = $request->service_address;
         $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();
