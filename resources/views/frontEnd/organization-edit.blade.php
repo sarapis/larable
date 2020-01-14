@@ -79,11 +79,59 @@ Organization Edit
                 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 organization-details-div">
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-name-div">
                         <input class="form-control selectpicker"  type="text" id="organization_name" name="organization_name" value="{{$organization->organization_name}}">
                     </div>
                 </div>
-               
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Alternate Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-alternate-name-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_alternate_name" name="organization_alternate_name" value="{{$organization->organization_alternate_name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Description: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-description-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_description" name="organization_description" value="{{$organization->organization_description}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Email: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-email-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_email" name="organization_email" value="{{$organization->organization_email}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">URL: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-url-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_url" name="organization_url" value="{{$organization->organization_url}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Legal Status: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-legal-status-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_legal_status" name="organization_legal_status" value="{{$organization->organization_legal_status}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Tax Status: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-tax-status-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_tax_status" name="organization_tax_status" value="{{$organization->organization_tax_status}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Tax ID: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-tax-id-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_tax_id" name="organization_tax_id" value="{{$organization->organization_tax_id}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Year Incorporated: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-year-incorporated-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_year_incorporated" name="organization_year_incorporated" value="{{$organization->organization_year_incorporated}}">
+                    </div>
+                </div>
+                
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-organization-btn"><i class="fa fa-save"></i>Save</button>

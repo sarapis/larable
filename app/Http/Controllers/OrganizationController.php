@@ -478,6 +478,14 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $organization->organization_name = $request->organization_name;
+        $organization->organization_alternate_name = $request->organization_alternate_name;
+        $organization->organization_description = $request->organization_description;
+        $organization->organization_email = $request->organization_email;
+        $organization->organization_url = $request->organization_url;
+        $organization->organization_legal_status = $request->organization_legal_status;
+        $organization->organization_tax_status = $request->organization_tax_status;
+        $organization->organization_tax_id = $request->organization_tax_id;
+        $organization->organization_year_incorporated = $request->organization_year_incorporated;
        
         $organization->save();
 
