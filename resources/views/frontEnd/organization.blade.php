@@ -52,76 +52,68 @@ ul#ui-id-1 {
     <!-- Page Content Holder -->
     <div id="content" class="container">
         <!-- <div id="map" style="height: 30vh;"></div> -->
-		<!-- Example Striped Rows -->
-		<div class="row m-0">
-        	<div class="col-md-8 pt-15 pb-15 pl-30">
-               <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">
-							<a href="">@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif
-							</a>
-                        </h4>
-
-                        <h4>
-							<span class="badge bg-red pl-0 organize_font"><b>Status:</b></span> 
-							{{$organization->organization_status_x}}
-						</h4>
-
-                        {{-- <h4 class="panel-text"><span class="badge bg-red">Alternate Name:</span> {{$organization->organization_alternate_name}}</h4> --}}
-
-                        <h4 style="line-height:inherit"> {{$organization->organization_description}}</h4>
-
-                        <h4 style="line-height: inherit;">
-                        	<span><i class="icon md-globe font-size-24 vertical-align-top  mr-5 pr-10"></i>
-								<a href="{{$organization->organization_url}}" > {{$organization->organization_url}}</a>
-							</span> 
-						</h4>
-
-                        @if($organization->organization_phones!='')
-						<h4 style="line-height: inherit;">
-                        	<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
-								@foreach($organization->phones as $phone)
-								{!! $phone->phone_number !!}, 
-								@endforeach
-							</span> 
-                        </h4>
-                        @endif
-
-                        @if(isset($organization->organization_forms_x_filename))
-                        <h4 class="py-10" style="line-height: inherit;"><span class="mb-10"><b>Referral Forms:</b></span>
-							<a href="{{$organization->organization_forms_x_url}}" class="panel-link"> {{$organization->organization_forms_x_filename}}</a>
-						</h4>
-                        @endif
-
-                    </div>
-                </div>
-
-                @if(isset($organization->services))
-                <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)</h4>
-                @foreach($organization->services as $service)
-                    <div class="card">
-					
-						<div class="card-block">
-							<h4 class="card-title">
-								<a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
-							</h4>
-							<h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
-                           
-                            <h4 style="line-height: inherit;">
-								<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
-								@foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span>
-							</h4>
-							<h4>
-								<span>
-								<i class="icon md-pin font-size-24 vertical-align-top  mr-5 pr-10"></i>
-                                @if(isset($service->address))
-                                    @foreach($service->address as $address)
-                                      {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                    @endforeach
-								@endif
-								</span>
+		    <!-- Example Striped Rows -->
+    		<div class="row m-0">
+            	<div class="col-md-8 pt-15 pb-15 pl-30">
+                   <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">
+                  							<a href="">@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif
+                  							</a>
                             </h4>
-                            
+                            <h4>
+                  							<span class="badge bg-red pl-0 organize_font"><b>Status:</b></span> 
+                  							{{$organization->organization_status_x}}
+                						</h4>
+                            {{-- <h4 class="panel-text"><span class="badge bg-red">Alternate Name:</span> {{$organization->organization_alternate_name}}</h4> --}}
+                            <h4 style="line-height:inherit"> {{$organization->organization_description}}</h4>
+                            <h4 style="line-height: inherit;">
+                            	<span><i class="icon md-globe font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                								<a href="{{$organization->organization_url}}" > {{$organization->organization_url}}</a>
+                							</span> 
+                						</h4>
+                            @if($organization->organization_phones!='')
+                						<h4 style="line-height: inherit;">
+                              	<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                  								@foreach($organization->phones as $phone)
+                  								{!! $phone->phone_number !!}, 
+                  								@endforeach
+                							</span> 
+                            </h4>
+                            @endif
+                            @if(isset($organization->organization_forms_x_filename))
+                            <h4 class="py-10" style="line-height: inherit;"><span class="mb-10"><b>Referral Forms:</b></span>
+                							<a href="{{$organization->organization_forms_x_url}}" class="panel-link"> {{$organization->organization_forms_x_filename}}</a>
+                						</h4>
+                            @endif
+                        </div>
+                    </div>
+
+                    @if(isset($organization->services))
+                    <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($organization->services)){{$organization->services->count()}}@else 0 @endif)
+                    </h4>
+                    @foreach($organization->services as $service)
+                    <div class="card">
+            						<div class="card-block">
+              							<h4 class="card-title">
+              								  <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
+              							</h4>
+            							  <h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
+                            <h4 style="line-height: inherit;">
+                								<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                								@foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span>
+              							</h4>
+            							  <h4>
+                								<span>
+                								<i class="icon md-pin font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                                                @if(isset($service->address))
+                                                    @foreach($service->address as $address)
+                                                      {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                                    @endforeach
+                								@endif
+                								</span>
+                            </h4>
+                                        
                             @if($service->service_details!=NULL)
                                 @php
                                     $show_details = [];
@@ -143,29 +135,8 @@ ul#ui-id-1 {
                               @foreach($show_details as $detail)
                                 <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
                               @endforeach
-							@endif
-							               <h4 class="py-10" style="line-height: inherit;">
-                           <!--      <span class="pl-0 category_badge"><b>Types of People:</b>
-                                    @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
-                                        @php 
-                                            $names = [];
-                                        @endphp
-                                        @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
-                                            
-                                            @if($taxonomy->taxonomy_parent_name == 'Target Populations')
-                                                @if(!in_array($taxonomy->taxonomy_name, $names))
-                                                    @if($taxonomy->taxonomy_name)
-                                                        <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
-                                                        @php
-                                                        $names[] = $taxonomy->taxonomy_name;
-                                                        @endphp
-                                                    @endif
-                                                @endif                                                    
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </span>  -->
-                                <!-- <br> -->
+    					              @endif
+    					              <h4 class="py-10" style="line-height: inherit;">
                                 <span class="pl-0 category_badge"><b>Types of Services:</b>
                                     @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
                                         @php 
@@ -202,78 +173,63 @@ ul#ui-id-1 {
                                         @endforeach
                                     @endif
                                 </span>  
-                              </h4>
+                            </h4>
                         </div>
                     </div>
                     @endforeach
-                  @endif
-            </div>
-            
-            <div class="col-md-4 property">
-				<div class="pt-10 pb-10 pl-0 btn-download">
-					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
-					<button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
-              <div class="sharethis-inline-share-buttons"></div>
-          </button>
-				</div>
-				
-				<div class="card">
-					<div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
-					<div class="card-block">
-						<div class="p-10">
-						@if(isset($organization->location))
-							@foreach($organization->location as $location)
-							<h4>
-								<span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>
-									{{$location->location_name}}
-								</span> 
-							</h4>
-							<h4>
-								<span><i class="icon md-pin font-size-24 vertical-align-top  "></i>
-									@if(isset($location->address))
-										@foreach($location->address as $address)
-										{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-										@endforeach
-									@endif
-								</span> 
-							</h4>
-							<h4>
-								<span><i class="icon md-phone font-size-24 vertical-align-top  "></i>
-									@foreach($location->phones as $phone)
-									@php 
-										$phones ='';
-										$phones = $phones.$phone->phone_number.','; @endphp
-									@endforeach
-                  @if(isset($phones))
-									{{ rtrim($phones, ',') }}
-                  @endif
-								</span>
-							</h4>
-							@endforeach
-						@endif
-						</div>
-          </div>
+                    @endif
+              </div>
+
+              <div class="col-md-4 property">
+          				<div class="pt-10 pb-10 pl-0 btn-download">
+          					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
+          					<button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
+                        <div class="sharethis-inline-share-buttons"></div>
+                    </button>
+          				</div>
+    				
+          				<div class="card">
+          					<div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
+          					<div class="card-block">
+          						<div class="p-10">
+          						@if(isset($organization->location))
+          							@foreach($organization->location as $location)
+          							<h4>
+          								<span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>
+          									{{$location->location_name}}
+          								</span> 
+          							</h4>
+          							<h4>
+          								<span><i class="icon md-pin font-size-24 vertical-align-top  "></i>
+          									@if(isset($location->address))
+          										@foreach($location->address as $address)
+          										{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+          										@endforeach
+          									@endif
+          								</span> 
+          							</h4>
+          							<h4>
+          								<span><i class="icon md-phone font-size-24 vertical-align-top  "></i>
+          									@foreach($location->phones as $phone)
+          									@php 
+          										$phones ='';
+          										$phones = $phones.$phone->phone_number.','; @endphp
+          									@endforeach
+                            @if(isset($phones))
+          									{{ rtrim($phones, ',') }}
+                            @endif
+          								</span>
+          							</h4>
+          							@endforeach
+          						@endif
+          						</div>
+                    </div>
+                  </div>
+              </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<!-- <script>
-    $(document).ready(function(){
-        if(screen.width < 768){
-          var text= $('.navbar-header').css('height');
-          var height = text.slice(0, -2);
-          $('.page').css('padding-top', height);
-          $('#content').css('top', height);
-        }
-        else{
-          var text= $('.navbar-header').css('height');
-          var height = 0;
-          $('.page').css('margin-top', height);
-        }
-    });
-</script> -->
 <script>
   $(document).ready(function(){  
     setTimeout(function(){
