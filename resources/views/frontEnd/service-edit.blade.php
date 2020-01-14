@@ -178,7 +178,7 @@ Edit Service
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone1: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-phone1-div">
-                        <input class="form-control selectpicker"  type="text" id="service_phone1" name="service_phone1" value="{{$service_phone1->phone_number}}">
+                        <input class="form-control selectpicker"  type="text" id="service_phone1" name="service_phone1" @if($service_phone1) value="{{$service_phone1->phone_number}}" @endif>
                     </div>  
                 </div>
                 <div class="form-group">

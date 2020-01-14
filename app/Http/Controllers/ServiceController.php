@@ -557,6 +557,30 @@ class ServiceController extends Controller
     {
         $service = Service::where('service_recordid', '=', $id)->first();
 
+        $service_phones_info = $service->service_phones;
+        if(strpos($service_phones_info, ',') !== false){
+            $service_phone_recordid_list = explode(',', $service_phones_info);
+            $phone1_recordid = $service_phone_recordid_list[0];
+            $phone2_recordid = $service_phone_recordid_list[1];
+        } else{
+            $phone1_recordid = $service_phones_info;
+            $phone2_recordid = NULL;
+        }
+        $phone_number_info = '';
+        if ($phone1_recordid) {
+            $phone1_number = Phone::where('phone_recordid', '=', $phone1_recordid)->select('phone_number')->first();            
+            $phone_number_info = $phone1_number->phone_number;
+        } 
+        if ($phone2_recordid) {
+            $phone2_number = Phone::where('phone_recordid', '=', $phone2_recordid)->select('phone_number')->first();            
+            if ($phone_number_info) {
+                $phone_number_info = $phone_number_info.', '.$phone2_number->phone_number;
+            } else {
+                $phone_number_info = $phone2_number->phone_number;
+            }
+        } 
+
+
         $service_taxonomy_recordid_list = explode(',', $service->service_taxonomy);
         $service_taxonomy_info_list = [];
         foreach ($service_taxonomy_recordid_list as $key => $service_taxonomy_recordid) {
@@ -573,7 +597,8 @@ class ServiceController extends Controller
         }
 
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();
-        $contact_info = Contact::where('contact_recordid', '=', $service->service_contacts)->first();
+
+        $contact_info = Contact::where('contact_recordid', '=', $service->service_contacts)->first();        
         $contact_phone = NULL;
         if ($contact_info) {
             $contact_phone = Phone::where('phone_recordid', '=', $contact_info->contact_phones)->first(); 
@@ -641,7 +666,7 @@ class ServiceController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info', 'contact_phone'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info', 'contact_phone', 'phone_number_info'));
     }
 
     public function taxonomy($id)
@@ -738,6 +763,7 @@ class ServiceController extends Controller
         $service_address_postal_code = Address::where('address_recordid', '=', $service_address_id)->select('address_postal_code')->first();
 
         $phone_recordids = $service->service_phones;
+        
         if(strpos($phone_recordids, ',') !== false){
             $phone_recordid_list = explode(',', $phone_recordids);
             $phone1_recordid = $phone_recordid_list[0];
@@ -748,6 +774,7 @@ class ServiceController extends Controller
         } 
         $service_phone1 = Phone::where('phone_recordid', '=', $phone1_recordid)->select('phone_number')->first();
         $service_phone2 = Phone::where('phone_recordid', '=', $phone2_recordid)->select('phone_number')->first();
+       
 
         return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list', 'service_location_list', 'service_phone1', 'service_phone2', 'service_contacts_list', 'service_taxonomy_list', 'service_details_list'));
     }
@@ -778,6 +805,27 @@ class ServiceController extends Controller
         $service->service_contacts = $request->service_contacts;
         $service->service_taxonomy = $request->service_taxonomy;
         $service->service_details = $request->service_details;
+        $service_phone1 = $request->service_phone1;
+        $service_phone2 = $request->service_phone2;
+
+        $phone2_info = NULL;
+        $phone1_info = NULL;
+        if ($service_phone1) {
+            $phone1_info = Phone::where('phone_number', '=', $service_phone1)->select('phone_recordid')->first();
+        }
+        if ($service_phone2) {
+            $phone2_info = Phone::where('phone_number', '=', $service_phone2)->select('phone_recordid')->first();
+        }
+   
+        if ($phone2_info) {
+            if ($phone1_info) {
+                $service->service_phones = $phone1_info->phone_recordid.','.$phone2_info->phone_recordid;
+            } else {
+                $service->service_phones = $phone2_info->phone_recordid;
+            }
+        } else {
+            $service->service_phones = $phone1_info->phone_recordid;
+        }
 
         $service_address_info = $request->service_address;
         $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();

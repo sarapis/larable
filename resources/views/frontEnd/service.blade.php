@@ -71,19 +71,11 @@ ul#ui-id-1 {
                         <h4  class="service-description" style="line-height: inherit;">{{ $service->service_description }}</h4>
 
                         @if(isset($service->service_phones))                            
-                            @if(isset($service->phone()->first()->phone_number))  
                             <h4 style="line-height: inherit;">
                                 <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
-                                @foreach($service->phone as $phone)
-                                    @if($loop->last)
-                                    {{$phone->phone_number}}
-                                    @else
-                                    {{$phone->phone_number}},
-                                    @endif
-                                @endforeach    
+                                    {{$phone_number_info}}
                                 </span>                   
                             </h4>
-                            @endif
                         @endif
 
                       <!--   <h4><span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span></h4> -->
