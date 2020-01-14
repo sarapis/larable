@@ -573,7 +573,7 @@ class ServiceController extends Controller
         }
 
         $location = Location::with('organization', 'address')->where('location_services', 'like', '%'.$id.'%')->get();
-        $contact_info = Contact::where('contact_services', '=', $id)->first();
+        $contact_info = Contact::where('contact_recordid', '=', $service->service_contacts)->first();
         $contact_phone = NULL;
         if ($contact_info) {
             $contact_phone = Phone::where('phone_recordid', '=', $contact_info->contact_phones)->first(); 
@@ -775,7 +775,8 @@ class ServiceController extends Controller
         $service->service_licenses = $request->service_licenses;
         $service->service_organization = $request->service_organization;
         $service->service_locations = $request->service_locations;
-
+        
+        $service->service_contacts = $request->service_contacts;
 
         $service_address_info = $request->service_address;
         $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();
@@ -785,25 +786,30 @@ class ServiceController extends Controller
             $full_address_info = $value->address_1.', '.$value->address_city.', '.$value->address_state_province.', '.$value->address_postal_code;
             array_push($full_address_info_list, $full_address_info);
         }
-        $full_address_info_list = array_unique($full_address_info_list);      
-        if (!in_array($service_address_info, $full_address_info_list)) {
-            $new_recordid = Address::max('address_recordid') + 1;  
-            $service->service_address = $new_recordid;
-            $address = new Address();
-            $address->address_recordid = $new_recordid;
-            $address->address_1 = explode(', ', $service_address_info)[0];
-            $address->address_city = explode(', ', $service_address_info)[1];
-            $address->address_state_province = explode(', ', $service_address_info)[2];
-            $address->address_postal_code = explode(', ', $service_address_info)[3];
-            $address->save();
-        } else {
-            foreach ($address_infos as $key => $value) {
-                $full_address_info = $value->address_1.', '.$value->address_city.', '.$value->address_state_province.', '.$value->address_postal_code;
-                if ($full_address_info == $service_address_info) {
-                    $service->service_address = $value->address_recordid;
+        $full_address_info_list = array_unique($full_address_info_list); 
+        if ($service_address_info) {
+            if (!in_array($service_address_info, $full_address_info_list)) {
+                $new_recordid = Address::max('address_recordid') + 1;  
+                $service->service_address = $new_recordid;
+                $address = new Address();
+                $address->address_recordid = $new_recordid;
+                $address->address_1 = explode(', ', $service_address_info)[0];
+                $address->address_city = explode(', ', $service_address_info)[1];
+                $address->address_state_province = explode(', ', $service_address_info)[2];
+                $address->address_postal_code = explode(', ', $service_address_info)[3];
+                $address->save();
+            } else {
+                foreach ($address_infos as $key => $value) {
+                    $full_address_info = $value->address_1.', '.$value->address_city.', '.$value->address_state_province.', '.$value->address_postal_code;
+                    if ($full_address_info == $service_address_info) {
+                        $service->service_address = $value->address_recordid;
+                    }
                 }
             }
+        } else {
+            $service->service_address = $service_address_info;
         }
+
 
         $service->save();
 

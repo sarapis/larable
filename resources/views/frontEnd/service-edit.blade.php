@@ -192,7 +192,7 @@ Edit Service
                     <div class="col-md-12 col-sm-12 col-xs-12 service-contacts-div">
                         <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_contacts" name="service_contacts">
                             @foreach($service_contacts_list as $key => $service_cont)                                
-                                <option value="{{$service_cont->contact_recordid}}" @if ($service->service_locations == $service_cont->contact_recordid) selected @endif>{{$service_cont->contact_name}}</option>
+                                <option value="{{$service_cont->contact_recordid}}" @if ($service->service_contacts == $service_cont->contact_recordid) selected @endif>{{$service_cont->contact_name}}</option>
                             @endforeach
                         </select>
                     </div>           
