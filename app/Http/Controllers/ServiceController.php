@@ -723,17 +723,31 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
+        $map = Map::find(1);
         $service = Service::where('service_recordid', '=', $id)->first(); 
         $service_organization_list = Organization::select('organization_recordid', 'organization_name')->get();  
-        $service_location_list = Location::select('location_recordid', 'location_name')->get();        
+        $service_location_list = Location::select('location_recordid', 'location_name')->get();
 
         $service_address_id = $service->service_address;
         $service_address_street = Address::where('address_recordid', '=', $service_address_id)->select('address_1')->first();
         $service_address_city = Address::where('address_recordid', '=', $service_address_id)->select('address_city')->first();
         $service_address_state = Address::where('address_recordid', '=', $service_address_id)->select('address_state_province')->first();
         $service_address_postal_code = Address::where('address_recordid', '=', $service_address_id)->select('address_postal_code')->first();
-        $map = Map::find(1);
-        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list', 'service_location_list'));
+
+        $phone_recordids = $service->service_phones;
+        if(strpos($phone_recordids, ',') !== false){
+            $phone_recordid_list = explode(',', $phone_recordids);
+            $phone1_recordid = $phone_recordid_list[0];
+            $phone2_recordid = $phone_recordid_list[1];
+        } else{
+            $phone1_recordid = $phone_recordids;
+            $phone2_recordid = '';
+        } 
+        $service_phone1 = Phone::where('phone_recordid', '=', $phone1_recordid)->select('phone_number')->first();
+        $service_phone2 = Phone::where('phone_recordid', '=', $phone2_recordid)->select('phone_number')->first();
+
+
+        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list', 'service_location_list', 'service_phone1', 'service_phone2'));
     }
 
     /**
@@ -759,7 +773,8 @@ class ServiceController extends Controller
         $service->service_licenses = $request->service_licenses;
         $service->service_organization = $request->service_organization;
         $service->service_locations = $request->service_locations;
-      
+
+
         $service_address_info = $request->service_address;
         $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();
 

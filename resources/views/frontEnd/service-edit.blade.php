@@ -163,6 +163,19 @@ Edit Service
                     </div>           
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone1: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-phone1-div">
+                        <input class="form-control selectpicker"  type="text" id="service_phone1" name="service_phone1" value="{{$service_phone1->phone_number}}">
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone2: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-phone2-div">
+                        <input class="form-control selectpicker"  type="text" id="service_phone2" name="service_phone2" @if($service_phone2) value="{{$service_phone2->phone_number}}" @endif>
+                    </div>  
+                </div>
+
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-service-btn"><i class="fa fa-save"></i>Save</button>
