@@ -756,6 +756,10 @@ class ServiceController extends Controller
         $service_taxonomy_list = Taxonomy::select('taxonomy_recordid', 'taxonomy_name')->get();
         $service_details_list = Detail::select('detail_recordid', 'detail_value')->get();
 
+        $location_info_list = explode(',', $service->service_locations);
+        $contact_info_list = explode(',', $service->service_contacts);
+        $taxonomy_info_list = explode(',', $service->service_taxonomy);
+
         $service_address_id = $service->service_address;
         $service_address_street = Address::where('address_recordid', '=', $service_address_id)->select('address_1')->first();
         $service_address_city = Address::where('address_recordid', '=', $service_address_id)->select('address_city')->first();
@@ -776,7 +780,7 @@ class ServiceController extends Controller
         $service_phone2 = Phone::where('phone_recordid', '=', $phone2_recordid)->select('phone_number')->first();
        
 
-        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list', 'service_location_list', 'service_phone1', 'service_phone2', 'service_contacts_list', 'service_taxonomy_list', 'service_details_list'));
+        return view('frontEnd.service-edit', compact('service', 'map', 'service_address_street', 'service_address_city', 'service_address_state', 'service_address_postal_code', 'service_organization_list', 'service_location_list', 'service_phone1', 'service_phone2', 'service_contacts_list', 'service_taxonomy_list', 'service_details_list', 'location_info_list', 'contact_info_list', 'taxonomy_info_list'));
     }
 
     /**
@@ -801,9 +805,11 @@ class ServiceController extends Controller
         $service->service_accreditations = $request->service_accreditations;
         $service->service_licenses = $request->service_licenses;
         $service->service_organization = $request->service_organization;
-        $service->service_locations = $request->service_locations;
-        $service->service_contacts = $request->service_contacts;
-        $service->service_taxonomy = $request->service_taxonomy;
+
+        $service->service_locations = join(',', $request->service_locations);
+        $service->service_contacts = join(',', $request->service_contacts);
+        $service->service_taxonomy = join(',', $request->service_taxonomy);
+
         $service->service_details = $request->service_details;
         $service_phone1 = $request->service_phone1;
         $service_phone2 = $request->service_phone2;

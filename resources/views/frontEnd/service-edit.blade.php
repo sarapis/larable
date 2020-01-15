@@ -161,9 +161,9 @@ Edit Service
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Locations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-locations-div">
-                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_locations" name="service_locations">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="service_locations" name="service_locations[]">
                             @foreach($service_location_list as $key => $service_loc)                                
-                                <option value="{{$service_loc->location_recordid}}" @if ($service->service_locations == $service_loc->location_recordid) selected @endif>{{$service_loc->location_name}}</option>
+                                <option value="{{$service_loc->location_recordid}}" @if (in_array($service_loc->location_recordid, $location_info_list)) selected @endif>{{$service_loc->location_name}}</option>
                             @endforeach
                         </select>
                     </div>           
@@ -184,9 +184,9 @@ Edit Service
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Contacts: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-contacts-div">
-                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_contacts" name="service_contacts">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="service_contacts" name="service_contacts[]">
                             @foreach($service_contacts_list as $key => $service_cont)                                
-                                <option value="{{$service_cont->contact_recordid}}" @if ($service->service_contacts == $service_cont->contact_recordid) selected @endif>{{$service_cont->contact_name}}</option>
+                                <option value="{{$service_cont->contact_recordid}}" @if (in_array($service_cont->contact_recordid, $contact_info_list)) selected @endif>{{$service_cont->contact_name}}</option>
                             @endforeach
                         </select>
                     </div>           
@@ -194,9 +194,9 @@ Edit Service
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Taxonomy: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-taxonomy-div">
-                        <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_taxonomy" name="service_taxonomy">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="service_taxonomy" name="service_taxonomy[]">
                             @foreach($service_taxonomy_list as $key => $service_taxo)                                
-                                <option value="{{$service_taxo->taxonomy_recordid}}" @if ($service->service_taxonomy == $service_taxo->taxonomy_recordid) selected @endif>{{$service_taxo->taxonomy_name}}</option>
+                                <option value="{{$service_taxo->taxonomy_recordid}}" @if (in_array($service_taxo->taxonomy_recordid, $taxonomy_info_list)) selected @endif>{{$service_taxo->taxonomy_name}}</option>
                             @endforeach
                         </select>
                     </div>           
