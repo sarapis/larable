@@ -201,7 +201,7 @@ Edit Service
                         </select>
                     </div>           
                 </div>
-                <div class="form-group">                 
+              <!--   <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Details: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-details-div">
                         <select class="form-control selectpicker" data-live-search="true" data-size="5" id="service_details" name="service_details">
@@ -210,7 +210,7 @@ Edit Service
                             @endforeach
                         </select>
                     </div>           
-                </div>
+                </div> -->
 
                 <div class="form-group"> 
                     <div class="col-md-12">
