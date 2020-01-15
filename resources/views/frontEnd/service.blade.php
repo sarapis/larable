@@ -156,36 +156,15 @@ ul#ui-id-1 {
                                 @endif
                             </span>                            
                         </h4>
-                        <!-- @if($service->service_details!=NULL)
-                            @php
-                                $show_details = [];
-                            @endphp
-                            @foreach($service->details->sortBy('detail_type') as $detail)
-                            @php
-                                for($i = 0; $i < count($show_details); $i ++){
-                                    if($show_details[$i]['detail_type'] == $detail->detail_type)
-                                        break;
-                                }
-                                if($i == count($show_details)){
-                                    $show_details[$i] = array('detail_type'=> $detail->detail_type, 'detail_value'=> $detail->detail_value);
-                                }
-                                else{
-                                    $show_details[$i]['detail_value'] = $show_details[$i]['detail_value'].', '.$detail->detail_value;
-                                }
-                            @endphp                                
-                            @endforeach
-                            @foreach($show_details as $detail)
-                            <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
-                            @endforeach
-                        @endif -->
                     </div>
                 </div>
-                @if($contact_info)
+                @if($contact_info_list)
                 <div class="card page-project">
+                    <h4 class="card-title">
+                        <b>Contacts</b>                        
+                    </h4>
+                    @foreach($contact_info_list as $contact_info)
                     <div class="card-block">
-                        <h4 class="card-title">
-                            <b>Contacts</b>                        
-                        </h4>
                         @if($contact_info->contact_name)
                         <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
                         @endif
@@ -198,10 +177,11 @@ ul#ui-id-1 {
                         @if($contact_info->contact_email)
                         <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
                         @endif
-                        @if($contact_phone)
-                        <h4><span><b>Phone:</b></span> {{$contact_phone->phone_number}}</h4>
+                        @if($contact_info->contact_phones)
+                        <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
                         @endif
                     </div>
+                    @endforeach
                 </div>
                 @endif
             </div>
