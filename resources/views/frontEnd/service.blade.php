@@ -181,6 +181,7 @@ ul#ui-id-1 {
                         <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
                         @endif
                     </div>
+                    </br>
                     @endforeach
                 </div>
                 @endif
