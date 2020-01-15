@@ -89,7 +89,7 @@ Edit Service
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-description-div">
-                        <input class="form-control selectpicker"  type="text" id="service_description" name="service_description" value="{{$service->service_description}}">
+                        <textarea id="service_description" name="service_description" class="form-control selectpicker" rows="5" cols="30">{{$service->service_description}}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,15 +119,9 @@ Edit Service
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Application Process: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-application-process-div">
-                        <input class="form-control selectpicker"  type="text" id="service_application_process" name="service_application_process" value="{{$service->service_application_process}}">
+                        <textarea id="service_application_process" name="service_application_process" class="form-control selectpicker" rows="5" cols="30">{{$service->service_application_process}}</textarea>
                     </div>
                 </div>
-             <!--    <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Interpretation Services: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-interpretation-services-div">
-                        <input class="form-control selectpicker"  type="text" id="service_interpretation_services" name="service_interpretation_services" value="{{$service->service_interpretation_services}}">
-                    </div>
-                </div> -->
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Wait Time: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-wait-time-div">

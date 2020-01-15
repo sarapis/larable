@@ -78,7 +78,7 @@ Organization Edit
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-description-div">
-                        <input class="form-control selectpicker"  type="text" id="organization_description" name="organization_description" value="{{$organization->organization_description}}">
+                      <textarea id="organization_description" name="organization_description" class="form-control selectpicker" rows="5" cols="30">{{$organization->organization_description}}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
