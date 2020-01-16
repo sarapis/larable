@@ -356,7 +356,8 @@ class OrganizationController extends Controller
         $checked_transportations = [];
         $checked_hours= [];
 
-        $contact_info = Contact::where('contact_recordid', '=', $organization->organization_contact)->first();
+        $organization_contacts_recordid_list = explode(',', $organization->organization_contact);
+        $contact_info_list = Contact::whereIn('contact_recordid', $organization_contacts_recordid_list)->get(); 
 
         //=====================updated tree==========================//
 
@@ -408,7 +409,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info', 'organization_services'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services'));
     }
 
     public function download($id)
@@ -468,8 +469,10 @@ class OrganizationController extends Controller
         $organization = Organization::where('organization_recordid', '=', $id)->first(); 
         $organization_service_list = explode(',', $organization->organization_services);
         $services_info_list = Service::select('service_recordid', 'service_name')->get();
+        $organization_contacts_list = Contact::select('contact_recordid', 'contact_name')->get();
+        $contact_info_list = explode(',', $organization->organization_contact);
 
-        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list'));
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list'));
     }
 
     /**
@@ -492,6 +495,7 @@ class OrganizationController extends Controller
         $organization->organization_tax_id = $request->organization_tax_id;
         $organization->organization_year_incorporated = $request->organization_year_incorporated;
         $organization->organization_services = join(',', $request->organization_services);
+        $organization->organization_contact = join(',', $request->organization_contacts);
        
         $organization->save();
 

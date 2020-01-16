@@ -189,12 +189,13 @@ ul#ui-id-1 {
                     @endforeach
                     @endif
 
-                    @if($contact_info)
+                    @if($contact_info_list)
                     <div class="card page-project">
+                        <h4 class="card-title">
+                            <b>Contacts</b>                        
+                        </h4>
+                        @foreach($contact_info_list as $contact_info)
                         <div class="card-block">
-                            <h4 class="card-title">
-                                <b>Contacts</b>                        
-                            </h4>
                             @if($contact_info->contact_name)
                             <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
                             @endif
@@ -207,10 +208,12 @@ ul#ui-id-1 {
                             @if($contact_info->contact_email)
                             <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
                             @endif
-                            @if($contact_phone)
-                            <h4><span><b>Phone:</b></span> {{$contact_phone->phone_number}}</h4>
+                            @if($contact_info->contact_phones)
+                            <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
                             @endif
                         </div>
+                        </br>
+                        @endforeach
                     </div>
                     @endif
               </div>
