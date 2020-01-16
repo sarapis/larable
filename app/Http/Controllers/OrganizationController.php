@@ -346,6 +346,7 @@ class OrganizationController extends Controller
         $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
         $organization_phones_recordid_list = explode(',', $organization->organization_phones);
         $organization_phones = Phone::whereIn('phone_recordid', $organization_phones_recordid_list)->orderBy('phone_recordid')->paginate(10);
+        
 
         $map = Map::find(1);
         $parent_taxonomy = [];
@@ -361,6 +362,9 @@ class OrganizationController extends Controller
 
         $organization_contacts_recordid_list = explode(',', $organization->organization_contact);
         $contact_info_list = Contact::whereIn('contact_recordid', $organization_contacts_recordid_list)->get(); 
+
+        $organization_locations_recordid_list = explode(',', $organization->organization_locations);
+        $location_info_list = Location::whereIn('location_recordid', $organization_locations_recordid_list)->orderBy('location_recordid')->paginate(10);
 
         //=====================updated tree==========================//
 
@@ -412,7 +416,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'organization_phones'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'organization_phones', 'location_info_list'));
     }
 
     public function download($id)
@@ -476,8 +480,10 @@ class OrganizationController extends Controller
         $contact_info_list = explode(',', $organization->organization_contact);
         $organization_phones_list = Phone::select('phone_recordid', 'phone_number')->get();
         $phone_info_list = explode(',', $organization->organization_phones);
+        $organization_locations_list = Location::select('location_recordid', 'location_name')->get();
+        $location_info_list = explode(',', $organization->organization_locations);
 
-        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list'));
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list', 'organization_locations_list', 'location_info_list'));
     }
 
     /**
@@ -502,6 +508,7 @@ class OrganizationController extends Controller
         $organization->organization_services = join(',', $request->organization_services);
         $organization->organization_contact = join(',', $request->organization_contacts);
         $organization->organization_phones = join(',', $request->organization_phones);
+        $organization->organization_locations = join(',', $request->organization_locations);
        
         $organization->save();
 

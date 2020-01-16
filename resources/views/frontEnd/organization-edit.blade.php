@@ -27,6 +27,10 @@ Organization Edit
         height: 100%;
         border: 1px solid #ddd;
     }
+    button[data-id="organization_locations"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
     .form-group button {
         width: 32.96%;
     }
@@ -154,6 +158,16 @@ Organization Edit
                         </select>
                     </div>           
                 </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Locations: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_locations" name="organization_locations[]">
+                            @foreach($organization_locations_list as $key => $organization_loc)                                
+                                <option value="{{$organization_loc->location_recordid}}" @if (in_array($organization_loc->location_recordid, $location_info_list)) selected @endif>{{$organization_loc->location_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
 
                 <div class="form-group"> 
                     <div class="col-md-12">
@@ -195,6 +209,7 @@ Organization Edit
         $("#organization_services").selectpicker("");       
         $("#organization_contacts").selectpicker("");   
         $("#organization_phones").selectpicker(""); 
+        $("#organization_locations").selectpicker(""); 
     });
     $('button.delete-td').on('click', function() {
         var value = $(this).val();

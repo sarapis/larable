@@ -238,8 +238,8 @@ ul#ui-id-1 {
                           @endif
                       </h4>
           						<div class="p-10">
-          						@if(isset($organization->location))
-          							@foreach($organization->location as $location)
+          						@if($location_info_list)
+          							@foreach($location_info_list as $location)
           							<h4>
           								<span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>
           									{{$location->location_name}}
@@ -266,6 +266,7 @@ ul#ui-id-1 {
                             @endif
           								</span>
           							</h4>
+                        </br>
           							@endforeach
           						@endif
           						</div>
