@@ -12,6 +12,7 @@ use App\Alt_taxonomy;
 use App\Servicetaxonomy;
 use App\Service;
 use App\Contact;
+use App\Phone;
 use App\Location;
 use App\Airtablekeyinfo;
 use App\Layout;
@@ -343,6 +344,8 @@ class OrganizationController extends Controller
         $locations = Location::with('services', 'address', 'phones')->where('location_organization', '=', $id)->get();
         $organization_services_recordid_list = explode(',', $organization->organization_services);
         $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
+        $organization_phones_recordid_list = explode(',', $organization->organization_phones);
+        $organization_phones = Phone::whereIn('phone_recordid', $organization_phones_recordid_list)->orderBy('phone_recordid')->paginate(10);
 
         $map = Map::find(1);
         $parent_taxonomy = [];
@@ -409,7 +412,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'organization_phones'));
     }
 
     public function download($id)
@@ -471,8 +474,10 @@ class OrganizationController extends Controller
         $services_info_list = Service::select('service_recordid', 'service_name')->get();
         $organization_contacts_list = Contact::select('contact_recordid', 'contact_name')->get();
         $contact_info_list = explode(',', $organization->organization_contact);
+        $organization_phones_list = Phone::select('phone_recordid', 'phone_number')->get();
+        $phone_info_list = explode(',', $organization->organization_phones);
 
-        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list'));
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list'));
     }
 
     /**
@@ -496,6 +501,7 @@ class OrganizationController extends Controller
         $organization->organization_year_incorporated = $request->organization_year_incorporated;
         $organization->organization_services = join(',', $request->organization_services);
         $organization->organization_contact = join(',', $request->organization_contacts);
+        $organization->organization_phones = join(',', $request->organization_phones);
        
         $organization->save();
 

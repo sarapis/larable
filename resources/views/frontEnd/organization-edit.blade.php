@@ -23,6 +23,10 @@ Organization Edit
         height: 100%;
         border: 1px solid #ddd;
     }
+    button[data-id="organization_phones"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
     .form-group button {
         width: 32.96%;
     }
@@ -140,6 +144,16 @@ Organization Edit
                         </select>
                     </div>           
                 </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_phones" name="organization_phones[]">
+                            @foreach($organization_phones_list as $key => $organization_pho)                                
+                                <option value="{{$organization_pho->phone_recordid}}" @if (in_array($organization_pho->phone_recordid, $phone_info_list)) selected @endif>{{$organization_pho->phone_number}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
 
                 <div class="form-group"> 
                     <div class="col-md-12">
@@ -180,6 +194,7 @@ Organization Edit
 	$(document).ready(function() {
         $("#organization_services").selectpicker("");       
         $("#organization_contacts").selectpicker("");   
+        $("#organization_phones").selectpicker(""); 
     });
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
