@@ -43,6 +43,8 @@ Route::group(['middleware' => ['web', 'auth' ] ], function () {
     Route::get('/organization/{id}/edit', 'OrganizationController@edit');
     Route::get('/organization/{id}/update', 'OrganizationController@update');
 
+    Route::get('/contacts', 'ContactController@contacts');
+
     Route::get('/category/{id}', 'ServiceController@taxonomy');
 
     Route::get('/services_near_me', 'ExploreController@geolocation');
@@ -81,29 +83,29 @@ Route::resource('login_register_edit', 'EditLoginRegisterController');
         Route::post('user/{user}/save', ['uses' => 'UserController@save', 'as' => 'user.save']);
         Route::get('user/{user}/activate', ['uses' => 'UserController@activate', 'as' => 'user.activate']);
         Route::get('user/{user}/deactivate', ['uses' => 'UserController@deactivate', 'as' => 'user.deactivate']);
-          Route::post('user/ajax_all', ['uses' => 'UserController@ajax_all']);
+          Route::post('user/ajax_all', ['uses' => 'UserController@ajax_all', 'as' => 'user.ajax_all']);
 
         //roles
         Route::resource('role', 'RoleController');
         Route::get('role/{role}/permissions', ['uses' => 'RoleController@permissions', 'as' => 'role.permissions']);
         Route::post('role/{role}/save', ['uses' => 'RoleController@save', 'as' => 'role.save']);
-        Route::post('role/check', ['uses' => 'RoleController@check']);
+        Route::post('role/check', ['uses' => 'RoleController@check', 'as' => 'role.check']);
 
         Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
-        Route::get('/sync_services/{api_key}/{base_url}', ['uses' => 'ServiceController@airtable']);  
-        Route::get('/sync_test/{api_key}/{base_url}', ['uses' => 'ServiceController@test_airtable']);      
+        Route::get('/sync_services/{api_key}/{base_url}', ['uses' => 'ServiceController@airtable', 'as' => 'sync_services.airtable']);  
+        Route::get('/sync_test/{api_key}/{base_url}', ['uses' => 'ServiceController@test_airtable', 'as' => 'sync_test.test_airtable']);      
         
-        Route::get('/sync_locations/{api_key}/{base_url}', ['uses' => 'LocationController@airtable']);
-        Route::get('/sync_organizations/{api_key}/{base_url}', ['uses' => 'OrganizationController@airtable']);
-        Route::get('/sync_contact/{api_key}/{base_url}', ['uses' => 'ContactController@airtable']);
-        Route::get('/sync_phones/{api_key}/{base_url}', ['uses' => 'PhoneController@airtable']);
-        Route::get('/sync_address/{api_key}/{base_url}', ['uses' => 'AddressController@airtable']);
-        Route::get('/sync_schedule/{api_key}/{base_url}', ['uses' => 'ScheduleController@airtable']);
-        Route::get('/sync_taxonomy/{api_key}/{base_url}', ['uses' => 'TaxonomyController@airtable']);
-        Route::get('/sync_details/{api_key}/{base_url}', ['uses' => 'DetailController@airtable']);
+        Route::get('/sync_locations/{api_key}/{base_url}', ['uses' => 'LocationController@airtable', 'as' => 'sync_locations.airtable']);
+        Route::get('/sync_organizations/{api_key}/{base_url}', ['uses' => 'OrganizationController@airtable', 'as' => 'sync_organizations.airtable']);
+        Route::get('/sync_contact/{api_key}/{base_url}', ['uses' => 'ContactController@airtable', 'as' => 'sync_contact.airtable']);
+        Route::get('/sync_phones/{api_key}/{base_url}', ['uses' => 'PhoneController@airtable', 'as' => 'sync_phones.airtable']);
+        Route::get('/sync_address/{api_key}/{base_url}', ['uses' => 'AddressController@airtable', 'as' => 'sync_address.airtable']);
+        Route::get('/sync_schedule/{api_key}/{base_url}', ['uses' => 'ScheduleController@airtable', 'as' => 'sync_schedule.airtable']);
+        Route::get('/sync_taxonomy/{api_key}/{base_url}', ['uses' => 'TaxonomyController@airtable', 'as' => 'sync_taxonomy.airtable']);
+        Route::get('/sync_details/{api_key}/{base_url}', ['uses' => 'DetailController@airtable', 'as' => 'sync_details.airtable']);
 
-        Route::get('/cron_datasync', ['uses' => 'CronController@cron_datasync']);
+        Route::get('/cron_datasync', ['uses' => 'CronController@cron_datasync', 'as' => 'cron_datasync.cron_datasync']);
 
         Route::post('/csv_services', ['uses' => 'ServiceController@csv']);  
         Route::post('/csv_locations', ['uses' => 'LocationController@csv']);
@@ -173,7 +175,7 @@ Route::resource('login_register_edit', 'EditLoginRegisterController');
         Route::get('/export', ['uses' => 'PagesController@export']);
         Route::get('/export_hsds_zip_file', ['uses' => 'PagesController@export_hsds_zip_file']);
         
-        Route::get('/meta_filter', ['uses' => 'PagesController@metafilter']);
+        Route::get('/meta_filter', ['uses' => 'PagesController@metafilter', 'as' => 'meta_filter.index']);
         Route::post('/meta/{id}', 'PagesController@metafilter_save');
         Route::post('/update_hsds_api_key', 'PagesController@update_hsds_api_key');
 

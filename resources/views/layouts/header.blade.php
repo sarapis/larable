@@ -36,9 +36,12 @@
 					</li>
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/#category">Categories</a>
-					</li>
+					</li>					
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/organizations">Organizations</a>
+					</li>
+					<li class="nav-item responsive_menu">
+						<a class="nav-link waves-effect waves-light waves-round" href="/contacts">Contacts</a>
 					</li>
 					@if($layout->about_active == 1)
 					<li class="nav-item responsive_menu">

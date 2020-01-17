@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Contact;
+use App\Organization;
+use App\Location;
+use App\Address;
 use App\Airtablekeyinfo;
 use App\Servicecontact;
 use App\Airtables;
@@ -167,6 +170,15 @@ class ContactController extends Controller
         $source_data = Source_data::find(1);
 
         return view('backEnd.tables.tb_contacts', compact('contacts', 'source_data'));
+    }
+
+
+    public function contacts(Request $request)
+    {
+
+        $contacts = Contact::orderBy('contact_recordid')->paginate(20);
+
+        return view('frontEnd.contacts', compact('contacts'));
     }
 
     

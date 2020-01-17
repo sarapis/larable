@@ -19,6 +19,7 @@ class PermissionMiddleware
     public function handle($request, Closure $next, $api="")
     {   
         $routeName = $request->route()->getName();
+        // var_dump(Sentinel::hasAccess($routeName));
         if (empty($routeName) || Sentinel::hasAccess($routeName)) {
             return $next($request);
         }
@@ -31,8 +32,5 @@ class PermissionMiddleware
             Session::flash('status', 'warning');
          return redirect()->back();
        }
-        
-
-        
     }
 }
