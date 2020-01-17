@@ -3,6 +3,20 @@
 Register
 @stop
 @section('content')
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<style type="text/css">
+    .dropdown-menu.open{
+      max-height: 300px !important;
+      max-width: 100px !important;
+    }
+    div.filter-option {
+      background: white;
+      color: #2c3e50;
+    }
+
+</style>
+
 <div class = "container">
   <div class="wrapper">
     <div class="panel-heading">
@@ -51,6 +65,21 @@ Register
                  {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
               </div>
             </div>
+            
+            <div class="form-group  {{ $errors->has('organization') ? 'has-error' : ''}}">
+              <label for="organization" class="cols-sm-2 control-label">Organization</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
+                  <select class="form-control selectpicker" multiple data-live-search="true" id="organization" name="organization[]">
+                  @foreach($organization_name_list as $key => $organization)
+                      <option value="{{$organization->organization_name}}">{{$organization->organization_name}}</option>
+                  @endforeach
+                  </select>
+                </div>
+                 {!! $errors->first('organization', '<p class="help-block">:message</p>') !!}
+              </div>
+            </div>
 
             <div class="form-group  {{ $errors->has('password') ? 'has-error' : ''}}">
               <label for="password" class="cols-sm-2 control-label">Password</label>
@@ -95,5 +124,12 @@ Register
 
 @section('scripts')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+<script>
+$(document).ready(function() {
+  $('#organization').selectpicker("");
+});  
+</script>
 
 @endsection

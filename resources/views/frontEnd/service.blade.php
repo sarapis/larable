@@ -52,7 +52,7 @@ ul#ui-id-1 {
                     <div class="card-block">
                         <h4 class="card-title">
                             <a href="#">{{$service->service_name}}</a>
-                            @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                            @if (Sentinel::getUser())
                             <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>
@@ -199,7 +199,7 @@ ul#ui-id-1 {
                     <div class="card-block">
                         <h4 class="card-title">
                             <b>Locations</b>
-                            @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                            @if (Sentinel::getUser())
                             <a href="/facility/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>

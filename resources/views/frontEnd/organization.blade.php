@@ -60,7 +60,7 @@ ul#ui-id-1 {
                             <h4 class="card-title">
                   							<a href="">@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif
                   							</a>
-                                @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                                @if (Sentinel::getUser())
                                 <a href="/organization/{{$organization->organization_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
@@ -102,7 +102,7 @@ ul#ui-id-1 {
             						<div class="card-block">
               							<h4 class="card-title">
               								  <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
-                                @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                                @if (Sentinel::getUser())
                                 <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
@@ -231,7 +231,7 @@ ul#ui-id-1 {
           					<div class="card-block">
                       <h4 class="card-title">
                           <b>Locations</b>
-                          @if (Sentinel::getUser() && Sentinel::getUser()->roles()->first()->slug != 'anonymous user')
+                          @if (Sentinel::getUser())
                           <a href="/facility/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                               <i class="icon md-edit" style="margin-right: 0px;"></i>
                           </a>

@@ -52,7 +52,11 @@
 						<a id="google_translate_element" class="nav-link waves-effect waves-light waves-round"></a>
 					</li>
 					<li class="nav-item responsive_menu">
+						@if (Sentinel::getUser())
 						<a class="nav-link waves-effect waves-light waves-round" href="/logout">Logout</a>
+						@else
+						<a class="nav-link waves-effect waves-light waves-round" href="/login">Login</a>
+						@endif
 					</li>
 					
 				</ul>

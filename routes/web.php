@@ -21,7 +21,7 @@ Route::get('/home', function () {
 //     return redirect('/login');
 // });
 
-Route::group(['middleware' => ['web', 'auth' ] ], function () {
+Route::group(['middleware' => ['web'] ], function () {
     Route::get('/', ['uses' => 'HomeController@home']);
     Route::match(['get', 'post'], '/search', [
         'uses'          => 'ExploreController@filter'
