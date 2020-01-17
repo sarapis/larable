@@ -102,7 +102,7 @@ ul#ui-id-1 {
             						<div class="card-block">
               							<h4 class="card-title">
               								  <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
-                                @if (Sentinel::getUser())
+                                @if (Sentinel::getUser() && str_contains(Sentinel::getUser()->user_organization, $organization->organization_recordid))
                                 <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
@@ -231,7 +231,7 @@ ul#ui-id-1 {
           					<div class="card-block">
                       <h4 class="card-title">
                           <b>Locations</b>
-                          @if (Sentinel::getUser())
+                          @if (Sentinel::getUser() && str_contains(Sentinel::getUser()->user_organization, $organization->organization_recordid))
                           <a href="/facility/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                               <i class="icon md-edit" style="margin-right: 0px;"></i>
                           </a>
