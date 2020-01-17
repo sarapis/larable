@@ -60,7 +60,7 @@ ul#ui-id-1 {
                             <h4 class="card-title">
                   							<a href="">@if($organization->organization_logo_x)<img src="{{$organization->organization_logo_x}}" height="80">@endif {{$organization->organization_name}} @if($organization->organization_alternate_name!='')({{$organization->organization_alternate_name}})@endif
                   							</a>
-                                @if (Sentinel::getUser())
+                                @if (Sentinel::getUser() && str_contains(Sentinel::getUser()->user_organization, $organization->organization_recordid))
                                 <a href="/organization/{{$organization->organization_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
