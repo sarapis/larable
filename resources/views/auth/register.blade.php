@@ -65,15 +65,15 @@ Register
                  {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
               </div>
             </div>
-            
+
             <div class="form-group  {{ $errors->has('organization') ? 'has-error' : ''}}">
               <label for="organization" class="cols-sm-2 control-label">Organization</label>
               <div class="cols-sm-10">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
                   <select class="form-control selectpicker" multiple data-live-search="true" id="organization" name="organization[]">
-                  @foreach($organization_name_list as $key => $organization)
-                      <option value="{{$organization->organization_name}}">{{$organization->organization_name}}</option>
+                  @foreach($organization_info_list as $key => $organization_info)
+                      <option value="{{$organization_info->organization_recordid}}">{{$organization_info->organization_name}}</option>
                   @endforeach
                   </select>
                 </div>
