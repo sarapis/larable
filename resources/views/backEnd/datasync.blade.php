@@ -86,11 +86,11 @@ Import
             </div>
             <div class="form-group">
                 <label for="airtable_api_key_input">Airtable API Key</label>
-                <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" required />                
+                <input class="form-control" type="text" name="airtable_api_key_input" id="airtable_api_key_input" value="{{$airtablekeyinfo->api_key}}" required />                
             </div>
             <div class="form-group">
                 <label for="airtable_base_url_input">Airtable Base ID</label>
-                <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" required />
+                <input class="form-control" type="text" name="airtable_base_url_input" id="airtable_base_url_input" value="{{$airtablekeyinfo->base_url}}" required />
             </div>
             <div class="form-group">                 
                 <label for="airtable_enable_auto_sync">Enable auto-sync: </label>

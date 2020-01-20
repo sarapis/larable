@@ -22,6 +22,7 @@ use App\Location;
 use App\Hsdsapikey;
 use App\Language;
 use App\Organization;
+use App\Airtablekeyinfo;
 use App\Contact;
 use App\Phone;
 use App\Metafilter;
@@ -164,11 +165,12 @@ class PagesController extends Controller
     public function import()
     {
         $airtables = Airtables::all();
+        $airtablekeyinfo = Airtablekeyinfo::find(1);
         $csvs = CSV_Source::all();
         $source_data = Source_data::find(1);
         $autosync = AutoSyncAirtable::find(1);
 
-        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data', 'autosync'));
+        return view('backEnd.datasync', compact('airtables', 'csvs', 'source_data', 'autosync', 'airtablekeyinfo'));
     }
 
     public function export()
