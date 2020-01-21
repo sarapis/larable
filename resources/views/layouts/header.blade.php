@@ -53,6 +53,9 @@
 					</li>
 					<li class="nav-item responsive_menu">
 						@if (Sentinel::getUser())
+						<li class="nav-item responsive_menu">
+							<a class="nav-link waves-effect waves-light waves-round" href="/account">My account</a>
+						</li>
 						<a class="nav-link waves-effect waves-light waves-round" href="/logout">Logout</a>
 						@else
 						<a class="nav-link waves-effect waves-light waves-round" href="/login">Login</a>
