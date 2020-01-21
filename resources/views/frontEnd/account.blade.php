@@ -21,7 +21,7 @@
     							<a href="">
 									{{$user->first_name}} {{$user->last_name}}
 	                            </a>
-	                            <a href="" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+	                            <a href="/account/{{$user->id}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
 	                                <i class="icon md-edit" style="margin-right: 0px;"></i>
 	                            </a>
     						</h2>

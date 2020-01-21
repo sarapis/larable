@@ -30,7 +30,9 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/about', ['uses' => 'HomeController@about']);
     Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
-    Route::get('/account', 'AccountController@account');
+    Route::get('/account/{id}', 'AccountController@account');
+    Route::get('/account/{id}/edit', 'AccountController@edit');
+    Route::get('/account/{id}/update', 'AccountController@update');
 
     Route::get('/services', 'ServiceController@services');
     Route::get('/service/{id}', 'ServiceController@service');
