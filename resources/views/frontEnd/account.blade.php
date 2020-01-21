@@ -16,10 +16,10 @@
     			<div class="card">
     				<div class="card-block">
     					<div class="card-title">
-    						@if (Sentinel::getUser())
+    						@if ($user)
     						<h2>
     							<a href="">
-									{{Sentinel::getUser()->first_name}} {{Sentinel::getUser()->last_name}}
+									{{$user->first_name}} {{$user->last_name}}
 	                            </a>
 	                            <a href="" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
 	                                <i class="icon md-edit" style="margin-right: 0px;"></i>
@@ -28,20 +28,26 @@
                             
                             <h4>
 								<span class="badge bg-red pl-0 organize_font"><b>First Name:</b></span> 
-								{{Sentinel::getUser()->first_name}}
+								{{$user->first_name}}
 		                    </h4>
 		                    <h4>
 								<span class="badge bg-red pl-0 organize_font"><b>Last Name:</b></span> 
-								{{Sentinel::getUser()->last_name}}
+								{{$user->last_name}}
 		                    </h4>
 		                    <h4>
 								<span class="badge bg-red pl-0 organize_font"><b>Email:</b></span> 
-								{{Sentinel::getUser()->email}}
+								{{$user->email}}
 		                    </h4>
-		                    <h4>
-								<span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span> 
-								{{Sentinel::getUser()->user_organization}}
-		                    </h4>
+			                    @if ($organization_list)
+			                    <h4>
+									<span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span> 
+									<br>
+									@foreach($organization_list as $organization)
+      									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{$organization->organization_name}} 
+      									<br>
+      								@endforeach
+			                    </h4>
+			                    @endif
 		                    @endif
                         </div>
     				</div>
