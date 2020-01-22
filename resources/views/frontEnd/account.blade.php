@@ -43,7 +43,9 @@
 									<span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span> 
 									<br>
 									@foreach($organization_list as $organization)
-      									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{$organization->organization_name}} 
+      									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+      									<a href="/organization/{{$organization->organization_recordid}}">
+      										{{$organization->organization_name}} </a>
       									<br>
       								@endforeach
 			                    </h4>
