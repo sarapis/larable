@@ -72,6 +72,7 @@ Register
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-home fa" aria-hidden="true"></i></span>
                   <select class="form-control selectpicker" data-live-search="true" id="organization" name="organization[]">
+                      <option value=" " selected></option>
                   @foreach($organization_info_list as $key => $organization_info)
                       <option value="{{$organization_info->organization_recordid}}">{{$organization_info->organization_name}}</option>
                   @endforeach
