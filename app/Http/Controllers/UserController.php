@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\Role;
+use App\Organization;
 use Validator;
 use Session;
 use Auth;
@@ -131,7 +132,10 @@ class UserController extends Controller
     {   
         $user = User::find($id);
         $roles = Role::get()->pluck('name', 'id');
-        return View('backEnd.users.edit', compact('user', 'roles'));
+        $organization_list = Organization::select('organization_recordid', 'organization_name')->get();
+        $account_organization_list = explode(',', $user->user_organization);
+       
+        return View('backEnd.users.edit', compact('user', 'roles', 'organization_list', 'account_organization_list'));
     }
 
     /**
@@ -169,6 +173,9 @@ class UserController extends Controller
               if($request->email){
               $user->email=$request->email;
               }
+              if ($request->user_organizations) {
+              $user->user_organization = join(',', $request->user_organizations);
+              }
               if($request->new_password && $request->new_password_confirmation ){
                 if ($request->new_password == $request->new_password_confirmation ){
                      $user->password=bcrypt($request->new_password);
@@ -178,10 +185,13 @@ class UserController extends Controller
                   return redirect()->back()->withErrors(['old_password', 'your old password is incorrect']);
                  }
               }
+
               $user->update();
             if ($request->role) {
               $user->roles()->sync([$request->role]);
             }
+
+            
             Session::flash('message', 'Success! User is updated successfully.');
             Session::flash('status', 'success');
             

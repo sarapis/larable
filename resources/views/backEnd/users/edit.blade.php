@@ -4,6 +4,8 @@ Edit User
 @stop
 
 @section('content')
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
 <div class="panel panel-default">
    <div class="panel-heading">Edit user: {{$user->name}}</div>
@@ -57,6 +59,18 @@ Edit User
                     {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+
+            <div id="organization" class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
+                 {!! Form::label('organization','Organizations', ['class' => 'col-md-4 control-label']) !!}
+                <div class="col-sm-6">
+                    <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="user_organizations" name="user_organizations[]">
+                        @foreach($organization_list as $key => $organization)                                
+                            <option value="{{$organization->organization_recordid}}" @if (in_array($organization->organization_recordid, $account_organization_list)) selected @endif>{{$organization->organization_name}}</option>
+                        @endforeach
+                    </select>
+                    {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
            
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-3">
@@ -75,5 +89,12 @@ Edit User
 @stop
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
+<script> 
+    $(document).ready(function() {
+        $("#user_organizations").selectpicker("");
+    }); 
+
+</script>
 @endsection
