@@ -27,6 +27,7 @@ Users
                     <th>First name</th>
                     <th>Last name</th>
                     <th>E-mail</th>
+                    <th>Organization</th>
                     <th>user Role</th>
                     <th>Created At</th>
                     <th>Actions</th>
@@ -40,6 +41,14 @@ Users
                         <td><a href="{{route('user.show', $user->id)}}">{{$user->first_name}}</a></td>
                         <td><a href="{{route('user.show', $user->id)}}">{{$user->last_name}}</a></td>
                         <td>{{$user->email}}</td>
+                        <td>
+                          @foreach ($user->organizations as $organization)
+                          <a href="/organization/{{$organization->organization_recordid}}" style="color: #3949ab;">
+                            {{$organization->organization_name}} 
+                          </a>
+                          <br>
+                          @endforeach
+                        </td>
                         <td> <a href="{{route('user.index',['type='.$user->roles()->first()->name])}}">{{empty($user->roles()->first())?"":$user->roles()->first()->name}}</a>  </td>
                         <td>{{$user->created_at}}</td>
                         <td>

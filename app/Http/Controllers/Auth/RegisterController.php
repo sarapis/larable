@@ -84,6 +84,7 @@ class RegisterController extends Controller
         if($user){
             $user->user_organization = join(',', $request->organization);
             $user->save();
+            $user->organizations()->sync($request->organization);
             $user->roles()->sync([2]); // 2 = client
             Session::flash('message', 'Registration is completed');
             Session::flash('status', 'success');

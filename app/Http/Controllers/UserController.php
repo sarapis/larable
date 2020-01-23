@@ -190,6 +190,10 @@ class UserController extends Controller
             if ($request->role) {
               $user->roles()->sync([$request->role]);
             }
+            if ($request->user_organizations) {
+              $user->organizations()->sync($request->user_organizations);
+            }
+
 
             
             Session::flash('message', 'Success! User is updated successfully.');

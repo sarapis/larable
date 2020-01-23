@@ -159,6 +159,11 @@ class User extends Model implements RoleableInterface, PermissibleInterface, Per
         return $this->belongsToMany(static::$rolesModel, 'role_users', 'user_id', 'role_id')->withTimestamps();
     }
 
+    public function organizations()
+    {
+        return $this->belongsToMany('App\Organization', 'organizations_users', 'user_id', 'organization_recordid');
+    }
+
     /**
      * Returns the persistences relationship.
      *

@@ -38,4 +38,8 @@ class Organization extends Model
     {
         return $this->belongsToMany('App\Detail', 'organization_detail', 'organization_recordid', 'detail_recordid');
     }
+    public function owner()
+    {
+        return $this->belongsToMany('App\User', 'organizations_users', 'organization_recordid', 'user_id');
+    }
 }
