@@ -39,6 +39,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/service/{id}/edit', 'ServiceController@edit');
     Route::get('/service/{id}/update', 'ServiceController@update');
 
+    Route::get('/facility/{id}', 'LocationController@facility');
     Route::get('/facility/{id}/edit', 'LocationController@edit');
     Route::get('/facility/{id}/update', 'LocationController@update');
 

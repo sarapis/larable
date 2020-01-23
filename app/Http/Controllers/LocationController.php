@@ -286,6 +286,15 @@ class LocationController extends Controller
         return view('backEnd.tables.tb_location', compact('locations', 'source_data'));
     }
 
+    public function facility($id) 
+    {
+        $facility = Location::where('location_recordid', '=', $id)->first();
+        $map = Map::find(1);
+        
+        return view('frontEnd.location', compact('facility', 'map'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -342,18 +351,9 @@ class LocationController extends Controller
     public function update(Request $request, $id)
     {
         $location = Location::find($id);
-        // $project = Project::where('id', '=', $id)->first();
-        $location->location_name = $request->location_name;
-        $location->location_alternate_name = $request->location_alternate_name;
-        $location->location_transportation = $request->location_transportation;
-        $location->location_latitude = $request->location_latitude;
-        $location->location_longitude = $request->location_longitude;
-        $location->location_description = $request->location_description;
-        $location->flag = 'modified';
+        $location->location_name = $request->facility_location_name;
         $location->save();
-        // var_dump($project);
-        // exit();
-        return response()->json($location);
+        return redirect('facility/'.$id);
     }
 
     /**

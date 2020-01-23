@@ -93,7 +93,7 @@ Facility Edit
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>
-                        <a href="/location/{{$facility->location_recordid}}" class="btn btn-success btn-rounded" id="view-facility-btn"><i class="fa fa-eye"></i>Close</a>
+                        <a href="/facility/{{$facility->location_recordid}}" class="btn btn-success btn-rounded" id="view-facility-btn"><i class="fa fa-eye"></i>Close</a>
                     </div>                   
                 </div>
             </div>
