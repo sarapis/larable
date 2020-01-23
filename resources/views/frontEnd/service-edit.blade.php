@@ -116,37 +116,6 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="service_status" name="service_status" value="{{$service->service_status}}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Application Process: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-application-process-div">
-                        <textarea id="service_application_process" name="service_application_process" class="form-control selectpicker" rows="5" cols="30">{{$service->service_application_process}}</textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Wait Time: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-wait-time-div">
-                        <input class="form-control selectpicker"  type="text" id="service_wait_time" name="service_wait_time" value="{{$service->service_wait_time}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Fees: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-fees-div">
-                        <input class="form-control selectpicker"  type="text" id="service_fees" name="service_fees" value="{{$service->service_fees}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Accreditations: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-accreditations-div">
-                        <input class="form-control selectpicker"  type="text" id="service_accreditations" name="service_accreditations" value="{{$service->service_accreditations}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Licenses: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 service-licenses-div">
-                        <input class="form-control selectpicker"  type="text" id="service_licenses" name="service_licenses" value="{{$service->service_licenses}}">
-                    </div>
-                </div>
-
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Organization: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-organization-div">
@@ -201,6 +170,38 @@ Edit Service
                         </select>
                     </div>           
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Application Process: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-application-process-div">
+                        <textarea id="service_application_process" name="service_application_process" class="form-control selectpicker" rows="5" cols="30">{{$service->service_application_process}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Wait Time: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-wait-time-div">
+                        <input class="form-control selectpicker"  type="text" id="service_wait_time" name="service_wait_time" value="{{$service->service_wait_time}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Fees: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-fees-div">
+                        <input class="form-control selectpicker"  type="text" id="service_fees" name="service_fees" value="{{$service->service_fees}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Accreditations: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-accreditations-div">
+                        <input class="form-control selectpicker"  type="text" id="service_accreditations" name="service_accreditations" value="{{$service->service_accreditations}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Licenses: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 service-licenses-div">
+                        <input class="form-control selectpicker"  type="text" id="service_licenses" name="service_licenses" value="{{$service->service_licenses}}">
+                    </div>
+                </div>
+
+                
               <!--   <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Details: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-details-div">
