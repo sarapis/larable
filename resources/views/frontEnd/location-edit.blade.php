@@ -88,7 +88,7 @@ Facility Edit
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
                         <input class="form-control selectpicker"  type="text" id="facility_location_name" name="facility_location_name" value="{{$facility->location_name}}">
                     </div>
-                </div> 
+                </div>              
                 
                 <div class="form-group"> 
                     <div class="col-md-12">
@@ -109,10 +109,8 @@ Facility Edit
                             <h4 class="modal-title" id="myModalLabel">Delete Facility</h4>
                         </div>
                         <div class="modal-body">
-                            
                             <input type="hidden" id="facility_recordid" name="facility_recordid">
                             <h4>Are you sure to delete this facility?</h4>
-                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
