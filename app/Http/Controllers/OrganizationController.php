@@ -504,11 +504,36 @@ class OrganizationController extends Controller
         $organization->organization_legal_status = $request->organization_legal_status;
         $organization->organization_tax_status = $request->organization_tax_status;
         $organization->organization_tax_id = $request->organization_tax_id;
-        $organization->organization_year_incorporated = $request->organization_year_incorporated;
-        $organization->organization_services = join(',', $request->organization_services);
-        $organization->organization_contact = join(',', $request->organization_contacts);
-        $organization->organization_phones = join(',', $request->organization_phones);
-        $organization->organization_locations = join(',', $request->organization_locations);
+
+        if ($request->organization_year_incorporated) {
+            $organization->organization_year_incorporated = join(',', $request->organization_year_incorporated);
+        } else {
+            $organization->organization_year_incorporated = '';
+        }
+
+        if ($request->organization_services) {
+            $organization->organization_services = join(',', $request->organization_services);
+        } else {
+            $organization->organization_services = '';
+        }
+
+        if ($request->organization_contact) {
+            $organization->organization_contact = join(',', $request->organization_contact);
+        } else {
+            $organization->organization_contact = '';
+        }
+
+        if ($request->organization_phones) {
+            $organization->organization_phones = join(',', $request->organization_phones);
+        } else {
+            $organization->organization_phones = '';
+        }
+
+        if ($request->organization_locations) {
+            $organization->organization_locations = join(',', $request->organization_locations);
+        } else {
+            $organization->organization_locations = '';
+        }
        
         $organization->save();
 
