@@ -556,7 +556,9 @@ class ServiceController extends Controller
     public function service($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first();
-
+        $organzation_recordid = $service->service_organization;
+        $organization = Organization::where('organization_recordid', '=', $organzation_recordid)->first();
+       
         $service_phones_info = $service->service_phones;
         if(strpos($service_phones_info, ',') !== false){
             $service_phone_recordid_list = explode(',', $service_phones_info);
@@ -663,7 +665,7 @@ class ServiceController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info_list', 'contact_phone', 'phone_number_info'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info_list', 'contact_phone', 'phone_number_info', 'organization'));
     }
 
     public function taxonomy($id)
