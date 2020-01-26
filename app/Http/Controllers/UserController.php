@@ -132,10 +132,12 @@ class UserController extends Controller
     {   
         $user = User::find($id);
         $roles = Role::get()->pluck('name', 'id');
+        $role_info_list = Role::select('id', 'name')->get();
+
         $organization_list = Organization::select('organization_recordid', 'organization_name')->get();
         $account_organization_list = explode(',', $user->user_organization);
        
-        return View('backEnd.users.edit', compact('user', 'roles', 'organization_list', 'account_organization_list'));
+        return View('backEnd.users.edit', compact('user', 'roles', 'organization_list', 'account_organization_list', 'role_info_list'));
     }
 
     /**
@@ -187,6 +189,7 @@ class UserController extends Controller
               }
 
               $user->update();
+          
             if ($request->role) {
               $user->roles()->sync([$request->role]);
             }

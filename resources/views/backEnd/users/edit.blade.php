@@ -52,10 +52,22 @@ Edit User
                 </div>
             </div>
 
-            <div id="role" class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
+            <!-- <div id="role" class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
                  {!! Form::label('role','User role', ['class' => 'col-md-4 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::select('role', $roles, null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div> -->
+
+            <div id="role" class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
+                 {!! Form::label('role','User role', ['class' => 'col-md-4 control-label']) !!}
+                <div class="col-sm-6">
+                    <select class="form-control selectpicker" id="role" name="role">
+                        @foreach($role_info_list as $key => $role_info)                                
+                            <option value="{{$role_info->id}}" @if ($role_info->name == $user->roles[0]->name) selected @endif>{{$role_info->name}}</option>
+                        @endforeach
+                    </select>
                     {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -68,7 +80,7 @@ Edit User
                             <option value="{{$organization->organization_recordid}}" @if (in_array($organization->organization_recordid, $account_organization_list)) selected @endif>{{$organization->organization_name}}</option>
                         @endforeach
                     </select>
-                    {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
+                    {!! $errors->first('organization', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
            
@@ -94,6 +106,7 @@ Edit User
 <script> 
     $(document).ready(function() {
         $("#user_organizations").selectpicker("");
+        $("#role").selectpicker("");
     }); 
 
 </script>
