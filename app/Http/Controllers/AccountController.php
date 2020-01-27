@@ -32,11 +32,23 @@ class AccountController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->account_email;     
-        $user->user_organization = join(',', $request->account_organizations);
+        if ($request->first_name) {
+          $user->first_name = $request->first_name;
+        }
+        if ($request->last_name) {
+          $user->last_name = $request->last_name;
+        }
+        if ($request->account_email) {
+          $user->email = $request->account_email;
+        }
+        if ($request->account_organizations) {
+          $user->user_organization = join(',', $request->account_organizations);
+        }
         $user->save();
+
+        if ($request->account_organizations) {
+          $user->organizations()->sync($request->account_organizations);
+        }
 
         return redirect('account/'.$id);
     }
