@@ -517,8 +517,8 @@ class OrganizationController extends Controller
             $organization->organization_services = '';
         }
 
-        if ($request->organization_contact) {
-            $organization->organization_contact = join(',', $request->organization_contact);
+        if ($request->organization_contacts) {
+            $organization->organization_contact = join(',', $request->organization_contacts);
         } else {
             $organization->organization_contact = '';
         }

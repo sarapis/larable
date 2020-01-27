@@ -148,15 +148,11 @@ Organization Edit
                         </select>
                     </div>           
                 </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone1: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_phones" name="organization_phones[]">
-                            @foreach($organization_phones_list as $key => $organization_pho)                                
-                                <option value="{{$organization_pho->phone_recordid}}" @if (in_array($organization_pho->phone_recordid, $phone_info_list)) selected @endif>{{$organization_pho->phone_number}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
+                        <input class="form-control selectpicker"  type="text" id="organization_phones" name="organization_phones[]" @if($phone_info_list) value="{{$phone_info_list[0]}}" @endif>
+                    </div>  
                 </div>
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Locations: </label>
