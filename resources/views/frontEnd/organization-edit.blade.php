@@ -164,7 +164,7 @@ Organization Edit
                     </ol>
                 </div>
                 <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Locations: </label>
+                    <label class="control-label sel-label-org pl-4">Other Locations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
                         <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_locations" name="organization_locations[]">
                             @foreach($organization_locations_list as $key => $organization_loc)                                
