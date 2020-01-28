@@ -153,7 +153,7 @@ Organization Edit
                     <a id="add-phone-input">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                     </a>
-                    <ol>
+                    <ol id="phones-ul">
                         @foreach($organization->phones as $phone)
                         <li class="organization-phones-li mb-2">
                             <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
@@ -182,7 +182,7 @@ Organization Edit
                     <ol>
                         @foreach($organization_services as $service)
                         <li class="organization-phones-li mb-2">
-                            <div class="col-md-12 col-sm-12 col-xs-12 organization-service-contacts-div">
+                            <div class="col-md-12 col-sm-12 col-xs-12 organization-service-locations-div">
                                 @foreach($service->locations as $location)
                                     <h5>{{$location->location_name}}</h5>
                                 @endforeach
@@ -248,7 +248,7 @@ Organization Edit
         $('input#organization_recordid').val(value);
     });
     $("#add-phone-input").click(function(){
-        $("ol").append(
+        $("ol#phones-ul").append(
             "<li class='organization-phones-li mb-2'>"
           + "<div class='col-md-12 col-sm-12 col-xs-12 organization-phones-div'>"
           + "<input class='form-control selectpicker organization_phones'  type='text' name='organization_phones[]'>"
