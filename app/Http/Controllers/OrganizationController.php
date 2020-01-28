@@ -479,8 +479,10 @@ class OrganizationController extends Controller
         $phone_info_list = explode(',', $organization->organization_phones);
         $organization_locations_list = Location::select('location_recordid', 'location_name')->get();
         $location_info_list = explode(',', $organization->organization_locations);
+        $organization_services_recordid_list = explode(',', $organization->organization_services);
+        $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
 
-        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list', 'organization_locations_list', 'location_info_list'));
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list', 'organization_locations_list', 'location_info_list', 'organization_services'));
     }
 
     /**

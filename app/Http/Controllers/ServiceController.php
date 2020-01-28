@@ -813,6 +813,7 @@ class ServiceController extends Controller
 
         if ($request->service_contacts) {
             $service->service_contacts = join(',', $request->service_contacts);
+            $service->contact()->sync($request->service_contacts);
         } else {
             $service->service_contacts = '';
         }
