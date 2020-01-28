@@ -149,10 +149,18 @@ Organization Edit
                     </div>           
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Phone1: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
-                        <input class="form-control selectpicker"  type="text" id="organization_phones" name="organization_phones[]" @if($phone_info_list) value="{{$phone_info_list[0]}}" @endif>
-                    </div>  
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol>
+                        <li class="organization-phones-li">
+                            <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
+                                <input class="form-control selectpicker organization_phones"  type="text" name="organization_phones[]" @if(isset($phone_info_list[0])) value="{{$phone_info_list[0]}}" @endif>
+
+                            </div> 
+                        </li> 
+                    </ol>
                 </div>
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Locations: </label>
@@ -204,12 +212,19 @@ Organization Edit
 	$(document).ready(function() {
         $("#organization_services").selectpicker("");       
         $("#organization_contacts").selectpicker("");   
-        $("#organization_phones").selectpicker(""); 
         $("#organization_locations").selectpicker(""); 
     });
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#organization_recordid').val(value);
+    });
+    $("#add-phone-input").click(function(){
+        $("ol").append(
+            "<li class='organization-phones-li'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 organization-phones-div'>"
+          + "<input class='form-control selectpicker organization_phones'  type='text' name='organization_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
 </script>
 @endsection

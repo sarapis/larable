@@ -523,6 +523,8 @@ class OrganizationController extends Controller
             $organization->organization_contact = '';
         }
 
+        var_dump($request->organization_phones);
+        exit;
         if ($request->organization_phones) {
             $organization->organization_phones = join(',', $request->organization_phones);
         } else {
