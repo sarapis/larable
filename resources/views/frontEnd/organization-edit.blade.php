@@ -177,6 +177,20 @@ Organization Edit
                         @endforeach
                     </ol>
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Service Locations: </label>
+                    <ol>
+                        @foreach($organization_services as $service)
+                        <li class="organization-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 organization-service-contacts-div">
+                                @foreach($service->locations as $location)
+                                    <h5>{{$location->location_name}}</h5>
+                                @endforeach
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
+                </div>
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Other Locations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
