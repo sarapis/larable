@@ -24,7 +24,7 @@ class Phone extends Model
 
     public function organization()
     {
-        return $this->belongsTo('App\Organization', 'phone_organizations', 'organization_recordid');
+        return $this->belongsToMany('App\Organization', 'organizations_phones', 'phone_recordid', 'organization_recordid');
     }
 
     public function contact()

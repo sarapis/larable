@@ -9,6 +9,7 @@ use App\Contact;
 use App\Organization;
 use App\Location;
 use App\Address;
+use App\Map;
 use App\Airtablekeyinfo;
 use App\Servicecontact;
 use App\Airtables;
@@ -175,10 +176,10 @@ class ContactController extends Controller
 
     public function contacts(Request $request)
     {
+        $map = Map::find(1);
+        $contacts = Contact::orderBy('contact_recordid', 'map')->paginate(20);
 
-        $contacts = Contact::orderBy('contact_recordid')->paginate(20);
-
-        return view('frontEnd.contacts', compact('contacts'));
+        return view('frontEnd.contacts', compact('contacts', 'map'));
     }
 
     

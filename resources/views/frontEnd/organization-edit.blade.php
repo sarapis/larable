@@ -154,12 +154,13 @@ Organization Edit
                         <span class="glyphicon glyphicon-plus-sign"></span>
                     </a>
                     <ol>
-                        <li class="organization-phones-li">
+                        @foreach($organization->phones as $phone)
+                        <li class="organization-phones-li mb-2">
                             <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
-                                <input class="form-control selectpicker organization_phones"  type="text" name="organization_phones[]" @if(isset($phone_info_list[0])) value="{{$phone_info_list[0]}}" @endif>
-
+                                <input class="form-control selectpicker organization_phones"  type="text" name="organization_phones[]"value="{{$phone->phone_number}}">
                             </div> 
                         </li> 
+                        @endforeach
                     </ol>
                 </div>
                 <div class="form-group">                 
@@ -220,7 +221,7 @@ Organization Edit
     });
     $("#add-phone-input").click(function(){
         $("ol").append(
-            "<li class='organization-phones-li'>"
+            "<li class='organization-phones-li mb-2'>"
           + "<div class='col-md-12 col-sm-12 col-xs-12 organization-phones-div'>"
           + "<input class='form-control selectpicker organization_phones'  type='text' name='organization_phones[]'>"
           + "</div>"

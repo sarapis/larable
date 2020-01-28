@@ -21,7 +21,7 @@ class Organization extends Model
 
     public function phones()
     {
-        return $this->hasmany('App\Phone', 'phone_organizations', 'organization_recordid');
+        return $this->belongsToMany('App\Phone', 'organizations_phones', 'organization_recordid', 'phone_recordid');
     }
 
     public function location()
