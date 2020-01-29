@@ -173,13 +173,89 @@ class ContactController extends Controller
         return view('backEnd.tables.tb_contacts', compact('contacts', 'source_data'));
     }
 
+    public function get_all_contacts(Request $request)
+    {
+        $start = $request->start;
+        $length = $request->length;
+        $search_term = $request->search_term;
+
+        $contacts = Contact::orderBy('contact_recordid', 'DESC');
+        if ($search_term) {
+            $contacts = $contacts
+                ->where('contact_name', 'LIKE', '%' . $search_term . '%');
+        }
+     
+        $filtered_count = $contacts->count();
+        $contacts = $contacts->offset($start)->limit($length)->get();
+        $total_count = Contact::count();
+        $result = [];
+        $contact_info = [];
+        
+        foreach ($contacts as $contact) {
+            $contact_info[0] = '';
+            $contact_info[1] = $contact->contact_recordid;
+            $contact_info[2] = $contact->contact_name;
+            $contact_info[3] = $contact->contact_title;
+            $contact_info[4] = $contact->contact_department;
+            $contact_info[5] = $contact->contact_email;
+            array_push($result, $contact_info);
+        }
+        return response()->json(array('data' => $result, 'recordsTotal' => $total_count, 'recordsFiltered' => $filtered_count));
+    }
+
 
     public function contacts(Request $request)
     {
         $map = Map::find(1);
         $contacts = Contact::orderBy('contact_recordid', 'map')->paginate(20);
+        $locations = Location::with('services', 'address', 'phones')->distinct()->get();
 
-        return view('frontEnd.contacts', compact('contacts', 'map'));
+        return view('frontEnd.contacts', compact('contacts', 'map', 'locations'));
+    }
+
+    public function contactData(Request $request)
+    {
+        DB::statement(DB::raw('set @rownum=0'));
+
+        $query = Contact::select('*', DB::raw('@rownum := @rownum + 1 AS rownum'));
+        if ($request->has('extraData')) {
+            $extraData = $request->get('extraData');
+            $query = $this->getDataManual($extraData);
+        }
+        return DataTables::of($query)
+            ->addColumn('action', function ($row) {
+                $links = '<input type="checkbox" class="contactCheckbox"  name="contactCheckbox"  value= "' . $row->contact_recordid . '"/> ';
+                $links .= '<a class="open-td" href="/contacts/' . $row->contact_recordid . '" style="color: #007bff;"><i class="fa fa-fw fa-eye"></i></a>&nbsp';
+                return $links;
+            })
+            ->editColumn('contact_name', function ($row) {
+                return $row->contact_name ? $row->contact_name : '';
+            })
+            ->editColumn('contact_organizations', function ($row) {
+
+                $organization = Organization::where('organization_recordid', 'LIKE', '%' . intval($row->contact_organizations) . '%')->first();
+                $organizationName = $organization ? $organization->organization_name : '';
+                $organizationRecordId = $organization ? $organization->organization_recordid : '';
+
+                $links = '<a href="/organization/' . $organizationRecordId . '" style="color: #007bff;">' . $organizationName . '</a>';
+                return $links;
+            })
+         
+            ->editColumn('contact_title', function ($row) {
+                return $row->contact_title ? $row->contact_title : '';
+            })
+            ->editColumn('contact_department', function ($row) {
+                return $row->contact_department ? $row->contact_department : '';
+            })
+            ->editColumn('contact_email', function ($row) {
+                return $row->contact_email ? $row->contact_email : '';
+            })
+            ->editColumn('contact_phones', function ($row) {
+                return $row->contact_phones ? $row->contact_phones : '';
+            })
+           
+            ->rawColumns(['action', 'contact_name', 'contact_organizations', 'contact_title', 'contact_department', 'contact_email', 'contact_phones'])
+            ->make(true);
     }
 
     

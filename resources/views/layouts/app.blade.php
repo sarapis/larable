@@ -17,5 +17,6 @@
 @if(config('app.env') != 'local')
     @include('layouts.analytics')
 @endif
+@yield('customScript')
 </body>
 </html>

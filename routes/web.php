@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/organization/{id}/update', 'OrganizationController@update');
 
     Route::get('/contacts', 'ContactController@contacts');
+    Route::post('/get_all_contacts', 'ContactController@get_all_contacts');
 
     Route::get('/category/{id}', 'ServiceController@taxonomy');
 
@@ -198,3 +199,5 @@ Route::resource('login_register_edit', 'EditLoginRegisterController');
 
         Route::resource('analytics', 'AnalyticsController');
  });
+
+Route::post('/contactData', 'ContactController@contactData')->name('contactData');
