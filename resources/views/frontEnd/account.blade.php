@@ -15,8 +15,19 @@
     		<div class="col-md-6 mx-auto" style="margin-top: 120px;">
     			<div class="card">
     				<div class="card-block">
+		    			@if ($user)
+		    				@if ($user->roles[0]->name == "System Admin")
+								<a href="/dashboard" class="btn btn-primary" style="width: 20%; float: right;">
+		                        	Access Backend
+		               			</a>
+							@endif 
+						@endif
+					</div>
+				</div>
+    			<div class="card">
+    				<div class="card-block">
     					<div class="card-title">
-    						@if ($user)
+    						@if ($user)    							
     						<h2>
     							<a href="">
 									{{$user->first_name}} {{$user->last_name}}
