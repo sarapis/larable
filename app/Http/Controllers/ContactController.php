@@ -219,6 +219,8 @@ class ContactController extends Controller
         return view('frontEnd.contacts', compact('contacts', 'map', 'locations'));
     }
 
+   
+
     public function contactData(Request $request)
     {
         DB::statement(DB::raw('set @rownum=0'));
@@ -272,7 +274,51 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        $map = Map::find(1);
+        $organization_names = Organization::select("organization_name")->distinct()->get();
+
+        $organization_name_list = [];
+        foreach ($organization_names as $key => $value) {
+            $org_names = explode(", ", trim($value->organization_name));
+            $organization_name_list = array_merge($organization_name_list, $org_names);
+        }
+        $organization_name_list = array_unique($organization_name_list);
+
+        return view('frontEnd.contact-create', compact('map', 'organization_name_list'));
+    }
+
+
+    public function add_new_contact(Request $request)
+    {
+        $contact = new Contact;
+        
+        $contact->contact_name = $request->contact_name;
+        $contact->contact_title = $request->contact_title;
+        $contact->contact_department = $request->contact_department;
+        $contact->contact_email = $request->contact_email;
+
+        $organization_name = $request->contact_organization_name;
+        $contact_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $contact_organization_id = $contact_organization["organization_recordid"];
+        $contact->contact_organizations = $contact_organization_id;
+
+        $contact_recordids = Contact::select("contact_recordid")->distinct()->get();
+        $contact_recordid_list = array();
+        foreach ($contact_recordids as $key => $value) {
+            $contact_recordid = $value->contact_recordid;
+            array_push($contact_recordid_list, $contact_recordid);
+        }
+        $contact_recordid_list = array_unique($contact_recordid_list);
+
+        $new_recordid = Contact::max('contact_recordid') + 1;
+        if (in_array($new_recordid, $contact_recordid_list)) {
+            $new_recordid = Contact::max('contact_recordid') + 1;
+        }
+        $contact->contact_recordid = $new_recordid;
+
+        $contact->save();
+
+        return redirect('contacts');
     }
 
     /**

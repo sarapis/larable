@@ -43,6 +43,14 @@
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/contacts">Contacts</a>
 					</li>
+					<li class="nav-item responsive_menu">
+						<div class="dropdown">
+							<button class="dropbtn">(+)</button>
+							<div class="dropdown-content">
+								<a href="/contact_create">New Contact</a>
+							</div>
+						</div>
+					</li>
 					@if($layout->about_active == 1)
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/about">About</a>
@@ -102,5 +110,49 @@
 	}
 	.page-register:before{
 		background-image: url(../uploads/images/{{$layout->top_background}});
+	}
+	.dropbtn {
+		background: transparent;
+		color: white;
+		padding: 16px;
+		font-size: 16px;
+		border: none;
+	}
+
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f1f1f1;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		z-index: 1;
+	}
+
+	.dropdown-content a {
+		color: white;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+		background: darkgreen;
+	}
+
+	.dropdown-content a:hover {
+		background-color: yellow;
+		color: black;
+	}
+
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+		display: block;
+	}
+
+	/* Change the background color of the dropdown button when the dropdown content is shown */
+	.dropdown:hover .dropbtn {
+		background-color: #36459b;
 	}
   </style>
