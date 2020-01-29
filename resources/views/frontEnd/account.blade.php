@@ -13,17 +13,17 @@
     <div id="content" class="container">
     	<div class="row m-0">
     		<div class="col-md-6 mx-auto" style="margin-top: 120px;">
-    			<div class="card">
-    				<div class="card-block">
-		    			@if ($user)
-		    				@if ($user->roles[0]->name == "System Admin")
+    			@if ($user)
+    				@if ($user->roles[0]->name == "System Admin")
+		    			<div class="card">
+		    				<div class="card-block">
 								<a href="/dashboard" class="btn btn-primary" style="width: 20%; float: right;">
 		                        	Access Backend
 		               			</a>
-							@endif 
-						@endif
-					</div>
-				</div>
+							</div>
+						</div>
+					@endif 
+				@endif
     			<div class="card">
     				<div class="card-block">
     					<div class="card-title">
