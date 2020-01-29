@@ -119,6 +119,7 @@ button[data-id="contact_zipcode"] {
                             <th class="default-active">Contact Title</th>
                             <th class="default-active">Contact Department</th> 
                             <th class="default-active">Contact Email</th>
+                            <th class="default-active">Organization</th>
                         </tr>
                     </thead>
                 </table>
@@ -193,6 +194,13 @@ button[data-id="contact_zipcode"] {
                     'checkboxes': {
                         'selectRow': true
                     },
+                },
+                {
+                    "targets": 6,
+                    "data": null,
+                    "render": function ( data, type, row ) {
+                        return '<a id="contact_organization_link" style="color: #3949ab; text-decoration: underline;" href="/organization/' + row[7] + '">' + row[8] + '</a>';
+                    }
                 }
             ],
             'select': {

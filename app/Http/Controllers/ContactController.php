@@ -182,7 +182,10 @@ class ContactController extends Controller
         $contacts = Contact::orderBy('contact_recordid', 'DESC');
         if ($search_term) {
             $contacts = $contacts
-                ->where('contact_name', 'LIKE', '%' . $search_term . '%');
+                ->where('contact_name', 'LIKE', '%' . $search_term . '%')
+                ->orWhere('contact_title', 'LIKE', '%' . $search_term . '%')
+                ->orWhere('contact_department', 'LIKE', '%' . $search_term . '%')
+                ->orWhere('contact_email', 'LIKE', '%' . $search_term . '%');
         }
      
         $filtered_count = $contacts->count();
@@ -198,6 +201,9 @@ class ContactController extends Controller
             $contact_info[3] = $contact->contact_title;
             $contact_info[4] = $contact->contact_department;
             $contact_info[5] = $contact->contact_email;
+            $contact_info[6] = '';
+            $contact_info[7] = $contact->organization['organization_recordid'];
+            $contact_info[8] = $contact->organization['organization_name'] != null ? $contact->organization['organization_name'] : '';
             array_push($result, $contact_info);
         }
         return response()->json(array('data' => $result, 'recordsTotal' => $total_count, 'recordsFiltered' => $filtered_count));
