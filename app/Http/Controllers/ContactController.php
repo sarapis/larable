@@ -219,7 +219,14 @@ class ContactController extends Controller
         return view('frontEnd.contacts', compact('contacts', 'map', 'locations'));
     }
 
-   
+    public function contact($id)
+    {
+        $contact = Contact::where('contact_recordid', '=', $id)->first();
+        $map = Map::find(1);
+
+        return view('frontEnd.contact', compact('contact', 'map'));
+    }
+
 
     public function contactData(Request $request)
     {

@@ -196,6 +196,13 @@ button[data-id="contact_zipcode"] {
                     },
                 },
                 {
+                    "targets": 2,
+                    "data": null,
+                    "render": function ( data, type, row ) {
+                        return '<a id="contact_profile_link" style="color: #3949ab; text-decoration: underline;" href="/contact/' + row[1] + '">' + row[2] + '</a>';
+                    }
+                },
+                {
                     "targets": 6,
                     "data": null,
                     "render": function ( data, type, row ) {

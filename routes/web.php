@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/organization/{id}/update', 'OrganizationController@update');
 
     Route::get('/contacts', 'ContactController@contacts');
+    Route::get('/contact/{id}', 'ContactController@contact');
     Route::post('/get_all_contacts', 'ContactController@get_all_contacts');
     Route::get('/contact_create', 'ContactController@create');
     Route::get('/add_new_contact', 'ContactController@add_new_contact');
