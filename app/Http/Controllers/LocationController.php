@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Location;
+use App\Organization;
 use App\Airtablekeyinfo;
 use App\Locationaddress;
 use App\Locationphone;
@@ -344,8 +345,12 @@ class LocationController extends Controller
     {
         $facility = Location::where('location_recordid', '=', $id)->first();
         $map = Map::find(1);
+
+        $organization_id = $facility->location_organization;
+        $organization_name_info = Organization::where('organization_recordid', '=', $organization_id)->select('organization_name')->first();
+        $organization_name = $organization_name_info["organization_name"];
         
-        return view('frontEnd.location', compact('facility', 'map'));
+        return view('frontEnd.location', compact('facility', 'map', 'organization_id', 'organization_name'));
 
     }
 

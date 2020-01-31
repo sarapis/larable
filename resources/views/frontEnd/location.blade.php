@@ -62,12 +62,20 @@ table#tbl-location-profile-history {
     margin-top: 12px !important;
 }
 
+#content-location-profile {
+    width: calc(50% - 270px);
+    padding: 0px;
+    transition: all 0.3s;
+    background: white;
+    min-height: calc(100% - 134px);
+}
+
 </style>
 
 @section('content')
 <div class="wrapper">
     <!-- Page Content Holder -->
-    <div id="content" class="container">
+    <div id="content-location-profile" class="container">
 		<div class="row m-0">
         	<div class="col-md-12 pt-15 pb-16">
                <div class="card">
@@ -79,6 +87,10 @@ table#tbl-location-profile-history {
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>
                         </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span>
+                            <a href="/organization/{{$organization_id}}">{{$organization_name}}</a>
+                        </h4>
                         @if(isset($facility->address))
                         <h4>
 							<span class="badge bg-red pl-0 organize_font"><b>Address:</b></span> 
@@ -87,6 +99,14 @@ table#tbl-location-profile-history {
 								{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
 								@endforeach
 							@endif
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Latitude:</b></span>
+                            {{$facility->location_latitude}}
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Longitude:</b></span>
+                            {{$facility->location_longitude}}
                         </h4>
                         @endif
                         @if(isset($facility->phones))
