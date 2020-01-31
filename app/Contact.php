@@ -15,6 +15,7 @@ class Contact extends Model
 	public function organization()
     {
         return $this->belongsTo('App\Organization', 'contact_organizations', 'organization_recordid');
+        // return $this->belongsToMany('App\Organization', 'organizations_contacts', 'contact_recordid', 'organization_recordid');
     }
 
     public function service()

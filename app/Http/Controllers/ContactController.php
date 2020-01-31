@@ -202,8 +202,14 @@ class ContactController extends Controller
             $contact_info[4] = $contact->contact_department;
             $contact_info[5] = $contact->contact_email;
             $contact_info[6] = '';
-            $contact_info[7] = $contact->organization['organization_recordid'];
-            $contact_info[8] = $contact->organization['organization_name'] != null ? $contact->organization['organization_name'] : '';
+            if ($contact->organization) {
+                $contact_info[7] = $contact->organization['organization_recordid'];
+                $contact_info[8] = $contact->organization['organization_name'] != null ? $contact->organization['organization_name'] : '';
+            } else {
+                $contact_info[7] = '';
+                $contact_info[8] = '';
+            }
+            
             array_push($result, $contact_info);
         }
         return response()->json(array('data' => $result, 'recordsTotal' => $total_count, 'recordsFiltered' => $filtered_count));

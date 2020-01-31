@@ -473,8 +473,15 @@ class OrganizationController extends Controller
         $organization = Organization::where('organization_recordid', '=', $id)->first(); 
         $organization_service_list = explode(',', $organization->organization_services);
         $services_info_list = Service::select('service_recordid', 'service_name')->get();
+
         $organization_contacts_list = Contact::select('contact_recordid', 'contact_name')->get();
-        $contact_info_list = explode(',', $organization->organization_contact);
+        $organization_contact_info_list = Contact::where('contact_organizations', '=', $id)->select('contact_recordid')->get();
+
+        $contact_info_list = [];
+        foreach ($organization_contact_info_list as $key => $value) {
+            array_push($contact_info_list, $value->contact_recordid);
+        }
+
         $organization_phones_list = Phone::select('phone_recordid', 'phone_number')->get();
         $phone_info_list = explode(',', $organization->organization_phones);
         $organization_locations_list = Location::select('location_recordid', 'location_name')->get();
@@ -517,11 +524,13 @@ class OrganizationController extends Controller
         }
 
         if ($request->organization_contacts) {
-            $organization->organization_contact = join(',', $request->organization_contacts);
-        } else {
-            $organization->organization_contact = '';
+            $contact_recordid_list = $request->organization_contacts;
+            foreach ($contact_recordid_list as $key => $value) {
+                $updating_contact = Contact::where('contact_recordid', '=', $value)->first();
+                $updating_contact->contact_organizations = $id;
+                $updating_contact->save();
+            }
         }
-
         
         if ($request->organization_phones) {
             $phone_recordids = [];

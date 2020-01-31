@@ -189,12 +189,11 @@ ul#ui-id-1 {
                     @endforeach
                     @endif
 
-                    @if($contact_info_list)
                     <div class="card page-project">
                         <h4 class="card-title">
                             <b>Contacts</b>                        
                         </h4>
-                        @foreach($contact_info_list as $contact_info)
+                        @foreach($organization->contact as $contact_info)
                         <div class="card-block">
                             @if($contact_info->contact_name)
                             <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
@@ -215,7 +214,6 @@ ul#ui-id-1 {
                         </br>
                         @endforeach
                     </div>
-                    @endif
               </div>
 
               <div class="col-md-4 property">
