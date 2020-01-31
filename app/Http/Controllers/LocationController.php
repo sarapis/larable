@@ -312,7 +312,8 @@ class LocationController extends Controller
         foreach ($facilities as $facility) {
             $facility_info[0] = '';
             $facility_info[1] = $facility->location_recordid;
-            $facility_info[2] = $facility->organization['organization_name'];
+            $facility_info[2] = $facility->location_name;
+            $facility_info[3] = $facility->organization['organization_name'];
 
             $facility_full_address_info = '';
             if (isset($facility->address[0])) {
@@ -328,8 +329,7 @@ class LocationController extends Controller
                 }
             }
 
-            $facility_info[3] = $facility_full_address_info;
-            $facility_info[4] = $facility->location_name;
+            $facility_info[4] = $facility_full_address_info;
             $facility_info[5] = $facility->location_description;
 
             array_push($result, $facility_info);

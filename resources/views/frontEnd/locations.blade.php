@@ -110,9 +110,9 @@ Locations
                         <tr>
                             <th class="default-active"></th>
                             <th class="default-inactive">Id</th>
+                            <th class="default-active">Facility Name</th>
                             <th class="default-active">Organization</th>
                             <th class="default-active">Address</th>
-                            <th class="default-active">Facility Name</th>
                             <th class="default-active">Facility Description</th>
                         </tr>
                     </thead>
