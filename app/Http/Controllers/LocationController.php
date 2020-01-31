@@ -16,6 +16,7 @@ use App\Map;
 use App\CSV_Source;
 use App\Source_data;
 use App\Services\Stringtoint;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LocationController extends Controller
@@ -298,6 +299,7 @@ class LocationController extends Controller
         if ($search_term) {
             $facilities = $facilities
                 ->where('location_name', 'LIKE', '%' . $search_term . '%')
+                ->orWhere('location_description', 'LIKE', '%' . $search_term . '%')
                 ->whereHas('organization', function (Builder $query) use ($search_term) {
                     $query->where('organization_name', 'LIKE', '%' . $search_term . '%');
                 });

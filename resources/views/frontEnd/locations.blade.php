@@ -137,7 +137,7 @@ Locations
         dataTable = $('#tbl-location').DataTable({
             "scrollX": true,
             "dom": 'lBfrtip',
-            "order": [[ 2, 'desc' ]],
+            "order": [[ 1, 'desc' ]],
             "serverSide": true,          
             "searching": true,                   
             "scrollY": 500,
