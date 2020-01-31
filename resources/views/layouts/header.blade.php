@@ -44,6 +44,9 @@
 						<a class="nav-link waves-effect waves-light waves-round" href="/contacts">Contacts</a>
 					</li>
 					<li class="nav-item responsive_menu">
+						<a class="nav-link waves-effect waves-light waves-round" href="/facilities">Facilities</a>
+					</li>
+					<li class="nav-item responsive_menu">
 						<div class="dropdown">
 							<button class="dropbtn">(+)</button>
 							<div class="dropdown-content">

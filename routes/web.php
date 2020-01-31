@@ -39,6 +39,8 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/service/{id}/edit', 'ServiceController@edit');
     Route::get('/service/{id}/update', 'ServiceController@update');
 
+    Route::resource('facilities', 'LocationController');
+    Route::post('/get_all_facilities', 'LocationController@get_all_facilities');
     Route::get('/facility/{id}', 'LocationController@facility');
     Route::get('/facility/{id}/edit', 'LocationController@edit');
     Route::get('/facility/{id}/update', 'LocationController@update');

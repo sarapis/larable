@@ -280,11 +280,63 @@ class LocationController extends Controller
 
     public function index()
     {
-        $locations = Location::with('organization')->orderBy('location_recordid')->paginate(20);
-        $source_data = Source_data::find(1);
+        $facilities = Location::orderBy('id', 'desc')->get();      
+        $map = Map::find(1);
 
-        return view('backEnd.tables.tb_location', compact('locations', 'source_data'));
+        return view('frontEnd.locations', compact('map', 'facilities'));
     }
+
+    public function get_all_facilities(Request $request)
+    {
+        $start = $request->start;
+        $length = $request->length;
+        $search_term = $request->search_term;
+
+       
+        $facilities = Location::orderBy('location_recordid', 'DESC');
+
+        if ($search_term) {
+            $facilities = $facilities
+                ->where('location_name', 'LIKE', '%' . $search_term . '%')
+                ->whereHas('organization', function (Builder $query) use ($search_term) {
+                    $query->where('organization_name', 'LIKE', '%' . $search_term . '%');
+                });
+        }
+
+        $filtered_count = $facilities->count();
+
+        $facilities = $facilities->offset($start)->limit($length)->get();
+        $total_count = Location::count();
+        $result = [];
+        $facility_info = [];
+        foreach ($facilities as $facility) {
+            $facility_info[0] = '';
+            $facility_info[1] = $facility->location_recordid;
+            $facility_info[2] = $facility->organization['organization_name'];
+
+            $facility_full_address_info = '';
+            if (isset($facility->address[0])) {
+                $facility_full_address_info = $facility_full_address_info . $facility->address[0]['address_1'];
+                if ($facility->address[0]['address_city']) {
+                    $facility_full_address_info = $facility_full_address_info . ', ' . $facility->address[0]['address_city'];
+                }
+                if ($facility->address[0]['address_state']) {
+                    $facility_full_address_info = $facility_full_address_info . ', ' . $facility->address[0]['address_state'];
+                }
+                if ($facility->address[0]['address_zip_code']) {
+                    $facility_full_address_info = $facility_full_address_info . ', ' . $facility->address[0]['address_zip_code'];
+                }
+            }
+
+            $facility_info[3] = $facility_full_address_info;
+            $facility_info[4] = $facility->location_name;
+            $facility_info[5] = $facility->location_description;
+
+            array_push($result, $facility_info);
+        }
+        return response()->json(array('data' => $result, 'recordsTotal' => $total_count, 'recordsFiltered' => $filtered_count));
+    }
+
 
     public function facility($id) 
     {
