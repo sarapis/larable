@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Location;
 use App\Service;
+use App\Phone;
 use App\Organization;
 use App\Airtablekeyinfo;
 use App\Locationaddress;
@@ -415,7 +416,32 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
         $location->location_name = $request->facility_location_name;
+        $location->location_alternate_name = $request->facility_location_alternate_name;
+        $location->location_transportation = $request->facility_location_transportation;
+        $location->location_latitude = $request->facility_location_latitude;
+        $location->location_description = $request->facility_location_description;
+
+        if ($request->facility_phones) {
+            $phone_recordids = [];
+            foreach ($request->facility_phones as $key => $number) {
+                $phone = Phone::where('phone_number', $number);
+                if ($phone->count() > 0) {
+                    $phone_record_id = $phone->first()->phone_recordid;
+                    array_push($phone_recordids, $phone_record_id);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $number;
+                    $new_phone->save();
+                    array_push($phone_recordids, $new_phone_recordid);
+                }
+            }
+            $location->phones()->sync($phone_recordids);
+        }
+
         $location->save();
+
         return redirect('facility/'.$id);
     }
 

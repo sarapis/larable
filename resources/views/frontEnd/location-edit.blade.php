@@ -119,6 +119,21 @@ Facility Edit
                         <input class="form-control selectpicker"  type="text" id="facility_location_description" name="facility_location_description" value="{{$facility->location_description}}">
                     </div>
                 </div> 
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        @foreach($facility->phones as $phone)
+                        <li class="facility-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 facility-phones-div">
+                                <input class="form-control selectpicker facility_phones"  type="text" name="facility_phones[]"value="{{$phone->phone_number}}">
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
+                </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>
@@ -156,6 +171,14 @@ Facility Edit
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#facility_recordid').val(value);
+    });
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='facility-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 facility-phones-div'>"
+          + "<input class='form-control selectpicker facility_phones'  type='text' name='facility_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
     
 </script>
