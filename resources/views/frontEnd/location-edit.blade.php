@@ -88,8 +88,37 @@ Facility Edit
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
                         <input class="form-control selectpicker"  type="text" id="facility_location_name" name="facility_location_name" value="{{$facility->location_name}}">
                     </div>
-                </div>              
-                
+                </div> 
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Alternative Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_alternate_name" name="facility_location_alternate_name" value="{{$facility->location_alternate_name}}">
+                    </div>
+                </div>             
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Transportation: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_transportation" name="facility_location_transportation" value="{{$facility->location_transportation}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Latitude: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_latitude" name="facility_location_latitude" value="{{$facility->location_latitude}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Longitude: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_longitude" name="facility_location_longitude" value="{{$facility->location_longitude}}">
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Description: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_description" name="facility_location_description" value="{{$facility->location_description}}">
+                    </div>
+                </div> 
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>
