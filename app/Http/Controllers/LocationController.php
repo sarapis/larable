@@ -432,8 +432,12 @@ class LocationController extends Controller
         $facility_address_city = $request->facility_location_address_city;
         $facility_address_state = $request->facility_location_address_state;
         $facility_address_zip_code = $request->facility_location_address_zip_code;
+        $facility_address_region = $request->facility_location_address_region;
+        $facility_address_country = $request->facility_location_address_country;
+        $facility_address_attention = $request->facility_location_address_attention;
+        $facility_address_type = $request->facility_location_address_type;
 
-        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->where('address_city', '=', $facility_address_city)->where('address_state_province', '=', $facility_address_state)->where('address_postal_code', '=', $facility_address_zip_code)->first();
+        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->where('address_city', '=', $facility_address_city)->where('address_state_province', '=', $facility_address_state)->where('address_postal_code', '=', $facility_address_zip_code)->where('address_region', '=', $facility_address_region)->where('address_country', '=', $facility_address_country)->where('address_attention', '=', $facility_address_attention)->where('address_type', '=', $facility_address_type)->first();
         if ($address != null) {
             $location->location_address = $address->address_recordid;
             $location->address()->sync($address->address_recordid);
@@ -446,7 +450,11 @@ class LocationController extends Controller
             $address->address_2 = $facility_location_address2;
             $address->address_city = $facility_address_city;
             $address->address_state_province = $facility_address_state;
-            $address->address_postal_code = $facility_address_zip_code;            
+            $address->address_postal_code = $facility_address_zip_code;   
+            $address->address_region = $facility_address_region;
+            $address->address_country = $facility_address_country;
+            $address->address_attention = $facility_address_attention;
+            $address->address_type = $facility_address_type;
             $address->save();
 
             $location->location_address = $new_recordid;

@@ -96,7 +96,7 @@ table#tbl-location-profile-history {
 							<span class="badge bg-red pl-0 organize_font"><b>Address:</b></span> 
 							@if(isset($facility->address))
 								@foreach($facility->address as $address)
-								{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+								{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }} {{ $address->address_region }} {{ $address->address_country }}
 								@endforeach
 							@endif
                         </h4>
