@@ -433,10 +433,10 @@ class LocationController extends Controller
         $facility_address_state = $request->facility_location_address_state;
         $facility_address_zip_code = $request->facility_location_address_zip_code;
 
-        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->first();
+        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->where('address_city', '=', $facility_address_city)->where('address_state_province', '=', $facility_address_state)->where('address_postal_code', '=', $facility_address_zip_code)->first();
         if ($address != null) {
-            $address_id = $address["address_recordid"];
-            $location->location_address = $address_id;
+            $location->location_address = $address->address_recordid;
+            $location->address()->sync($address->address_recordid);
         } else {
             $address = new Address;
             $new_recordid = Address::max('address_recordid') + 1;
