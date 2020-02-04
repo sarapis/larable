@@ -9,6 +9,7 @@ use App\Location;
 use App\Service;
 use App\Schedule;
 use App\Phone;
+use App\Address;
 use App\Organization;
 use App\Airtablekeyinfo;
 use App\Locationaddress;
@@ -425,6 +426,33 @@ class LocationController extends Controller
         $location->location_description = $request->facility_location_description;
         $location->location_details = $request->facility_location_details;
         $location->location_schedule = $request->facility_location_schedule;
+
+        $facility_location_address1 = $request->facility_location_address1;
+        $facility_location_address2 = $request->facility_location_address2;
+        $facility_address_city = $request->facility_location_address_city;
+        $facility_address_state = $request->facility_location_address_state;
+        $facility_address_zip_code = $request->facility_location_address_zip_code;
+
+        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->first();
+        if ($address != null) {
+            $address_id = $address["address_recordid"];
+            $location->location_address = $address_id;
+        } else {
+            $address = new Address;
+            $new_recordid = Address::max('address_recordid') + 1;
+
+            $address->address_recordid = $new_recordid;
+            $address->address_1 = $facility_location_address1;
+            $address->address_2 = $facility_location_address2;
+            $address->address_city = $facility_address_city;
+            $address->address_state_province = $facility_address_state;
+            $address->address_postal_code = $facility_address_zip_code;            
+            $address->save();
+
+            $location->location_address = $new_recordid;
+            $location->address()->sync($new_recordid);
+        }
+
 
         if ($request->facility_phones) {
             $phone_recordids = [];

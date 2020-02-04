@@ -126,6 +126,36 @@ Facility Edit
                         </select>
                     </div>           
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Address1: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address1-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_address1" name="facility_location_address1" @if ($facility->address) value="{{$facility->address[0]->address_1}}" @endif>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Address2: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address2-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_address2" name="facility_location_address2" @if ($facility->address) value="{{$facility->address[0]->address_2}}" @endif>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">City: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-city-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_address_city" name="facility_location_address_city" @if ($facility->address) value="{{$facility->address[0]->address_city}}" @endif>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">State: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-state-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_address_state" name="facility_location_address_state" @if ($facility->address) value="{{$facility->address[0]->address_state_province}}" @endif>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Zip Code: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-zip-code-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_address_zip_code" name="facility_location_address_zip_code" @if ($facility->address) value="{{$facility->address[0]->address_postal_code}}" @endif>
+                    </div>
+                </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>

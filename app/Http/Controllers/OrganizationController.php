@@ -151,7 +151,6 @@ class OrganizationController extends Controller
                     }
                 }
                 $organization->organization_contact = isset($record['fields']['contact']) ?implode(",", $record['fields']['contact']):null;
-
                 $organization->organization_contact = $strtointclass->string_to_int($organization->organization_contact);
 
                 if(isset($record['fields']['details'])){
