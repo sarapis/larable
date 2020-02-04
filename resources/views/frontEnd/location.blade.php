@@ -113,14 +113,8 @@ table#tbl-location-profile-history {
                         <h4>
 							<span class="badge bg-red pl-0 organize_font"><b>Phones:</b></span> 
 							@foreach($facility->phones as $phone)
-								@php 
-									$phones ='';
-									$phones = $phones.$phone->phone_number.','; 
-								@endphp
-							@endforeach
-                            @if(isset($phones))
-								{{ rtrim($phones, ',') }}
-                            @endif
+                                {{$phone->phone_number}}, 
+                            @endforeach
                         </h4>
                         @endif
                     </div>
