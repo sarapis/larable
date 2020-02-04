@@ -15,35 +15,11 @@ Facility Edit
         width: 100%;
     }
 
-    button[data-id="facility_location_name"] {
+    button[data-id="facility_location_schedule"] {
         height: 100%;
         border: 1px solid #ddd;
-    } 
+    }
 
-    button[data-id="facility_organization_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="facility_address_city"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="facility_street_address"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="facility_zip_code"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="facility_building_status"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-    button[data-id="facility_facility_call"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
     .form-group button {
         width: 32.96%;
     }
@@ -140,6 +116,16 @@ Facility Edit
                         <input class="form-control selectpicker"  type="text" id="facility_location_details" name="facility_location_details" value="{{$facility->location_details}}">
                     </div>
                 </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Schedule: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-schedule-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="facility_location_schedule" data-size="5" name="facility_location_schedule">
+                            @foreach($schedule_info_list as $key => $schedule_info)                                
+                                <option value="{{$schedule_info->schedule_recordid}}" @if ($schedule_info->schedule_recordid == $facility->location_schedule) selected @endif>{{$schedule_info->schedule_opens_at}} @if ($schedule_info->schedule_opens_at != '24 Hours') ~ {{$schedule_info->schedule_closes_at}} @endif</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>
@@ -174,6 +160,10 @@ Facility Edit
 </div>
 
 <script> 
+    $(document).ready(function() {
+        $("#facility_location_schedule").selectpicker("");       
+    });
+
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#facility_recordid').val(value);

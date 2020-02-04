@@ -132,7 +132,7 @@ table#tbl-location-profile-history {
                         <h4>
                             <span class="badge bg-red pl-0 organize_font"><b>Details:</b></span>
                             {{$facility->location_details}}
-                        </h4>
+                        </h4>                        
                     </div>
                 </div>
 

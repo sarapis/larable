@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Location;
 use App\Service;
+use App\Schedule;
 use App\Phone;
 use App\Organization;
 use App\Airtablekeyinfo;
@@ -402,7 +403,9 @@ class LocationController extends Controller
     {
         $map = Map::find(1);
         $facility = Location::where('location_recordid', '=', $id)->first();
-        return view('frontEnd.location-edit', compact('facility', 'map'));
+        $schedule_info_list = Schedule::select('schedule_recordid', 'schedule_opens_at', 'schedule_closes_at')->get();
+
+        return view('frontEnd.location-edit', compact('facility', 'map', 'schedule_info_list'));
     }
 
     /**
@@ -421,6 +424,7 @@ class LocationController extends Controller
         $location->location_latitude = $request->facility_location_latitude;
         $location->location_description = $request->facility_location_description;
         $location->location_details = $request->facility_location_details;
+        $location->location_schedule = $request->facility_location_schedule;
 
         if ($request->facility_phones) {
             $phone_recordids = [];
