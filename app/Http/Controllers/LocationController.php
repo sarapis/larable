@@ -420,6 +420,7 @@ class LocationController extends Controller
         $location->location_transportation = $request->facility_location_transportation;
         $location->location_latitude = $request->facility_location_latitude;
         $location->location_description = $request->facility_location_description;
+        $location->location_details = $request->facility_location_details;
 
         if ($request->facility_phones) {
             $phone_recordids = [];

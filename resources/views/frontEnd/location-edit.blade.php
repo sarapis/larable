@@ -134,6 +134,12 @@ Facility Edit
                         @endforeach
                     </ol>
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Details: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker"  type="text" id="facility_location_details" name="facility_location_details" value="{{$facility->location_details}}">
+                    </div>
+                </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>

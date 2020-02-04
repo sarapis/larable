@@ -117,6 +117,22 @@ table#tbl-location-profile-history {
                             @endforeach
                         </h4>
                         @endif
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Alternative Name:</b></span>
+                            {{$facility->location_alternate_name}}
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Description:</b></span>
+                            {{$facility->location_description}}
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Transportation:</b></span>
+                            {{$facility->location_transportation}}
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Details:</b></span>
+                            {{$facility->location_details}}
+                        </h4>
                     </div>
                 </div>
 
