@@ -121,7 +121,7 @@ Facility Edit
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-schedule-div">
                         <select class="form-control selectpicker" data-live-search="true" id="facility_location_schedule" data-size="5" name="facility_location_schedule">
                             @foreach($schedule_info_list as $key => $schedule_info)                                
-                                <option value="{{$schedule_info->schedule_recordid}}" @if ($schedule_info->schedule_recordid == $facility->location_schedule) selected @endif>{{$schedule_info->schedule_opens_at}} @if ($schedule_info->schedule_opens_at != '24 Hours') ~ {{$schedule_info->schedule_closes_at}} @endif</option>
+                                <option value="{{$schedule_info->schedule_recordid}}" @if ($schedule_info->schedule_recordid == $facility->location_schedule) selected @endif>{{$schedule_info->schedule_opens_at}} @if (($schedule_info->schedule_opens_at != '24 Hours') && ($schedule_info->schedule_opens_at != '24 hours')) ~ {{$schedule_info->schedule_closes_at}} @endif</option>
                             @endforeach
                         </select>
                     </div>           
