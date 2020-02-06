@@ -14,47 +14,11 @@ Contact Edit
         width: 100%;
     }
 
-    button[data-id="contact_first_name"] {
+    button[data-id="contact_organization"] {
         height: 100%;
         border: 1px solid #ddd;
     }
-
-    button[data-id="contact_middle_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_last_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_organization_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_languages_spoken"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_other_languages"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_type"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_organization_type"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_pronouns"] {
+    button[data-id="contact_services"] {
         height: 100%;
         border: 1px solid #ddd;
     }
@@ -102,12 +66,54 @@ Contact Edit
         <form action="/contact/{{$contact->contact_recordid}}/update" method="GET">
             <div class="row">
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Contact Name: </label>
+                    <label class="control-label sel-label-org pl-4">Name: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_name"
                             name="contact_name" value="{{$contact->contact_name}}">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Title: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_title"
+                            name="contact_title" value="{{$contact->contact_title}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Department: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_department"
+                            name="contact_department" value="{{$contact->contact_department}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Email: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_email"
+                            name="contact_email" value="{{$contact->contact_email}}">
+                    </div>
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Organization: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="contact_organization" data-size="5" name="contact_organization">
+                            @foreach($organization_info_list as $key => $organization_info)                                
+                                <option value="{{$organization_info->organization_recordid}}" @if ($organization_info->organization_recordid == $contact->contact_organizations) selected @endif>{{$organization_info->organization_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Services: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="contact_services" name="contact_services[]">
+                            @foreach($service_info_list as $key => $service_info)                                
+                                <option value="{{$service_info->service_recordid}}" @if (in_array($service_info->service_recordid, $contact_services)) selected @endif>{{$service_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+
                 <div class="form-group">
                     <div class="col-md-12 text-center">
                         <a href="/contacts/{{$contact->contact_recordid}}" class="btn btn-info btn-rounded"

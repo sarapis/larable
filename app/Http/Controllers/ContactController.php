@@ -9,6 +9,7 @@ use App\Contact;
 use App\Organization;
 use App\Location;
 use App\Address;
+use App\Service;
 use App\Map;
 use App\Airtablekeyinfo;
 use App\Servicecontact;
@@ -227,7 +228,7 @@ class ContactController extends Controller
 
     public function contact($id)
     {
-        $contact = Contact::where('contact_recordid', '=', $id)->first();
+        $contact = Contact::where('contact_recordid', '=', $id)->first();        
         $map = Map::find(1);
 
         return view('frontEnd.contact', compact('contact', 'map'));
@@ -366,8 +367,15 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::where('contact_recordid', '=', $id)->first();
+        $organization_info_list = Organization::select('organization_recordid', 'organization_name')->get();
+        $service_info_list = Service::select('service_recordid', 'service_name')->get();
+        $contact_services = [];
+        foreach ($contact->service as $key => $value) {
+             array_push($contact_services, $value->service_recordid);
+        }  
+             
         $map = Map::find(1);
-        return view('frontEnd.contact-edit', compact('contact', 'map'));
+        return view('frontEnd.contact-edit', compact('contact', 'map', 'organization_info_list', 'service_info_list', 'contact_services'));
     }
 
     /**
