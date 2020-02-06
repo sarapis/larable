@@ -146,6 +146,10 @@ Contact
                             <span class="badge bg-red pl-0 organize_font"><b>Email:</b></span>
                             {{$contact->contact_email}}
                         </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Phone:</b></span>
+                            {{$phone_number}}
+                        </h4>
                     </div>
                 </div>
 

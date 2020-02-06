@@ -9,6 +9,7 @@ use App\Contact;
 use App\Organization;
 use App\Location;
 use App\Address;
+use App\Phone;
 use App\Service;
 use App\Map;
 use App\Airtablekeyinfo;
@@ -228,10 +229,17 @@ class ContactController extends Controller
 
     public function contact($id)
     {
-        $contact = Contact::where('contact_recordid', '=', $id)->first();        
+        $contact = Contact::where('contact_recordid', '=', $id)->first();  
+        $phone_recordid = $contact->contact_phones;
+        $phone_info = Phone::where('phone_recordid', '=', $phone_recordid)->select('phone_number')->first();
+        if ($phone_info) {
+            $phone_number = $phone_info->phone_number;
+        } else {
+            $phone_number = '';
+        }
         $map = Map::find(1);
 
-        return view('frontEnd.contact', compact('contact', 'map'));
+        return view('frontEnd.contact', compact('contact', 'map', 'phone_number'));
     }
 
 
@@ -373,9 +381,15 @@ class ContactController extends Controller
         foreach ($contact->service as $key => $value) {
              array_push($contact_services, $value->service_recordid);
         }  
+        $phone_recordid = $contact->contact_phones;
+        if ($phone_recordid) {
+            $contact_phone = Phone::where('phone_recordid', '=', $phone_recordid)->select('phone_recordid', 'phone_number')->first();
+        } else {
+            $contact_phone = NULL;
+        }
              
         $map = Map::find(1);
-        return view('frontEnd.contact-edit', compact('contact', 'map', 'organization_info_list', 'service_info_list', 'contact_services'));
+        return view('frontEnd.contact-edit', compact('contact', 'map', 'organization_info_list', 'service_info_list', 'contact_services', 'contact_phone'));
     }
 
     /**
@@ -399,6 +413,23 @@ class ContactController extends Controller
             $contact->service()->sync($request->contact_services);
         } else {
             $contact->contact_services = '';
+        }
+
+        if ($request->contact_phone) {
+            $number = $request->contact_phone;
+            $phone = Phone::where('phone_number', $number);
+            if ($phone->count() > 0) {
+                $phone_record_id = $phone->first()->phone_recordid;
+                $contact->contact_phones = $phone_record_id;
+            } else {
+                $new_phone = new Phone;
+                $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                $new_phone->phone_recordid = $new_phone_recordid;
+                $new_phone->phone_number = $number;
+                $new_phone->save();
+                $contact->contact_phones = $new_phone_recordid;
+            }
+            
         }
         
         $contact->flag = 'modified';

@@ -113,6 +113,13 @@ Contact Edit
                         </select>
                     </div>           
                 </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone"
+                            name="contact_phone" @if ($contact_phone) value="{{$contact_phone->phone_number}}" @endif>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <div class="col-md-12 text-center">
