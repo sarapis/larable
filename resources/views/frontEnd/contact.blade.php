@@ -148,6 +148,101 @@ Contact
                         </h4>
                     </div>
                 </div>
+
+                @if(isset($contact->service))
+                <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($contact->service)){{$contact->service->count()}}@else 0 @endif)
+                </h4>
+                @foreach($contact->service as $service)
+                <div class="card">
+                                <div class="card-block">
+                                    <h4 class="card-title">
+                                          <a href="/service/{{$service->service_recordid}}">{{$service->service_name}}</a>
+                            @if (Sentinel::getUser())
+                            <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
+                            @endif
+                                    </h4>
+                                      <h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
+                        <h4 style="line-height: inherit;">
+                                            <span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                                            @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</span>
+                                    </h4>
+                                      <h4>
+                                            <span>
+                                            <i class="icon md-pin font-size-24 vertical-align-top  mr-5 pr-10"></i>
+                                            @if(isset($service->address))
+                                                @foreach($service->address as $address)
+                                                  {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                                @endforeach
+                                            @endif
+                                            </span>
+                        </h4>
+                                    
+                        @if($service->service_details!=NULL)
+                            @php
+                                $show_details = [];
+                            @endphp
+                          @foreach($service->details->sortBy('detail_type') as $detail)
+                            @php
+                                for($i = 0; $i < count($show_details); $i ++){
+                                    if($show_details[$i]['detail_type'] == $detail->detail_type)
+                                        break;
+                                }
+                                if($i == count($show_details)){
+                                    $show_details[$i] = array('detail_type'=> $detail->detail_type, 'detail_value'=> $detail->detail_value);
+                                }
+                                else{
+                                    $show_details[$i]['detail_value'] = $show_details[$i]['detail_value'].', '.$detail->detail_value;
+                                }
+                            @endphp                                
+                          @endforeach
+                          @foreach($show_details as $detail)
+                            <h4><span class="badge bg-red"><b>{{ $detail['detail_type'] }}:</b></span> {!! $detail['detail_value'] !!}</h4>  
+                          @endforeach
+                                  @endif
+                                  <h4 class="py-10" style="line-height: inherit;">
+                            <span class="pl-0 category_badge"><b>Types of Services:</b>
+                                @if($service->service_taxonomy!=0 || $service->service_taxonomy==null)
+                                    @php 
+                                        $names = [];
+                                    @endphp
+                                    @foreach($service->taxonomy->sortBy('taxonomy_name') as $key => $taxonomy)
+                                        @if(!in_array($taxonomy->taxonomy_grandparent_name, $names))
+                                            @if($taxonomy->taxonomy_grandparent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}">{{$taxonomy->taxonomy_grandparent_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_grandparent_name;
+                                                @endphp
+                                            @endif
+                                        @endif
+                                        @if(!in_array($taxonomy->taxonomy_parent_name, $names))
+                                            @if($taxonomy->taxonomy_parent_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                @if($taxonomy->taxonomy_grandparent_name)
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}" at="{{str_replace(' ', '_', $taxonomy->taxonomy_grandparent_name)}}_{{str_replace(' ', '_', $taxonomy->taxonomy_parent_name)}}">{{$taxonomy->taxonomy_parent_name}}</a>
+                                                @endif
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_parent_name;
+                                                @endphp
+                                            @endif
+                                        @endif
+                                        @if(!in_array($taxonomy->taxonomy_name, $names))
+                                            @if($taxonomy->taxonomy_name && $taxonomy->taxonomy_parent_name != 'Target Populations')
+                                                <a class="panel-link {{str_replace(' ', '_', $taxonomy->taxonomy_name)}}" at="{{$taxonomy->taxonomy_recordid}}">{{$taxonomy->taxonomy_name}}</a>
+                                                @php
+                                                $names[] = $taxonomy->taxonomy_name;
+                                                @endphp
+                                            @endif
+                                        @endif                                                    
+                                       
+                                    @endforeach
+                                @endif
+                            </span>  
+                        </h4>
+                    </div>
+                </div>
+                @endforeach
+                @endif
             </div>
         </div>
     </div>
