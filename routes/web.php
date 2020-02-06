@@ -52,6 +52,8 @@ Route::group(['middleware' => ['web'] ], function () {
 
     Route::get('/contacts', 'ContactController@contacts');
     Route::get('/contact/{id}', 'ContactController@contact');
+    Route::get('/contact/{id}/edit', 'ContactController@edit');
+    Route::get('/contact/{id}/update', 'ContactController@update');
     Route::post('/get_all_contacts', 'ContactController@get_all_contacts');
     Route::get('/contact_create', 'ContactController@create');
     Route::get('/add_new_contact', 'ContactController@add_new_contact');

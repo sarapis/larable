@@ -119,10 +119,12 @@ Contact
                         <h4 class="card-title">
                             <a href="">@if($contact->contact_name!='?'){{$contact->contact_name}}@endif
                             </a>
-                           <!--  <a href="/contact/{{$contact->contact_recordid}}/edit"
+                            @if (Sentinel::getUser())
+                            <a href="/contact/{{$contact->contact_recordid}}/edit"
                                 class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
-                            </a> -->
+                            </a>
+                            @endif
                         </h4>
                         <h4>
                             <span class="badge bg-red pl-0 organize_font"><b>Contact Title:</b></span>

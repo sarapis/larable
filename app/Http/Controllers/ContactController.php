@@ -365,7 +365,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::where('contact_recordid', '=', $id)->first();
+        $map = Map::find(1);
+        return view('frontEnd.contact-edit', compact('contact', 'map'));
     }
 
     /**
