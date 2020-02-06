@@ -392,10 +392,19 @@ class ContactController extends Controller
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
         $contact->contact_email = $request->contact_email;
+        $contact->contact_organizations = $request->contact_organization;
+
+        if ($request->contact_services) {
+            $contact->contact_services = join(',', $request->contact_services);
+            $contact->service()->sync($request->contact_services);
+        } else {
+            $contact->contact_services = '';
+        }
+        
         $contact->flag = 'modified';
         $contact->save();
 
-        return response()->json($contact);
+        return redirect('contact/' . $id);
     }
 
     /**
