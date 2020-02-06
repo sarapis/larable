@@ -430,6 +430,8 @@ class ContactController extends Controller
                 $contact->contact_phones = $new_phone_recordid;
             }
             
+        } else {
+            $contact->contact_phones = '';
         }
         
         $contact->flag = 'modified';
