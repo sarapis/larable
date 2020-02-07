@@ -318,9 +318,9 @@ class LocationController extends Controller
         $facility_info = [];
         foreach ($facilities as $facility) {
             $facility_info[0] = '';
-            $facility_info[1] = $facility->location_recordid;
-            $facility_info[2] = $facility->location_name;
-            $facility_info[3] = $facility->organization['organization_name'];
+            $facility_info[1] = $facility->location_recordid; 
+            $facility_info[2] = str_limit($facility->location_name, 30, '...');
+            $facility_info[3] = str_limit($facility->organization['organization_name'], 25, '...');
 
             $facility_full_address_info = '';
             if (isset($facility->address[0])) {
@@ -337,7 +337,7 @@ class LocationController extends Controller
             }
 
             $facility_info[4] = $facility_full_address_info;
-            $facility_info[5] = $facility->location_description;
+            $facility_info[5] = str_limit($facility->location_description, 15, '...');
 
             array_push($result, $facility_info);
         }

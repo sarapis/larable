@@ -95,9 +95,6 @@ Locations
         width: 100%;
     }
 
-    #tbl-location_wrapper {
-        overflow-x: scroll;
-    }
 </style>
 
 @section('content')
@@ -135,15 +132,11 @@ Locations
         // $('#waiting').hide();
         sessionStorage.setItem('check_marks', '');
         dataTable = $('#tbl-location').DataTable({
-            "scrollX": true,
             "dom": 'lBfrtip',
             "order": [[ 1, 'desc' ]],
             "serverSide": true,          
             "searching": true,                   
             "scrollY": 500,
-            "scroller": {
-                "loadingIndicator": true
-            },
             "ajax": function (data, callback, settings) {
                     var start = data.start;
                     var length = data.length;
