@@ -126,6 +126,9 @@ Facility Edit
                         </select>
                     </div>           
                 </div>
+                 <div class="form-group" style="text-align: center;">    
+                    <h4>Address</h4>
+                </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Address1: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-address1-div">
