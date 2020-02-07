@@ -123,7 +123,7 @@ Contact Edit
 
                 <div class="form-group">
                     <div class="col-md-12 text-center">
-                        <a href="/contacts/{{$contact->contact_recordid}}" class="btn btn-info btn-rounded"
+                        <a href="/contact/{{$contact->contact_recordid}}" class="btn btn-info btn-rounded"
                             id="view-contact-btn"><i class="fa fa-arrow-left"></i> Back</a>
                         <button type="button" class="btn btn-danger delete-td" id="delete-contact-btn"
                             value="{{$contact->contact_recordid}}" data-toggle="modal" data-target=".bs-delete-modal-lg"><i
