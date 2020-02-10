@@ -20,6 +20,11 @@ Facility Edit
         border: 1px solid #ddd;
     }
 
+    button[data-id="facility_services"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     .form-group button {
         width: 32.96%;
     }
@@ -115,6 +120,16 @@ Facility Edit
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
                         <input class="form-control selectpicker"  type="text" id="facility_location_details" name="facility_location_details" value="{{$facility->location_details}}">
                     </div>
+                </div>
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Services: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-services-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_services" data-size="5" name="facility_services[]">
+                            @foreach($services_info_list as $key => $services_info)                                
+                                <option value="{{$services_info->service_recordid}}" @if (in_array($services_info->service_recordid, $facility_service_list)) selected @endif>{{$services_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
                 </div>
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Schedule: </label>
@@ -218,7 +233,8 @@ Facility Edit
 
 <script> 
     $(document).ready(function() {
-        $("#facility_location_schedule").selectpicker("");       
+        $("#facility_location_schedule").selectpicker("");  
+        $("#facility_services").selectpicker("");     
     });
 
     $('button.delete-td').on('click', function() {

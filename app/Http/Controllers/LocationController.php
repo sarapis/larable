@@ -405,8 +405,10 @@ class LocationController extends Controller
         $map = Map::find(1);
         $facility = Location::where('location_recordid', '=', $id)->first();
         $schedule_info_list = Schedule::select('schedule_recordid', 'schedule_opens_at', 'schedule_closes_at')->get();
+        $services_info_list = Service::select('service_recordid', 'service_name')->get();
+        $facility_service_list = explode(',', $facility->location_services);
 
-        return view('frontEnd.location-edit', compact('facility', 'map', 'schedule_info_list'));
+        return view('frontEnd.location-edit', compact('facility', 'map', 'schedule_info_list', 'services_info_list', 'facility_service_list'));
     }
 
     /**
@@ -436,6 +438,14 @@ class LocationController extends Controller
         $facility_address_country = $request->facility_location_address_country;
         $facility_address_attention = $request->facility_location_address_attention;
         $facility_address_type = $request->facility_location_address_type;
+
+
+        if ($request->facility_services) {
+            $location->location_services = join(',', $request->facility_services);
+        } else {
+            $location->location_services = '';
+        }
+        
 
         $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->where('address_city', '=', $facility_address_city)->where('address_state_province', '=', $facility_address_state)->where('address_postal_code', '=', $facility_address_zip_code)->where('address_region', '=', $facility_address_region)->where('address_country', '=', $facility_address_country)->where('address_attention', '=', $facility_address_attention)->where('address_type', '=', $facility_address_type)->first();
         if ($address != null) {
