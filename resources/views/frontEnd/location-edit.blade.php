@@ -25,6 +25,11 @@ Facility Edit
         border: 1px solid #ddd;
     }
 
+    button[data-id="facility_organizations"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     .form-group button {
         width: 32.96%;
     }
@@ -132,6 +137,16 @@ Facility Edit
                     </div>           
                 </div>
                 <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Organizations: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-organizations-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_organizations" data-size="5" name="facility_organizations[]">
+                            @foreach($organizations_info_list as $key => $organizations_info)                                
+                                <option value="{{$organizations_info->organization_recordid}}" @if (in_array($organizations_info->organization_recordid, $facility_organization_list)) selected @endif>{{$organizations_info->organization_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+                <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Schedule: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-schedule-div">
                         <select class="form-control selectpicker" data-live-search="true" id="facility_location_schedule" data-size="5" name="facility_location_schedule">
@@ -234,7 +249,8 @@ Facility Edit
 <script> 
     $(document).ready(function() {
         $("#facility_location_schedule").selectpicker("");  
-        $("#facility_services").selectpicker("");     
+        $("#facility_services").selectpicker(""); 
+        $("#facility_organizations").selectpicker("");     
     });
 
     $('button.delete-td').on('click', function() {
