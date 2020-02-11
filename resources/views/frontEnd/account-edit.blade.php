@@ -74,7 +74,7 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="account_email" name="account_email" value="{{$user_info->email}}">
                     </div>
                 </div>
-                
+                @if ($user_info->roles[0]->name != "System Admin")
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Organizations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 account_organizations-div">
@@ -85,7 +85,7 @@ Edit Service
                         </select>
                     </div>           
                 </div>
-               
+                @endif
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-service-btn"><i class="fa fa-save"></i>Save</button>
