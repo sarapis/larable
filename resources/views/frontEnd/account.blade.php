@@ -31,37 +31,38 @@
     				<div class="card-block">
     					<div class="card-title">
     						@if ($user)    							
-    						<h2>
-    							<a href="">
-									{{$user->first_name}} {{$user->last_name}}
-	                            </a>
-	                            <a href="/account/{{$user->id}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
-	                                <i class="icon md-edit" style="margin-right: 0px;"></i>
-	                            </a>
-    						</h2>
-                            
-                            <h4>
-								<span class="badge bg-red pl-0 organize_font"><b>First Name:</b></span> 
-								{{$user->first_name}}
-		                    </h4>
-		                    <h4>
-								<span class="badge bg-red pl-0 organize_font"><b>Last Name:</b></span> 
-								{{$user->last_name}}
-		                    </h4>
-		                    <h4>
-								<span class="badge bg-red pl-0 organize_font"><b>Email:</b></span> 
-								{{$user->email}}
-		                    </h4>
+	    						<h2>
+	    							<a href="">
+										{{$user->first_name}} {{$user->last_name}}
+		                            </a>
+		                            <a href="/account/{{$user->id}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+		                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+		                            </a>
+	    						</h2>
+	                            
+	                            <h4>
+									<span class="badge bg-red pl-0 organize_font"><b>First Name:</b></span> 
+									{{$user->first_name}}
+			                    </h4>
+			                    <h4>
+									<span class="badge bg-red pl-0 organize_font"><b>Last Name:</b></span> 
+									{{$user->last_name}}
+			                    </h4>
+			                    <h4>
+									<span class="badge bg-red pl-0 organize_font"><b>Email:</b></span> 
+									{{$user->email}}
+									
+			                    </h4>
 			                    @if ($organization_list)
 			                    <h4>
 									<span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span> 
 									<br>
 									@foreach($organization_list as $organization)
-      									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-      									<a href="/organization/{{$organization->organization_recordid}}">
-      										{{$organization->organization_name}} </a>
-      									<br>
-      								@endforeach
+	  									&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+	  									<a href="/organization/{{$organization->organization_recordid}}">
+	  										{{$organization->organization_name}} </a>
+	  									<br>
+	  								@endforeach
 			                    </h4>
 			                    @endif
 		                    @endif
