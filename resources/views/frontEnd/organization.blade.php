@@ -208,7 +208,9 @@ ul#ui-id-1 {
                             <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
                             @endif
                             @if($contact_info->contact_phones)
-                            <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
+                              @if (isset($contact_info->phone->phone_number))
+                              <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
+                              @endif
                             @endif
                         </div>
                         </br>

@@ -29,6 +29,13 @@ class AccountController extends Controller
         return view('frontEnd.account-edit', compact('user_info', 'map', 'organization_list', 'account_organization_list'));
     }
 
+    public function change_password($id) {
+        $map = Map::find(1);
+        $user_info = User::where('id', '=', $id)->first(); 
+
+        return view('frontEnd.account-change-password', compact('user_info', 'map'));
+    }
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -41,14 +48,17 @@ class AccountController extends Controller
         if ($request->account_email) {
           $user->email = $request->account_email;
         }
-        if ($request->account_organizations) {
-          $user->user_organization = join(',', $request->account_organizations);
-        }
-        $user->save();
 
         if ($request->account_organizations) {
-          $user->organizations()->sync($request->account_organizations);
+          $user->user_organization = join(',', $request->account_organizations);
+        } else {
+            $user->user_organization = '';
         }
+
+        $user->save();
+        
+        $user->organizations()->sync($request->account_organizations);
+        
 
         return redirect('account/'.$id);
     }

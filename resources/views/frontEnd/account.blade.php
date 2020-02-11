@@ -14,15 +14,18 @@
     	<div class="row m-0">
     		<div class="col-md-6 mx-auto" style="margin-top: 120px;">
     			@if ($user)
-    				@if ($user->roles[0]->name == "System Admin")
-		    			<div class="card">
-		    				<div class="card-block">
-								<a href="/dashboard" class="btn btn-primary" style="width: 20%; float: right;">
-		                        	Access Backend
-		               			</a>
-							</div>
+	    			<div class="card">
+	    				<div class="card-block">
+	    					@if ($user->roles[0]->name == "System Admin")
+							<a href="/dashboard" class="btn btn-primary ml-20" style="width: 20%; float: right;">
+	                        	Access Backend
+	               			</a>
+	               			@endif 
+	               			<a href="/account/{{$user->id}}/change_password" class="btn btn-danger mr-20" style="width: 20%; float: right;">
+	                        	Change Password
+	               			</a>
 						</div>
-					@endif 
+					</div>						
 				@endif
     			<div class="card">
     				<div class="card-block">
