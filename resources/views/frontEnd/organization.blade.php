@@ -65,6 +65,11 @@ ul#ui-id-1 {
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
                                 @endif
+                                @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                                <a href="/organization/{{$organization->organization_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                </a>
+                                @endif
                             </h4>
                             <h4>
                   							<span class="badge bg-red pl-0 organize_font"><b>Status:</b></span> 
