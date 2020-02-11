@@ -448,7 +448,69 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $organization = new Organization;
+
+        $new_recordid = Organization::max("organization_recordid") + 1;
+        $organization->organization_recordid = $new_recordid;
+
+        $organization->organization_name = $request->organization_name;
+        $organization->organization_alternate_name = $request->organization_alternate_name;
+        $organization->organization_description = $request->organization_description;
+        $organization->organization_email = $request->organization_email;
+        $organization->organization_url = $request->organization_url;
+        $organization->organization_legal_status = $request->organization_legal_status;
+        $organization->organization_tax_status = $request->organization_tax_status;
+        $organization->organization_tax_id = $request->organization_tax_id;
+
+        if ($request->organization_year_incorporated) {
+            $organization->organization_year_incorporated = join(',', $request->organization_year_incorporated);
+        } else {
+            $organization->organization_year_incorporated = '';
+        }
+
+        if ($request->organization_services) {
+            $organization->organization_services = join(',', $request->organization_services);
+        } else {
+            $organization->organization_services = '';
+        }
+
+        if ($request->organization_contacts) {
+            $contact_recordid_list = $request->organization_contacts;
+            foreach ($contact_recordid_list as $key => $value) {
+                $updating_contact = Contact::where('contact_recordid', '=', $value)->first();
+                $updating_contact->contact_organizations = $new_recordid;
+                $updating_contact->save();
+            }
+        }
+        
+        if ($request->organization_phones) {
+            $phone_recordids = [];
+            foreach ($request->organization_phones as $key => $number) {
+                $phone = Phone::where('phone_number', $number);
+                if ($phone->count() > 0) {
+                    $phone_record_id = $phone->first()->phone_recordid;
+                    array_push($phone_recordids, $phone_record_id);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $number;
+                    $new_phone->save();
+                    array_push($phone_recordids, $new_phone_recordid);
+                }
+            }
+            $organization->phones()->sync($phone_recordids);
+        }
+
+        if ($request->organization_locations) {
+            $organization->organization_locations = join(',', $request->organization_locations);
+        } else {
+            $organization->organization_locations = '';
+        }
+       
+        $organization->save();
+
+        return redirect('organizations');
     }
 
     /**
@@ -574,4 +636,16 @@ class OrganizationController extends Controller
     {
         //
     }
+
+    public function delete_organization(Request $request)
+    {
+        $organization_recordid = $request->input('organization_recordid');
+        $organization = Organization::where('organization_recordid', '=', $organization_recordid)->first();
+        if ($organization != null) {
+            $organization->delete();
+        }
+        return redirect('organizations');
+    }
+
+
 }

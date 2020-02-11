@@ -52,6 +52,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/organization/{id}/edit', 'OrganizationController@edit');
     Route::get('/organization/{id}/update', 'OrganizationController@update');
     Route::get('/organization_create', 'OrganizationController@create');
+    Route::post('/organization_delete_filter', 'OrganizationController@delete_organization');
 
     Route::get('/contacts', 'ContactController@contacts');
     Route::get('/contact/{id}', 'ContactController@contact');
