@@ -415,24 +415,25 @@ class ContactController extends Controller
             $contact->contact_services = '';
         }
 
-        if ($request->contact_phone) {
-            $number = $request->contact_phone;
-            $phone = Phone::where('phone_number', $number);
-            if ($phone->count() > 0) {
-                $phone_record_id = $phone->first()->phone_recordid;
-                $contact->contact_phones = $phone_record_id;
-            } else {
-                $new_phone = new Phone;
-                $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                $new_phone->phone_recordid = $new_phone_recordid;
-                $new_phone->phone_number = $number;
-                $new_phone->save();
-                $contact->contact_phones = $new_phone_recordid;
+        if ($request->contact_phones) {
+            $phone_recordids = [];
+            foreach ($request->contact_phones as $key => $number) {
+                $phone = Phone::where('phone_number', $number);
+                if ($phone->count() > 0) {
+                    $phone_record_id = $phone->first()->phone_recordid;
+                    array_push($phone_recordids, $phone_record_id);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $number;
+                    $new_phone->save();
+                    array_push($phone_recordids, $new_phone_recordid);
+                }
             }
-            
-        } else {
-            $contact->contact_phones = '';
+            $contact->phone()->sync($phone_recordids);
         }
+
         
         $contact->flag = 'modified';
         $contact->save();

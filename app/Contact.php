@@ -28,6 +28,7 @@ class Contact extends Model
 
     public function phone()
     {
-        return $this->belongsTo('App\Phone', 'contact_phones', 'phone_recordid');
+        // return $this->belongsTo('App\Phone', 'contact_phones', 'phone_recordid');
+        return $this->belongsToMany('App\Phone', 'contact_phones', 'contact_recordid', 'phone_recordid');
     }
 }

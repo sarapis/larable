@@ -146,10 +146,14 @@ Contact
                             <span class="badge bg-red pl-0 organize_font"><b>Email:</b></span>
                             {{$contact->contact_email}}
                         </h4>
-                        <h4>
+                        @if($contact->phone)
+                        <h4 style="line-height: inherit;">
                             <span class="badge bg-red pl-0 organize_font"><b>Phone:</b></span>
-                            {{$phone_number}}
+                            @foreach($contact->phone as $phone)
+                            {{$phone->phone_number}}, 
+                            @endforeach
                         </h4>
+                        @endif
                     </div>
                 </div>
 

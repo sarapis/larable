@@ -113,12 +113,28 @@ Contact Edit
                         </select>
                     </div>           
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_phone"
                             name="contact_phone" @if ($contact_phone) value="{{$contact_phone->phone_number}}" @endif>
                     </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        @foreach($contact->phone as $phone)
+                        <li class="contact-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 contact-phones-div">
+                                <input class="form-control selectpicker contact_phones"  type="text" name="contact_phones[]" value="{{$phone->phone_number}}">
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
                 </div>
 
                 <div class="form-group">
@@ -166,6 +182,14 @@ Contact Edit
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#contact_recordid').val(value);
+    });
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='contact-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 contact-phones-div'>"
+          + "<input class='form-control selectpicker contact_phones'  type='text' name='contact_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
 </script>
 @endsection

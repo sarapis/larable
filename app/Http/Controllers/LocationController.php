@@ -350,10 +350,6 @@ class LocationController extends Controller
         $facility = Location::where('location_recordid', '=', $id)->first();
         $map = Map::find(1);
 
-        // $organization_id = $facility->location_organization;
-        // $organization_name_info = Organization::where('organization_recordid', '=', $organization_id)->select('organization_name')->first();
-        // $organization_name = $organization_name_info["organization_name"];
-
         $facility_services_recordid_list = explode(',', $facility->location_services);
         $facility_services = Service::whereIn('service_recordid', $facility_services_recordid_list)->orderBy('service_name')->paginate(10);
 

@@ -29,7 +29,8 @@ class Phone extends Model
 
     public function contact()
     {
-        return $this->hasMany('App\Contact', 'contact_phones', 'phone_recordid');
+        // return $this->hasMany('App\Contact', 'contact_phones', 'phone_recordid');
+        return $this->belongsToMany('App\Contact', 'contact_phones', 'phone_recordid', 'contact_recordid');
     }
 
     public function schedule()
