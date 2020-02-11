@@ -46,14 +46,18 @@
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/facilities">Facilities</a>
 					</li>
+					@if (Sentinel::getUser())
 					<li class="nav-item responsive_menu">
 						<div class="dropdown">
 							<button class="dropbtn">(+)</button>
 							<div class="dropdown-content">
+								
+								<a href="/organization_create">New Organization</a>
 								<a href="/contact_create">New Contact</a>
 							</div>
 						</div>
 					</li>
+					@endif
 					@if($layout->about_active == 1)
 					<li class="nav-item responsive_menu">
 						<a class="nav-link waves-effect waves-light waves-round" href="/about">About</a>

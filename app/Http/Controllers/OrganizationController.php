@@ -434,7 +434,10 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        $map = Map::find(1);
+        $services_info_list = Service::select('service_recordid', 'service_name')->get();
+        $organization_contacts_list = Contact::select('contact_recordid', 'contact_name')->get();
+        return view('frontEnd.organization-create', compact('map', 'services_info_list', 'organization_contacts_list'));
     }
 
     /**

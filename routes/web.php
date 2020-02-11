@@ -46,10 +46,12 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/facility/{id}/edit', 'LocationController@edit');
     Route::get('/facility/{id}/update', 'LocationController@update');
 
+    Route::resource('/organizations', 'OrganizationController');
     Route::get('/organizations', 'OrganizationController@organizations');
     Route::get('/organization/{id}', 'OrganizationController@organization');
     Route::get('/organization/{id}/edit', 'OrganizationController@edit');
     Route::get('/organization/{id}/update', 'OrganizationController@update');
+    Route::get('/organization_create', 'OrganizationController@create');
 
     Route::get('/contacts', 'ContactController@contacts');
     Route::get('/contact/{id}', 'ContactController@contact');
