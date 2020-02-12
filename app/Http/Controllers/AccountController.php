@@ -38,13 +38,13 @@ class AccountController extends Controller
 
     public function update_password(Request $request, $id) 
     {
-        var_dump($id);
         $user = User::find($id);
         $new_password = $request->new_password;
         $confirm_password = $request->confirm_password;
-        Sentinel::update($user, array('password' => $new_password));
-        return redirect('account/'.$id);
-
+        if ($new_password == $confirm_password) {
+            Sentinel::update($user, array('password' => $new_password));
+            return redirect('account/'.$id);
+        }
     }
 
     public function update(Request $request, $id)
