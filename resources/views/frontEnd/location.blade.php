@@ -91,7 +91,7 @@ table#tbl-location-profile-history {
                             <span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span>
                             <br>
                             @foreach($facility_organizations as $organization)
-                                <a href="/organization/{{$organization->organization_id}}">{{$organization->organization_name}}</a>
+                                <a href="/organization/{{$organization->organization_recordid}}">{{$organization->organization_name}}</a>
                                 <br>
                             @endforeach
                         </h4>
