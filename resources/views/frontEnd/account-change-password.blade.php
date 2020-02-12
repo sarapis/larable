@@ -54,7 +54,7 @@ Edit Service
 <div class="wrapper">
     <div id="services-edit-content" class="container">
         <h1>Change Password</h1>
-        <form action="/account/{{$user_info->id}}/update" method="GET">
+        <form action="/account/{{$user_info->id}}/update_password" method="GET">
             <div class="row"> 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">New Password: </label>

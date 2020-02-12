@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/account/{id}', 'AccountController@account');
     Route::get('/account/{id}/edit', 'AccountController@edit');
     Route::get('/account/{id}/change_password', 'AccountController@change_password');
+    Route::get('/account/{id}/update_password', 'AccountController@update_password');
     Route::get('/account/{id}/update', 'AccountController@update');
 
     Route::get('/services', 'ServiceController@services');
