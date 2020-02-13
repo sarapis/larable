@@ -200,8 +200,8 @@ ul#ui-id-1 {
                     <div id="map" style="width:initial;margin: 0;height: 50vh;"></div>
                     <div class="card-block">
                         <h4 class="card-title">
-                            <b>Locations</b>
-                            @if (Sentinel::getUser())
+                            <b>Locations</b>                            
+                            @if (Sentinel::getUser() && $organization && str_contains(Sentinel::getUser()->user_organization, $organization->organization_recordid))
                             <a href="/facility/{{$service->service_locations}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>
