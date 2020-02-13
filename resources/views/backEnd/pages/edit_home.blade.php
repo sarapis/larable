@@ -9,7 +9,7 @@ Edit Home
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Edit Home</h2>
+            <h2>Home Page Settings</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -27,7 +27,7 @@ Edit Home
             'enctype'=> 'multipart/form-data'
         ]) !!}
         
-            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+           <!--  <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                 {!! Form::label('name', 'Name: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -41,13 +41,25 @@ Edit Home
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
                 </div>
+            </div> -->
+
+            <div id="style" class="form-group {{ $errors->has('style') ? 'has-error' : ''}}">
+                 {!! Form::label('home-page-style','Home Page Style', ['class' => 'col-sm-3 control-label']) !!}
+                <div class="col-sm-6">
+                    <select class="form-control selectpicker" id="home_page_style" name="home_page_style">
+                        @foreach($home_page_style_info_list as $key => $home_page_style_info)                                
+                            <option value="{{$home_page_style_info}}">{{$home_page_style_info}}</option>
+                        @endforeach
+                    </select>
+                    {!! $errors->first('style', '<p class="help-block">:message</p>') !!}
+                </div>
             </div>
 
             <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Home Page Sidebar Content
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Home Page Content
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <textarea id="summernote1" type="text" name="sidebar_content" class="optional form-control col-md-7 col-xs-12">{{$layout->sidebar_content}}</textarea>
+                  <textarea id="summernote_homepage_content" type="text" name="sidebar_content" class="optional form-control col-md-7 col-xs-12">{{$layout->sidebar_content}}</textarea>
                 </div>
             </div>
 
@@ -91,9 +103,9 @@ Edit Home
 @section('scripts')
 <script>
     $(document).ready(function() {
-    $('#summernote').summernote({
-        height: 300
-    });
+        $('#summernote_homepage_content').summernote({
+            height: 300
+        });
     });
 
 

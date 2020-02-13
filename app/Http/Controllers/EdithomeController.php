@@ -37,7 +37,13 @@ class EdithomeController extends Controller
         $page = Page::findOrFail(1);
         $layout = Layout::find(1);
 
-        return view('backEnd.pages.edit_home', compact('page', 'layout'));
+        $home_page_style_info_list = [
+            'Services (ex. larable-dev.sarapisorg)',
+            'Alerts (ex. hc.flospaces.org)',
+            'Custom (if developer wants to create a custom page.)'
+        ];
+
+        return view('backEnd.pages.edit_home', compact('page', 'layout', 'home_page_style_info_list'));
     }
 
     /**
