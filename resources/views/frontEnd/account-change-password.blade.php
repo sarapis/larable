@@ -88,7 +88,6 @@ Edit Service
         $('.alert').hide();
         if ($('#new_password').val() != $('#confirm_password').val()) {
             $('.alert').show();
-            $('#update-password-btn').hide();
         }
     });
 

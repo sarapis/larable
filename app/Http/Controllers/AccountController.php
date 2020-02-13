@@ -44,6 +44,8 @@ class AccountController extends Controller
         if ($new_password == $confirm_password) {
             Sentinel::update($user, array('password' => $new_password));
             return redirect('account/'.$id);
+        } else {
+            return redirect('account/'.$id.'/change_password');
         }
     }
 
