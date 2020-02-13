@@ -59,13 +59,13 @@ Edit Service
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">New Password: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-new-password-div">
-                        <input class="form-control selectpicker"  type="text" id="new_password" name="new_password" required>
+                        <input class="form-control selectpicker"  type="password" id="new_password" name="new_password" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Confirm Password: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-confirm-password-div">
-                        <input class="form-control selectpicker"  type="text" id="confirm_password" name="confirm_password" required>
+                        <input class="form-control selectpicker"  type="password" id="confirm_password" name="confirm_password" required>
                     </div>
                 </div>
                 <div class="form-group alert" style="text-align: center;">
