@@ -68,8 +68,8 @@ Edit Service
                         <input class="form-control selectpicker"  type="text" id="confirm_password" name="confirm_password" required>
                     </div>
                 </div>
-                <div class="form-group" style="text-align: center;">
-                    <h5 style="font-style: italic; color: red;"></h5>
+                <div class="form-group alert" style="text-align: center;">
+                    <h5 style="font-style: italic; color: red;">new password is not matched with confirm password</h5>
                 </div>
                 <div class="form-group"> 
                     <div class="col-md-12">
@@ -84,6 +84,14 @@ Edit Service
 </div>
 
 <script> 
+    $(document).ready(function(){
+        $('.alert').hide();
+        if ($('#new_password').val() != $('#confirm_password').val()) {
+            $('.alert').show();
+            $('#update-password-btn').hide();
+        }
+    });
+
 </script>
 @endsection
 
