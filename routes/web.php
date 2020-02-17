@@ -84,8 +84,39 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::get('/download_service/{id}', 'ServiceController@download');
     Route::get('/download_organization/{id}', 'OrganizationController@download');
 
-    Route::get('tb_alt_taxonomy/all_terms', 'AltTaxonomyController@get_all_terms');
+    // this is for campaign and message
+    Route::resource('campaigns', 'CampaignController');
+    Route::post('updateStatus', 'CampaignController@updateStatus')->name('updateStatus');
+    Route::post('deleteCampaigns', 'CampaignController@deleteCampaigns')->name('deleteCampaigns');
+    Route::post('deleteRecipient', 'CampaignController@deleteRecipient')->name('deleteRecipient');
+    Route::get('/confirm/{id}', 'CampaignController@confirm');
+    Route::get('/campaign_report/{id}', 'CampaignController@campaign_report')->name('campaign_report');
+    Route::post('/campaign_report_action/{id}', 'CampaignController@campaign_report_action')->name('campaign_report_action');
+    Route::post('/campaign_report_update_dynamic_group/{id}', 'CampaignController@campaign_report_update_dynamic_group')->name('campaign_report_update_dynamic_group');
+    Route::resource('messages', 'MessageController');
+    Route::post('send_campaign/{id}', 'BulkSmsController@send_campaign')->name('send_campaign');
+    Route::get('message/sent', 'MessageController@messages_sent');
+    Route::get('/message/recieved', 'MessageController@messages_recieved');
+    Route::post('connect_compaign', 'MessageController@connect_compaign')->name('connect_compaign');
+    Route::post('connect_group', 'MessageController@connect_group')->name('connect_group');
+    Route::post('getContact', 'MessageController@getContact')->name('getContact');
+    Route::get('messagesSetting', 'MessageController@messagesSetting')->name('messagesSetting');
+    Route::post('saveMessageCredential', 'MessageController@saveMessageCredential')->name('saveMessageCredential');
 
+    Route::post('/checkSendgrid', 'HomeController@checkSendgrid')->name('checkSendgrid');
+    Route::post('/checkTwillio', 'HomeController@checkTwillio')->name('checkTwillio');
+    Route::post('/create_group', 'MessageController@create_group')->name('create_group');
+    Route::get('download_attachment/{id}', 'CampaignController@download_attachment');
+    Route::get('createMessage', 'MessageController@createMessage')->name('createMessage');
+
+    Route::post('send_message/{id}', 'BulkSmsController@send_message')->name('send_message');
+    Route::post('group_message/{id}', 'BulkSmsController@group_message')->name('group_message');
+    Route::post('getGroupTag', 'MessageController@getGroupTag')->name('getGroupTag');
+    Route::post('sendMultipleMessage', 'BulkSmsController@sendMultipleMessage')->name('sendMultipleMessage');
+    Route::post('saveContactInfo', 'MessageController@saveContactInfo')->name('saveContactInfo');
+    Route::post('addContactToGroup/{id}', 'GroupController@addContactToGroup')->name('addContactToGroup');
+
+    Route::get('tb_alt_taxonomy/all_terms', 'AltTaxonomyController@get_all_terms');
     Route::post('/range', 'ExploreController@filterValues1');
 });
 
