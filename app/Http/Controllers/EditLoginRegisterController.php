@@ -93,7 +93,14 @@ class EditLoginRegisterController extends Controller
     {
         $layout = Layout::find(1);
         $layout->login_content=$request->login_content;
-        $layout->register_content = $request->register_content;        
+        $layout->register_content = $request->register_content;
+
+        if ($request->activate_login_home == 'checked') {
+            $layout->activate_login_home = 1;
+        } else {
+            $layout->activate_login_home = 0;
+        }
+        
         $layout->save();
 
         if ($this->validator($request,Sentinel::getUser()->id)->fails()) {

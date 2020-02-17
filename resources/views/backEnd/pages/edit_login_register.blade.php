@@ -63,6 +63,14 @@ Edit Login/Register Page
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Activate Login on Home Page</label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <label>On&nbsp;&nbsp;
+                      <input type="checkbox" class="js-switch" value="checked" name="activate_login_home"  @if($layout->activate_login_home==1) checked @endif/>&nbsp;&nbsp;Off
+                    </label>
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-3">
@@ -89,6 +97,18 @@ Edit Login/Register Page
         $('#summernote_login').summernote({
             height: 200
         });
+    });
+
+    $('.js-switch').change(function(){
+      var on = $('.js-switch').prop('checked');
+      if(on == true){
+        $('.item input').removeAttr('disabled');
+        $('.usa-state').removeAttr('disabled');
+      }
+      else{
+        $('.item input').attr('disabled','disabled'); 
+        $('.usa-state').attr('disabled','disabled');
+      }
     });
   </script>
 @endsection
