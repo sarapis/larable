@@ -21,8 +21,10 @@
         "laravelcollective/html": "^5.4",
         "maatwebsite/excel": "~2.1.0",
         "roland/crud": "dev-master",
+        "sendgrid/sendgrid": "^7.4",
         "spatie/geocoder": "^3.4",
         "stevebauman/location": "^3.0",
+        "twilio/sdk": "^5.42",
         "usmanhalalit/laracsv": "^2.0"
     },
     "require-dev": {

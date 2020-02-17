@@ -14,6 +14,7 @@ use App\Analytic;
 use App\Alt_taxonomy;
 use App\Servicetaxonomy;
 use App\Http\Controllers\Controller;
+use Twilio\Rest\Client;
 
 class HomeController extends Controller
 {
@@ -207,5 +208,64 @@ class HomeController extends Controller
         }
         // $services =Service::where('service_name',  'like', '%'.$search.'%')->get();
         return view('frontEnd.services', compact('services','locations', 'chip_title', 'chip_service', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'search_results'));
+    }
+
+    public function checkTwillio(Request $request)
+    {
+        try {
+            $sid = $request->get('twillioSid');
+            $token = $request->get('twillioKey');
+            $twilio = new Client($sid, $token);
+
+            $account = $twilio->api->v2010->accounts("ACd991aaec2fba11620c174e9148e04d7a")
+                ->fetch();
+            return response()->json([
+                'message' => 'Your twillio key is verified!',
+                'success' => true,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            return response()->json([
+                'message' => $th->getMessage(),
+                'success' => false,
+            ], 500);
+
+        }
+    }
+
+    public function checkSendgrid(Request $request)
+    {
+        try {
+            $key = $request->get('sendgridApiKey');
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom('example@example.com', 'test');
+            $email->setSubject('test');
+            $email->addTo('example@example.com', 'test');
+            $email->addContent("text/plain", 'test');
+
+            $sendgrid = new \SendGrid($key);
+            $response = $sendgrid->send($email);
+
+            if ($response->statusCode() == 202) {
+                return response()->json([
+                    'message' => 'Your sendgrid key is verified!',
+                    'success' => true,
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Your sendgrid key is not valid!',
+                    'success' => false,
+                ], 500);
+            }
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'success' => false,
+            ], 500);
+
+        }
     }
 }
