@@ -13,7 +13,7 @@ Map Settings
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Map Settings</h2>
+            <h2>Map</h2>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -29,10 +29,10 @@ Map Settings
             <div class="row">
             <div class="col-md-8"> 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Apply Unique NYC Map Settings</label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                    <label>NYC&nbsp;&nbsp;
-                      <input type="checkbox" class="js-switch" value="checked" name="active"  @if($map->active==1) checked @endif/>&nbsp;&nbsp;Out NYC
+                    <label>On&nbsp;&nbsp;
+                      <input type="checkbox" class="js-switch" value="checked" name="active"  @if($map->active==1) checked @endif/>&nbsp;&nbsp;Off
                     </label>
                 </div>
               </div>
@@ -109,7 +109,7 @@ Map Settings
             <div class="row">              
               <div class="col-md-8"> 
                 <div class="item form-group">
-                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Scan database for geocodable locations
+                  <label class="control-label col-md-6 col-sm-6 col-xs-12" for="email">Scan database to add NYC specific information to locations
                   </label>
                   <div class="col-md-4 col-sm-4 col-xs-12">
                     <a class="btn btn-primary open-td" href="/scan_ungeocoded_location/" id="scan-btn" style="color: white;">Scan</a>                    
