@@ -243,4 +243,10 @@ Route::resource('login_register_edit', 'EditLoginRegisterController');
         Route::resource('analytics', 'AnalyticsController');
  });
 
+Route::resource('religions', 'backend\ReligionsController');
+Route::resource('organizationTypes', 'backend\OrganizationTypeController');
+Route::resource('ContactTypes', 'backend\ContactTypeController');
+Route::resource('FacilityTypes', 'backend\FacilityTypeController');
+Route::resource('languages', 'backend\LanguageController');
+
 Route::post('/contactData', 'ContactController@contactData')->name('contactData');

@@ -45,9 +45,9 @@
             <li><a href="/tb_alt_taxonomy">Service Alt Taxonomy</a></li> -->
             <li><a href="/religions">Religions</a></li>
             <li><a href="/languages">Languages</a></li>
-            <li><a href="/organization_type">Organization Type</a></li>
-            <li><a href="/contact_type">Contact Type</a></li>
-            <li><a href="/facility_type">Facility Type</a></li>
+            <li><a href="/organizationTypes">Organization Type</a></li>
+            <li><a href="/ContactTypes">Contact Type</a></li>
+            <li><a href="/FacilityTypes">Facility Type</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-database"></i> Datasync <span class="fa fa-chevron-down"></span></a>
