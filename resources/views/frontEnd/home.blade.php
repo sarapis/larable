@@ -208,6 +208,17 @@ Home
             </div>
         </div>
     </div>
+    <div class="home_page_content" id="home_page_content" style="text-align: center; margin-bottom: 100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1 col-sm-12 col-md-1"></div>
+                <div class="col-lg-10 col-sm-12 col-md-10">
+                    {!! $home->sidebar_content !!}
+                </div>
+                <div class="col-lg-1 col-sm-12 col-md-1"></div>
+            </div>
+        </div>
+    </div>
     <!-- end browse_category div -->
 
     <!-- start below after serching div -->
