@@ -41,8 +41,8 @@
         </li>
         <li><a><i class="fa fa-line-chart"></i> Taxonomies <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="/service_taxonomy">Service Taxonomy</a></li>
-            <li><a href="/tb_alt_taxonomy">Service Alt Taxonomy</a></li>
+            <!-- <li><a href="/service_taxonomy">Service Taxonomy</a></li>
+            <li><a href="/tb_alt_taxonomy">Service Alt Taxonomy</a></li> -->
             <li><a href="/religions">Religions</a></li>
             <li><a href="/languages">Languages</a></li>
             <li><a href="/organization_type">Organization Type</a></li>
