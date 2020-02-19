@@ -48,7 +48,7 @@ Edit Home
                 <div class="col-sm-6">
                     <select class="form-control selectpicker" id="home_page_style" name="home_page_style">
                         @foreach($home_page_style_info_list as $key => $home_page_style_info)                                
-                            <option value="{{$home_page_style_info}}">{{$home_page_style_info}}</option>
+                            <option value="{{$home_page_style_info}}" @if($home_page_style_info == $layout->home_page_style) selected @endif>{{$home_page_style_info}}</option>
                         @endforeach
                     </select>
                     {!! $errors->first('style', '<p class="help-block">:message</p>') !!}

@@ -44,7 +44,46 @@ Home
         @include('layouts.filter')
         @include('layouts.sidebar')
     </div>
-    <!-- start top form content div -->
+
+    @if ($home->home_page_style == 'Alerts (ex. hc.flospaces.org)')
+    <div class="page-register layout-full page-dark">
+        <div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+            <div class="page-content vertical-align-middle">
+                <div class="row"> 
+                    <div class="col-lg-6 col-sm-12 col-md-6" style="text-align: center;">
+                        <div class="inner_search">
+                            {!! $home->sidebar_content !!}
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6 home-browse-list" style="text-align: center;">
+                        <div class="brand">
+                            <h2 class="brand-text"></h2>
+                            <h3 class="text-white">How can we help you?</h3>
+                        </div>
+                        
+                        <form method="post" role="form" autocomplete="off" class="home_serach_form" action="/search">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <div class="form-group text-left form-material" data-plugin="formMaterial">
+                                <label for="inputName"><h4 class="text-white">I'm looking for </h4></label>
+                                <input type="text" class="form-control" id="inputName" name="find">
+                            </div>
+                            <div class="form-group text-left form-material" data-plugin="formMaterial">
+                                <label for="inputName"><h4 class="text-white">Near an Address?</h4></label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <a href="/services_near_me" class="input-search-btn" style="z-index: 100;"><img src="frontend/assets/examples/images/location.png"></a>
+                                        <input type="text" class="form-control pr-50" id="location1" name="search_address" >
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @else
     <div class="page-register layout-full page-dark">
         <div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
             <div class="page-content vertical-align-middle">
@@ -71,9 +110,9 @@ Home
                 </form>
             </div>
         </div>
-        <!-- End Page -->
     </div>
-    <!--end top form content div -->
+    @endif
+    
 
     <!-- start browse_category div -->
     <div class="browse_category" id="category">
@@ -208,6 +247,8 @@ Home
             </div>
         </div>
     </div>
+
+    @if ($home->home_page_style == 'Services (ex. larable-dev.sarapisorg)')
     <div class="home_page_content" id="home_page_content" style="text-align: center; margin-bottom: 100px;">
         <div class="container">
             <div class="row">
@@ -219,23 +260,8 @@ Home
             </div>
         </div>
     </div>
-    <!-- end browse_category div -->
-
-    <!-- start below after serching div -->
-    @if ($home->bottom_section_active == '1')
-    <div class="after_serach">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-1 col-sm-12 col-md-1"></div>
-                <div class="col-lg-10 col-sm-12 col-md-10">
-                    <div class="inner_search">
-                        {!! $home->sidebar_content !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     @endif
+    
         <!-- end below after serching div -->
     {{-- <div id="content" class="container m-0" style="width: 100%;">
         <div class=" pt-20 pl-15" style="margin-right: 0">

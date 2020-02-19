@@ -117,9 +117,7 @@ class EdithomeController extends Controller
     {
         $layout = Layout::find(1);
         $layout->sidebar_content = $request->sidebar_content;
-
-        // var_dump($request->hasFile('top_background'));
-        // exit;
+        $layout->home_page_style = $request->home_page_style;
        
         if($request->hasFile('top_background')){
             $top_background = $request->file('top_background');
