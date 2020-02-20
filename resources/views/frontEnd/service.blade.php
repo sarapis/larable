@@ -57,6 +57,11 @@ ul#ui-id-1 {
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>
                             @endif
+                            @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                            <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
+                            @endif
                         </h4>
                         @if(isset($service->service_alternate_name))
                         <h4><span><b>Alternate Name:</b></span> {{$service->service_alternate_name}}</h4>

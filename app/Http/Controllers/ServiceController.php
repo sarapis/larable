@@ -665,7 +665,7 @@ class ServiceController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info_list', 'contact_phone', 'phone_number_info', 'organization'));
+        return view('frontEnd.service', compact('service', 'location', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'service_taxonomy_info_list', 'contact_info_list', 'phone_number_info', 'organization'));
     }
 
     public function taxonomy($id)
