@@ -166,10 +166,15 @@ ul#ui-id-1 {
                 @if($contact_info_list)
                 <div class="card page-project">
                     <h4 class="card-title">
-                        <b>Contacts</b>                        
+                        <b>Contacts</b>                                              
                     </h4>
                     @foreach($contact_info_list as $contact_info)
                     <div class="card-block">
+                        @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                            <a href="/contact/{{$contact_info->contact_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
+                        @endif  
                         @if($contact_info->contact_name)
                         <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
                         @endif
@@ -216,63 +221,72 @@ ul#ui-id-1 {
                             @if(isset($service->locations))
                                 @if($service->locations != null)
                                     @foreach($service->locations as $location)
-                                        @if($location->location_name)
-                                        <h4>
-                                            <span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>{{$location->location_name}}</span> 
-                                        </h4>
-                                        @endif
-                                        <h4>
-                                            <span><i class="icon md-pin font-size-24 vertical-align-top "></i>
-                                                @if(isset($location->address))
-                                                    @if($location->address != null)
-                                                        @foreach($location->address as $address)
-                                                        {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
-                                                        @endforeach
-                                                    @endif
-                                                @endif
-                                            </span>
-                                        </h4>
-                                        @if($location->location_hours)
-                                        <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
-                                        @endif
-                                        @if($location->location_transportation)
-                                        <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
-                                        @endif
-                                        @if(isset($location->phones))
-                                            @if($location->phones != null)
-                                                @if(count($location->phones) > 0)
-                                                    <h4>
-                                                        <span>
-                                                            <i class="icon md-phone font-size-24 vertical-align-top "></i>
-                                                    @foreach($location->phones as $phone)
-                                                    @php 
-                                                    $phones ='';
-                                                    $phones = $phones.$phone->phone_number.','; @endphp
-                                                    @endforeach
-                                                    {{ rtrim($phones, ',') }}
-                                                        </span>
-                                                    </h4>  
-                                                @endif
+                                        <div>
+                                            @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                                                <a href="/facility/{{$location->location_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                                </a>
                                             @endif 
-                                        @endif 
-                                        @if(isset($location->accessibilities()->first()->accessibility)) 
-                                        <h4><span><b>Accessibility for disabilities:</b></span> <br/>
-                                            {{$location->accessibilities()->first()->accessibility}}
-                                        </h4>
-                                        @endif
-                                        @if(isset($location->schedules()->first()->schedule_days_of_week)) 
-                                        <h4 class="panel-text"><span class="badge bg-red"><b>Schedules:</b></span>
-                                            @if($location->schedules != null)
-                                                @foreach($location->schedules as $schedule)
-                                                    @if($loop->last)
-                                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
-                                                    @else
-                                                    {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
-                                                    @endif
-                                                @endforeach  
-                                            @endif                     
-                                        </h4>
-                                        @endif
+                                            <div>
+                                                @if($location->location_name)
+                                                <h4>
+                                                    <span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>{{$location->location_name}}</span> 
+                                                </h4>
+                                                @endif
+                                                <h4>
+                                                    <span><i class="icon md-pin font-size-24 vertical-align-top "></i>
+                                                        @if(isset($location->address))
+                                                            @if($location->address != null)
+                                                                @foreach($location->address as $address)
+                                                                {{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                                                                @endforeach
+                                                            @endif
+                                                        @endif
+                                                    </span>
+                                                </h4>
+                                                @if($location->location_hours)
+                                                <h4><span><i class="icon fa-clock-o font-size-24 vertical-align-top "></i> {{$location->location_hours}}</span></h4>
+                                                @endif
+                                                @if($location->location_transportation)
+                                                <h4><span><i class="icon fa-truck font-size-24 vertical-align-top "></i> {{$location->location_transportation}}</span></h4>
+                                                @endif
+                                                @if(isset($location->phones))
+                                                    @if($location->phones != null)
+                                                        @if(count($location->phones) > 0)
+                                                            <h4>
+                                                                <span>
+                                                                    <i class="icon md-phone font-size-24 vertical-align-top "></i>
+                                                            @foreach($location->phones as $phone)
+                                                            @php 
+                                                            $phones ='';
+                                                            $phones = $phones.$phone->phone_number.','; @endphp
+                                                            @endforeach
+                                                            {{ rtrim($phones, ',') }}
+                                                                </span>
+                                                            </h4>  
+                                                        @endif
+                                                    @endif 
+                                                @endif 
+                                                @if(isset($location->accessibilities()->first()->accessibility)) 
+                                                <h4><span><b>Accessibility for disabilities:</b></span> <br/>
+                                                    {{$location->accessibilities()->first()->accessibility}}
+                                                </h4>
+                                                @endif
+                                                @if(isset($location->schedules()->first()->schedule_days_of_week)) 
+                                                <h4 class="panel-text"><span class="badge bg-red"><b>Schedules:</b></span>
+                                                    @if($location->schedules != null)
+                                                        @foreach($location->schedules as $schedule)
+                                                            @if($loop->last)
+                                                            {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}}
+                                                            @else
+                                                            {{$schedule->schedule_days_of_week}} {{$schedule->schedule_opens_at}} {{$schedule->schedule_closes_at}},
+                                                            @endif
+                                                        @endforeach  
+                                                    @endif                     
+                                                </h4>
+                                                @endif
+                                            </div>
+                                        </div>   
                                         <hr/>
                                     @endforeach
                                 @endif
