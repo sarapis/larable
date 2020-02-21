@@ -112,6 +112,11 @@ ul#ui-id-1 {
                                     <i class="icon md-edit" style="margin-right: 0px;"></i>
                                 </a>
                                 @endif
+                                @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                                <a href="/service/{{$service->service_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                </a>
+                                @endif
               							</h4>
             							  <h4 style="line-height: inherit;">{!! str_limit($service->service_description, 200) !!}</h4>
                             <h4 style="line-height: inherit;">
@@ -200,6 +205,11 @@ ul#ui-id-1 {
                         </h4>
                         @foreach($organization->contact as $contact_info)
                         <div class="card-block">
+                            @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                                <a href="/contact/{{$contact_info->contact_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                </a>
+                            @endif
                             @if($contact_info->contact_name)
                             <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
                             @endif
@@ -245,11 +255,16 @@ ul#ui-id-1 {
           						<div class="p-10">
           						@if($location_info_list)
           							@foreach($location_info_list as $location)
+                        @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                            <a href="/facility/{{$location->location_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                <i class="icon md-edit" style="margin-right: 0px;"></i>
+                            </a>
+                        @endif
           							<h4>
           								<span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>
           									{{$location->location_name}}
           								</span> 
-          							</h4>
+          							</h4>                        
           							<h4>
           								<span><i class="icon md-pin font-size-24 vertical-align-top  "></i>
           									@if(isset($location->address))
