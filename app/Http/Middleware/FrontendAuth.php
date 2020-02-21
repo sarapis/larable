@@ -20,7 +20,7 @@ class FrontendAuth
     {
         $layout = Layout::find(1);
         $active = $layout->activate_login_home;
-        if ($active == 0) {
+        if ($active == 1) {
             return $next($request);
         }
         if (Sentinel::guest()) {
