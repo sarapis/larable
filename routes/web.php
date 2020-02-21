@@ -21,7 +21,7 @@ Route::get('/home', function () {
 //     return redirect('/login');
 // });
 
-Route::group(['middleware' => ['web'] ], function () {
+Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/', ['uses' => 'HomeController@home']);
     Route::match(['get', 'post'], '/search', [
         'uses'          => 'ExploreController@filter'
@@ -120,12 +120,12 @@ Route::group(['middleware' => ['web'] ], function () {
     Route::post('/range', 'ExploreController@filterValues1');
 });
 
-Route::resource('login_register_edit', 'EditLoginRegisterController');
-
  Route::group(['middleware' => ['web', 'auth', 'permission'] ], function () {
         Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'home.dashboard']);
 
         Route::resource('pages', 'PagesController');
+        Route::resource('login_register_edit', 'EditLoginRegisterController');
+
         //users
         Route::resource('user', 'UserController');
         Route::get('user/{user}/permissions', ['uses' => 'UserController@permissions', 'as' => 'user.permissions']);
