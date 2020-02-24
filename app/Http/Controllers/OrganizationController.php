@@ -615,10 +615,14 @@ class OrganizationController extends Controller
             $organization->phones()->sync($phone_recordids);
         }
 
+        $other_location_recordid_list = explode(',', $organization->organization_locations);
+
         if ($request->organization_locations) {
-            $organization->organization_locations = join(',', $request->organization_locations);
-        } else {
-            $organization->organization_locations = '';
+            foreach ($request->organization_locations as $key => $organization_location_name) {               
+                $organization_location_info = Location::where('location_recordid', '=', $other_location_recordid_list[$key])->select('location_name', 'location_recordid')->first();
+                $organization_location_info->location_name = $organization_location_name;
+                $organization_location_info->save();
+            }
         }
        
         $organization->save();

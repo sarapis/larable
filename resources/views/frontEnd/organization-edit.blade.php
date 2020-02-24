@@ -189,7 +189,7 @@ Organization Edit
                         @endforeach
                     </ol>
                 </div>
-                <div class="form-group">                 
+                <!-- <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Other Locations: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
                         <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_locations" name="organization_locations[]">
@@ -198,6 +198,22 @@ Organization Edit
                             @endforeach
                         </select>
                     </div>           
+                </div> -->
+
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Other Locations: </label>
+                    <!-- <a id="add-location-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a> -->
+                    <ol id="other-locations-ul">
+                        @foreach($organization->location as $location)
+                        <li class="organization-locations-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
+                                <input class="form-control selectpicker organization_locations"  type="text" name="organization_locations[]"value="{{$location->location_name}}">
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
                 </div>
 
                 <div class="form-group"> 
@@ -253,8 +269,19 @@ Organization Edit
           + "</div>"
           + "</li>" );
     });
+    $("#add-location-input").click(function(){
+        $("ol#other-locations-ul").append(
+            "<li class='organization-locations-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 organization-locations-div'>"
+          + "<input class='form-control selectpicker organization_locations'  type='text' name='organization_locations[]'>"
+          + "</div>"
+          + "</li>" );
+    });
 </script>
 @endsection
+
+
+
 
 
 
