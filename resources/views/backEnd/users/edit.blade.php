@@ -7,6 +7,14 @@ Edit User
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
+<style type="text/css">  
+    .dropdown-menu.open {
+        max-height: 156px;
+        overflow: hidden;        
+        width: 100%;
+    }
+</style>
+
 <div class="panel panel-default">
    <div class="panel-heading">Edit user: {{$user->name}}</div>
 
