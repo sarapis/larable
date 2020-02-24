@@ -189,16 +189,6 @@ Organization Edit
                         @endforeach
                     </ol>
                 </div>
-                <!-- <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Other Locations: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="organization_locations" name="organization_locations[]">
-                            @foreach($organization_locations_list as $key => $organization_loc)                                
-                                <option value="{{$organization_loc->location_recordid}}" @if (in_array($organization_loc->location_recordid, $location_info_list)) selected @endif>{{$organization_loc->location_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div> -->
 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Other Locations: </label>
@@ -206,10 +196,14 @@ Organization Edit
                         <span class="glyphicon glyphicon-plus-sign"></span>
                     </a> -->
                     <ol id="other-locations-ul">
-                        @foreach($organization->location as $location)
+                        @foreach($location_info_list as $location_info)
                         <li class="organization-locations-li mb-2">
                             <div class="col-md-12 col-sm-12 col-xs-12 organization-locations-div">
-                                <input class="form-control selectpicker organization_locations"  type="text" name="organization_locations[]"value="{{$location->location_name}}">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="5" id="organization_locations" name="organization_locations[]">
+                                    @foreach($organization_locations_list as $key => $organization_loc)
+                                        <option value="{{$organization_loc->location_recordid}}" @if ($organization_loc->location_recordid==$location_info) selected @endif>{{$organization_loc->location_name}}</option>
+                                    @endforeach
+                                </select>
                             </div> 
                         </li> 
                         @endforeach
@@ -277,8 +271,15 @@ Organization Edit
           + "</div>"
           + "</li>" );
     });
+
 </script>
 @endsection
+
+
+ 
+               
+            
+
 
 
 
