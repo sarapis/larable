@@ -241,6 +241,8 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
         Route::resource('data', 'DataController');
 
         Route::resource('analytics', 'AnalyticsController');
+
+        Route::post('/religions_change_activate', 'backend\ReligionsController@change_activate');
  });
 
 Route::resource('religions', 'backend\ReligionsController');

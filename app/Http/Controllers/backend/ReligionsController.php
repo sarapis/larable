@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\Religion;
+use App\Layout;
 use DB;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -18,8 +19,21 @@ class ReligionsController extends Controller
     public function index()
     {
         $religions = Religion::get();
-        return View('backEnd.religions.index', compact('religions'));
+        $layout = Layout::find(1);
+        return View('backEnd.religions.index', compact('religions', 'layout'));
 
+    }
+
+    public function change_activate(Request $request) 
+    {
+        var_dump($request->on);
+        $layout = Layout::find(1);
+        if ($request->on == 'true') {
+            $layout->activate_religions = 0;
+        } else {
+            $layout->activate_religions = 1;
+        }
+        $layout->save();
     }
 
     /**
