@@ -243,6 +243,10 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
         Route::resource('analytics', 'AnalyticsController');
 
         Route::post('/religions_change_activate', 'backend\ReligionsController@change_activate');
+        Route::post('/languages_change_activate', 'backend\LanguageController@change_activate');
+        Route::post('/organizationTypes_change_activate', 'backend\OrganizationTypeController@change_activate');
+        Route::post('/ContactTypes_change_activate', 'backend\ContactTypeController@change_activate');
+        Route::post('/FacilityTypes_change_activate', 'backend\FacilityTypeController@change_activate');
  });
 
 Route::resource('religions', 'backend\ReligionsController');

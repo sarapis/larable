@@ -7,6 +7,19 @@ Organization type
 
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
+
+    <div class="x_panel">
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Activate</label>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+              <label>On&nbsp;&nbsp;
+                <input type="checkbox" class="js-switch" value="checked" id="activate_organization_types" name="activate_organization_types" @if($layout->activate_organization_types==0) checked @endif />&nbsp;&nbsp;Off
+              </label>
+          </div>
+      </div>
+    </div>
+
+
     <div class="x_panel">
       <div class="x_title">
         <h2>Organization types</h2>
@@ -78,6 +91,7 @@ Organization type
         @endif
       </div>
     </div>
+
   </div>
 </div>
 @endsection
@@ -193,9 +207,39 @@ Organization type
         return false;
     });
     //End Activate Function
+
+    $('.js-switch').change(function(){
+        var on = $('.js-switch').prop('checked');
+        if(on == true){
+          $('.item input').removeAttr('disabled');
+          $('.usa-state').removeAttr('disabled');
+        }
+        else{
+          $('.item input').attr('disabled','disabled'); 
+          $('.usa-state').attr('disabled','disabled');
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/organizationTypes_change_activate",
+            data: {
+              on: on
+            },
+            success: function (response) {
+              console.log(response)
+            }, 
+            error: function (data) {
+              console.log(data);
+            }
+        });
+    });
     
-
-
    
    function get_Selected_id() {
     var searchIDs = $("input[name=sel]:checked").map(function(){

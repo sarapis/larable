@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\OrganizationType;
+use App\Layout;
 use DB;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -18,8 +19,8 @@ class OrganizationTypeController extends Controller
     public function index()
     {
         $organizationTypes = OrganizationType::get();
-
-        return view('backEnd.organizationType.index', compact('organizationTypes'));
+        $layout = Layout::find(1);
+        return view('backEnd.organizationType.index', compact('organizationTypes', 'layout'));
     }
 
     /**
@@ -34,6 +35,17 @@ class OrganizationTypeController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+
+    public function change_activate(Request $request) 
+    {
+        $layout = Layout::find(1);
+        if ($request->on == 'true') {
+            $layout->activate_organization_types = 0;
+        } else {
+            $layout->activate_organization_types = 1;
+        }
+        $layout->save();
     }
 
     /**

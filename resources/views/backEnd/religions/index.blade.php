@@ -10,14 +10,11 @@ Religions
     <div class="x_panel">
       <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Activate</label>
-       <!--  <form action="/religions/change_activate" id="activate_religions_form" method="POST">
-        {{ csrf_field() }} -->
           <div class="col-md-8 col-sm-8 col-xs-12">
               <label>On&nbsp;&nbsp;
                 <input type="checkbox" class="js-switch" value="checked" id="activate_religions" name="activate_religions" @if($layout->activate_religions==0) checked @endif />&nbsp;&nbsp;Off
               </label>
           </div>
-      <!-- </form> -->
       </div>
     </div>
     <div class="x_panel">

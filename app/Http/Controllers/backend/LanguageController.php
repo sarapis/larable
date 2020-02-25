@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\AllLanguage;
+use App\Layout;
 use DB;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -18,8 +19,8 @@ class LanguageController extends Controller
     public function index()
     {
         $languages = AllLanguage::get();
-
-        return view('backEnd.languages.index', compact('languages'));
+        $layout = Layout::find(1);
+        return view('backEnd.languages.index', compact('languages', 'layout'));
     }
 
     /**
@@ -31,6 +32,18 @@ class LanguageController extends Controller
     {
         return view('backEnd.languages.create');
 
+    }
+
+    public function change_activate(Request $request) 
+    {
+        
+        $layout = Layout::find(1);
+        if ($request->on == 'true') {
+            $layout->activate_languages = 0;
+        } else {
+            $layout->activate_languages = 1;
+        }
+        $layout->save();
     }
 
     /**
