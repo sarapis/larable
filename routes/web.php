@@ -240,7 +240,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
 
         Route::resource('data', 'DataController');
 
-        Route::resource('analytics', 'AnalyticsController');
+        Route::resource('analytics', 'AnalyticsController');        
 
         Route::post('/religions_change_activate', 'backend\ReligionsController@change_activate');
         Route::post('/languages_change_activate', 'backend\LanguageController@change_activate');

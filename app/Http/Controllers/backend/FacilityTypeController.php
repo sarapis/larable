@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\facilityType;
+use App\Layout;
 use DB;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -18,8 +19,8 @@ class FacilityTypeController extends Controller
     public function index()
     {
         $FacilityTypes = facilityType::get();
-
-        return view('backEnd.facility_type.index', compact('FacilityTypes'));
+        $layout = Layout::find(1);
+        return view('backEnd.facility_type.index', compact('FacilityTypes', 'layout'));
     }
 
     /**
@@ -31,6 +32,17 @@ class FacilityTypeController extends Controller
     {
         return view('backEnd.facility_type.create');
 
+    }
+
+    public function change_activate(Request $request) 
+    {
+        $layout = Layout::find(1);
+        if ($request->on == 'true') {
+            $layout->activate_facility_types = 0;
+        } else {
+            $layout->activate_facility_types = 1;
+        }
+        $layout->save();
     }
 
     /**

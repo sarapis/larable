@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\contactType;
+use App\Layout;
 use DB;
 use Illuminate\Http\Request;
 use Sentinel;
@@ -18,8 +19,8 @@ class ContactTypeController extends Controller
     public function index()
     {
         $ContactTypes = contactType::get();
-
-        return view('backEnd.contactType.index', compact('ContactTypes'));
+        $layout = Layout::find(1);
+        return view('backEnd.contactType.index', compact('ContactTypes', 'layout'));
     }
 
     /**
@@ -31,6 +32,17 @@ class ContactTypeController extends Controller
     {
         return view('backEnd.contactType.create');
 
+    }
+
+    public function change_activate(Request $request) 
+    {
+        $layout = Layout::find(1);
+        if ($request->on == 'true') {
+            $layout->activate_contact_types = 0;
+        } else {
+            $layout->activate_contact_types = 1;
+        }
+        $layout->save();
     }
 
     /**
