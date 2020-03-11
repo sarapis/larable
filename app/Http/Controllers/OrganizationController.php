@@ -12,6 +12,7 @@ use App\Alt_taxonomy;
 use App\Servicetaxonomy;
 use App\Service;
 use App\Contact;
+use App\Comment;
 use App\Phone;
 use App\Location;
 use App\Airtablekeyinfo;
@@ -23,6 +24,8 @@ use App\Source_data;
 use App\Services\Stringtoint;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use Sentinel;
+
 
 class OrganizationController extends Controller
 {
@@ -423,7 +426,9 @@ class OrganizationController extends Controller
             }
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags'));
+        $comment_list = Comment::where('comments_organization', '=', $id)->get();
+
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags', 'comment_list'));
     }
 
     public function tagging(Request $request, $id)
@@ -645,6 +650,42 @@ class OrganizationController extends Controller
         $organization->save();
 
         return redirect('organization/'.$id);
+    }
+
+    public function add_comment(Request $request, $id)
+    {
+
+        $organization = Organization::find($id);
+        $comment_content = $request->reply_content;
+        $user = Sentinel::getUser();
+        $date_time = date("Y-m-d h:i:sa");
+        $comment = new Comment();
+
+        $comment_recordids = Comment::select("comments_recordid")->distinct()->get();
+        $comment_recordid_list = array();
+        foreach ($comment_recordids as $key => $value) {
+            $comment_recordid = $value->comments_recordid;
+            array_push($comment_recordid_list, $comment_recordid);
+        }
+        $comment_recordid_list = array_unique($comment_recordid_list);
+        $new_recordid = Comment::max('comments_recordid') + 1;
+        if (in_array($new_recordid, $comment_recordid_list)) {
+            $new_recordid = Comment::max('comments_recordid') + 1;
+        }
+
+        $comment->comments_recordid = $new_recordid;
+        $comment->comments_content = $comment_content;
+        $comment->comments_user = $user->id;
+        $comment->comments_user_firstname = $user->first_name;
+        $comment->comments_user_lastname = $user->last_name;
+        $comment->comments_organization = $id;
+        $comment->comments_datetime = $date_time;
+        $comment->save();
+
+        $comment_list = Comment::where('comments_organization', '=', $id)->get();
+
+        return redirect('organization/' . $id);
+
     }
 
     /**

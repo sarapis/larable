@@ -48,6 +48,11 @@ ul#ui-id-1 {
     margin-top: 12px !important;
 }
 
+.comment-author {
+    color: #3949ab !important;
+    font-size: 18px !important;
+}
+
 </style>
 
 @section('content')
@@ -314,6 +319,47 @@ ul#ui-id-1 {
           						</div>
                     </div>
                   </div>
+
+                  <div class="pt-5 pb-0">
+                      <h3>Comments</h3>
+                      <div class="card">
+                          <div class="card-block">
+                              <div class="comment-body media-body">
+                                  @foreach($comment_list as $key => $comment)
+                                  <a class="comment-author" href="javascript:void(0)">{{$comment->comments_user_firstname}}
+                                      {{$comment->comments_user_lastname}}</a>
+                                  <div class="comment-meta">
+                                      <span class="date">{{$comment->comments_datetime}}</span>
+                                  </div>
+                                  <div class="comment-content">
+                                      <p style="color: black;">{{$comment->comments_content}}</p>
+                                  </div>
+                                  <hr>
+                                  @endforeach
+                                  <div class="comment-actions">
+                                      <a class="active" id="reply-btn" href="javascript:void(0)" role="button">Add a
+                                          comment</a>
+                                  </div>
+                                  <form class="comment-reply"
+                                      action="/organization/{{$organization->organization_recordid}}/add_comment"
+                                      method="POST">
+                                      {{ csrf_field() }}
+                                      <div class="form-group">
+                                          <textarea class="form-control" id="reply_content" name="reply_content" rows="3">
+                                          </textarea>
+                                      </div>
+                                      <div class="form-group">
+                                          <button type="submit"
+                                              class="btn btn-primary waves-effect waves-classic">Post</button>
+                                          <button type="button" id="close-reply-window-btn"
+                                              class="btn btn-link grey-600 waves-effect waves-classic">Close</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
               </div>
         </div>
     </div>
@@ -335,6 +381,11 @@ ul#ui-id-1 {
       },
       showAutocompleteOnFocus: true
       });
+  });
+
+  $(document).ready(function() {
+      $('.comment-reply').hide();
+      $('#reply_content').val('');
   });
 
   $(document).ready(function(){  
@@ -457,6 +508,17 @@ ul#ui-id-1 {
 
       });
   });
+
+
+  $("#reply-btn").on('click', function(e) {
+      e.preventDefault();
+      $('.comment-reply').show();
+  });
+  $("#close-reply-window-btn").on('click', function(e) {
+      e.preventDefault();
+      $('.comment-reply').hide();
+  });
+  
 </script>
 @endsection
 
