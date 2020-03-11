@@ -26,7 +26,7 @@ class ReligionsController extends Controller
 
     public function change_activate(Request $request) 
     {
-        var_dump($request->on);
+        
         $layout = Layout::find(1);
         if ($request->on == 'true') {
             $layout->activate_religions = 0;

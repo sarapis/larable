@@ -12,6 +12,7 @@
   <link rel="shortcut icon" href="../../frontend/assets/images/favicon.ico">
   <!-- Stylesheets -->
    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+   <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css" />
    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/
     jquery-ui.css"> -->
@@ -33,6 +34,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+  <link href="http://sliptree.github.io/bootstrap-tokenfield/dist/css/tokenfield-typeahead.css" rel="stylesheet">
+  <link href="http://sliptree.github.io/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css" rel="stylesheet">
   
   <!-- Fonts -->
   <link rel="stylesheet" href="../../../../frontend/global/fonts/web-icons/web-icons.css">
@@ -50,7 +54,15 @@
 
   <link rel="stylesheet" href="../../frontend/assets/examples/css/pages/register.css">
   
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 <script type="text/javascript" src="../../js/jquery.jticker.js"></script>
 <script type="text/javascript">

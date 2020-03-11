@@ -43,6 +43,11 @@ ul#ui-id-1 {
 .morelink{
   color: #428bca;
 }
+
+#tagging-div {
+    margin-top: 12px !important;
+}
+
 </style>
 
 @section('content')
@@ -234,12 +239,29 @@ ul#ui-id-1 {
               </div>
 
               <div class="col-md-4 property">
-          				<div class="pt-10 pb-10 pl-0 btn-download">
+          				<!-- <div class="pt-10 pb-10 pl-0 btn-download">
           					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
           					<button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
                         <div class="sharethis-inline-share-buttons"></div>
                     </button>
-          				</div>
+          				</div> -->
+
+                  <div class="pt-10 pb-10 pl-0 btn-download">
+                      <form method="GET" action="/organization/{{$organization->organization_recordid}}/tagging"
+                          id="organization_tagging">
+                          <div class="row m-0" id="tagging-div">
+                              <div class="col-md-10">
+                                  <input type="text" class="form-control" id="tokenfield" name="tokenfield"
+                                      value="{{$organization->organization_tag}}" />
+                              </div>
+                              <div class="col-md-2">
+                                  <button type="submit" class="btn btn-secondary btn-tag-save">
+                                      <i class="fas fa-save"></i>
+                                  </button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
     				
           				<div class="card">
           					<div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
@@ -297,7 +319,24 @@ ul#ui-id-1 {
     </div>
 </div>
 
+<script type="text/javascript" src="http://sliptree.github.io/bootstrap-tokenfield/dist/bootstrap-tokenfield.js">
+</script>
+<script type="text/javascript"
+    src="http://sliptree.github.io/bootstrap-tokenfield/docs-assets/js/typeahead.bundle.min.js"></script>
 <script>
+
+  var tag_source = <?php print_r(json_encode($existing_tags)) ?>; 
+
+  $(document).ready(function() {   
+      $('#tokenfield').tokenfield({
+      autocomplete: {
+          source: tag_source,
+          delay: 100
+      },
+      showAutocompleteOnFocus: true
+      });
+  });
+
   $(document).ready(function(){  
     setTimeout(function(){
       var locations = <?php print_r(json_encode($locations)) ?>;

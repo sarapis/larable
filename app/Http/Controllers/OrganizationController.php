@@ -412,7 +412,26 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list'));
+        $existing_tag_element_list = Organization::whereNotNull('organization_tag')->get()->pluck('organization_tag');
+        $existing_tags = [];
+        foreach ($existing_tag_element_list as $key => $existing_tag_element) {
+            $existing_tag_list = explode(", ", $existing_tag_element);
+            foreach ($existing_tag_list as $key => $existing_tag) {
+                if (!in_array($existing_tag, $existing_tags, true)) {
+                    array_push($existing_tags, $existing_tag);
+                }
+            }
+        }
+
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags'));
+    }
+
+    public function tagging(Request $request, $id)
+    {
+        $organization = Organization::find($id);
+        $organization->organization_tag = $request->tokenfield;
+        $organization->save();
+        return redirect('organization/' . $id);
     }
 
     public function download($id)

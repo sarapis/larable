@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::resource('/organizations', 'OrganizationController');
     Route::get('/organizations', 'OrganizationController@organizations');
     Route::get('/organization/{id}', 'OrganizationController@organization');
+    Route::get('/organization/{id}/tagging', 'OrganizationController@tagging');
     Route::get('/organization/{id}/edit', 'OrganizationController@edit');
     Route::get('/organization/{id}/update', 'OrganizationController@update');
     Route::get('/organization_create', 'OrganizationController@create');
