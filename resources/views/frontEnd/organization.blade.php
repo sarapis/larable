@@ -210,8 +210,7 @@ ul#ui-id-1 {
                     @endif
 
                     <div class="card page-project">
-                        <h4 class="card-title">
-                            <b>Contacts</b>                        
+                        <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;"> Contacts (@if(isset($organization->contact)){{$organization->contact->count()}}@else 0 @endif)
                         </h4>
                         @foreach($organization->contact as $contact_info)
                         <div class="card-block">
@@ -518,7 +517,7 @@ ul#ui-id-1 {
       e.preventDefault();
       $('.comment-reply').hide();
   });
-  
+
 </script>
 @endsection
 
