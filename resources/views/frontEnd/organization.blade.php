@@ -320,6 +320,18 @@ ul#ui-id-1 {
                   </div>
 
                   <div class="pt-5 pb-0">
+                      <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Session 
+                      </h4>
+                      <div class="card">
+                          <div class="card-block">
+                              <div class="session-body media-body">
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="pt-5 pb-0">
                       <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Comments 
                       </h4>
                       <div class="card">
