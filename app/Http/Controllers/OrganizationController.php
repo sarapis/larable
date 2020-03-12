@@ -13,6 +13,7 @@ use App\Servicetaxonomy;
 use App\Service;
 use App\Contact;
 use App\Comment;
+use App\Session;
 use App\Phone;
 use App\Location;
 use App\Airtablekeyinfo;
@@ -427,8 +428,9 @@ class OrganizationController extends Controller
         }
 
         $comment_list = Comment::where('comments_organization', '=', $id)->get();
+        $session_list = Session::where('session_organization', '=', $id)->get();
 
-        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags', 'comment_list'));
+        return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags', 'comment_list', 'session_list'));
     }
 
     public function tagging(Request $request, $id)
