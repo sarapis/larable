@@ -328,17 +328,19 @@ ul#ui-id-1 {
                                   <table class="table table-striped jambo_table bulk_action nowrap" id="tbl-session">
                                       <thead>
                                           <tr>
-                                              <th class="default-active">Id</th>
+                                              <!-- <th class="default-active">Id</th> -->
                                               <th class="default-active">Status</th>
                                               <th class="default-active">Date</th>
+                                              <th class="default-active">Edits</th>
                                           </tr>
                                       </thead>
                                       <tbody>
                                           @foreach($session_list as $key => $session)
                                           <tr>
-                                              <td>{{$session->session_recordid}}</td>
-                                              <td>{{$session->session_verification_status}}</td>
+                                              <!-- <td>{{$session->session_recordid}}</td> -->
                                               <td>{{$session->session_performed_at}}</td>
+                                              <td>{{$session->session_verification_status}}</td>
+                                              <td>{{$session->session_edits}}</td>
                                           </tr>
                                           @endforeach
                                       <tbody>
