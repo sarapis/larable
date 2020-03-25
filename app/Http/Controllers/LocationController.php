@@ -317,10 +317,16 @@ class LocationController extends Controller
         $result = [];
         $facility_info = [];
         foreach ($facilities as $facility) {
+            
             $facility_info[0] = '';
             $facility_info[1] = $facility->location_recordid; 
             $facility_info[2] = str_limit($facility->location_name, 30, '...');
-            $facility_info[3] = str_limit($facility->organization['organization_name'], 25, '...');
+            if ($facility->organization) {
+                $facility_info[3] = str_limit($facility->organization['organization_name'], 25, '...');
+            } else {
+                $facility_info[3] = '';
+            }
+            
 
             $facility_full_address_info = '';
             if (isset($facility->address[0])) {
