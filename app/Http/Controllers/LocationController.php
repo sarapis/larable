@@ -11,6 +11,7 @@ use App\Schedule;
 use App\Phone;
 use App\Address;
 use App\Organization;
+use App\Comment;
 use App\Airtablekeyinfo;
 use App\Locationaddress;
 use App\Locationphone;
@@ -23,6 +24,7 @@ use App\Source_data;
 use App\Services\Stringtoint;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
+use Sentinel;
 
 class LocationController extends Controller
 {
@@ -361,8 +363,47 @@ class LocationController extends Controller
 
         $facility_organization_recordid_list = explode(',', $facility->location_organization);
         $facility_organizations = Organization::whereIn('organization_recordid', $facility_organization_recordid_list)->orderBy('organization_name')->paginate(10);
+
+        $comment_list = Comment::where('comments_location', '=', $id)->get();
         
-        return view('frontEnd.location', compact('facility', 'map', 'facility_organizations', 'facility_services'));
+        return view('frontEnd.location', compact('facility', 'map', 'facility_organizations', 'facility_services', 'comment_list'));
+
+    }
+
+
+    public function add_comment(Request $request, $id)
+    {
+
+        $facility = Location::find($id);
+        $comment_content = $request->reply_content;
+        $user = Sentinel::getUser();
+        $date_time = date("Y-m-d h:i:sa");
+        $comment = new Comment();
+
+        $comment_recordids = Comment::select("comments_recordid")->distinct()->get();
+        $comment_recordid_list = array();
+        foreach ($comment_recordids as $key => $value) {
+            $comment_recordid = $value->comments_recordid;
+            array_push($comment_recordid_list, $comment_recordid);
+        }
+        $comment_recordid_list = array_unique($comment_recordid_list);
+        $new_recordid = Comment::max('comments_recordid') + 1;
+        if (in_array($new_recordid, $comment_recordid_list)) {
+            $new_recordid = Comment::max('comments_recordid') + 1;
+        }
+
+        $comment->comments_recordid = $new_recordid;
+        $comment->comments_content = $comment_content;
+        $comment->comments_user = $user->id;
+        $comment->comments_user_firstname = $user->first_name;
+        $comment->comments_user_lastname = $user->last_name;
+        $comment->comments_location = $id;
+        $comment->comments_datetime = $date_time;
+        $comment->save();
+
+        $comment_list = Comment::where('comments_location', '=', $id)->get();
+
+        return redirect('facility/' . $id);
 
     }
 
