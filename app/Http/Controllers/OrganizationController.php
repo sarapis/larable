@@ -275,7 +275,7 @@ class OrganizationController extends Controller
 
     public function organizations()
     {
-        $organizations = Organization::orderBy('organization_status_sort')->orderBy('organization_name')->paginate(10);
+        $organizations = Organization::orderBy('organization_status_sort')->orderBy('organization_name')->paginate(20);
         $map = Map::find(1);
         $parent_taxonomy = [];
         $child_taxonomy = [];
