@@ -26,6 +26,11 @@ ul#ui-id-1 {
 #map{
     position: fixed !important;
 }
+.card-columns {
+    -webkit-column-count: 2;
+    column-count: 4 !important;
+}
+
 </style>
 
 @section('content')
