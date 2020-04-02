@@ -356,6 +356,7 @@ class LocationController extends Controller
     public function facility($id) 
     {
         $facility = Location::where('location_recordid', '=', $id)->first();
+        $locations = Location::with('services', 'address', 'phones')->where('location_recordid', '=', $id)->get();
         $map = Map::find(1);
 
         $facility_services_recordid_list = explode(',', $facility->location_services);
@@ -366,7 +367,7 @@ class LocationController extends Controller
 
         $comment_list = Comment::where('comments_location', '=', $id)->get();
         
-        return view('frontEnd.location', compact('facility', 'map', 'facility_organizations', 'facility_services', 'comment_list'));
+        return view('frontEnd.location', compact('facility', 'map', 'locations', 'facility_organizations', 'facility_services', 'comment_list'));
 
     }
 
