@@ -6,6 +6,10 @@
 
 
 <style type="text/css">
+.dropdown-menu.show {
+    max-height: 300px !important;
+    width: 100% !important;
+}
 .table a{
     text-decoration:none !important;
     color: rgba(40,53,147,.9);
@@ -45,7 +49,7 @@ ul#ui-id-1 {
 }
 
 #tagging-div {
-    margin-top: 12px !important;
+    width: 100% !important;
 }
 
 .comment-author {
@@ -243,23 +247,33 @@ ul#ui-id-1 {
               </div>
 
               <div class="col-md-4 property">
-          				<!-- <div class="pt-10 pb-10 pl-0 btn-download">
-          					<a href="/download_organization/{{$organization->organization_recordid}}" class="btn btn-primary btn-button">Download PDF</a>
-          					<button type="button" class="btn btn-primary btn-button" style="padding: 1px;">
-                        <div class="sharethis-inline-share-buttons"></div>
-                    </button>
-          				</div> -->
+
+          				<div class="pt-10 pb-10 pl-0" style="display: flex;">
+          					  <div class="dropdown" style="width: 100%; float: right;">
+                          <button class="btn btn-primary dropdown-toggle" type="button"
+                              id="dropdownMenuButton-group" data-toggle="dropdown" aria-haspopup="true"
+                              aria-expanded="false" style="width: 100%;">
+                              (+) Add New
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-new"
+                              style="width: 100%;">
+                              <a href="/service_create/{{$organization->organization_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Service</a>
+                              <a href="/contact_create/{{$organization->organization_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Contact</a>
+                              <a href="/facility_create/{{$organization->organization_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Facility</a>
+                          </div>
+                      </div>
+          				</div>
 
                   <div class="pt-10 pb-10 pl-0 btn-download">
                       <form method="GET" action="/organization/{{$organization->organization_recordid}}/tagging"
                           id="organization_tagging">
-                          <div class="row m-0" id="tagging-div">
+                          <div class="row" id="tagging-div">
                               <div class="col-md-10">
                                   <input type="text" class="form-control" id="tokenfield" name="tokenfield"
                                       value="{{$organization->organization_tag}}" />
                               </div>
                               <div class="col-md-2">
-                                  <button type="submit" class="btn btn-secondary btn-tag-save">
+                                  <button type="submit" class="btn btn-secondary btn-tag-save" style="float: right;">
                                       <i class="fas fa-save"></i>
                                   </button>
                               </div>
