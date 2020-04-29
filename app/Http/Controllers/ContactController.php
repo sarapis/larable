@@ -309,6 +309,13 @@ class ContactController extends Controller
         return view('frontEnd.contact-create', compact('map', 'organization_name_list'));
     }
 
+    public function create_in_organization($id)
+    {
+        $map = Map::find(1);
+        $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
+        return view('frontEnd.contact-create-in-organization', compact('map', 'organization'));
+    }
+
 
     public function add_new_contact(Request $request)
     {
