@@ -14,49 +14,13 @@ Contact Create
         width: 100%;
     }
 
-    button[data-id="contact_first_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_middle_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_last_name"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
     button[data-id="contact_organization_name"] {
         height: 100%;
         border: 1px solid #ddd;
     }
 
-    button[data-id="contact_languages_spoken"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_other_languages"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_organization_type"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_pronouns"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="contact_type"] {
-        height: 100%;
-        border: 1px solid #ddd;
+    .dropdown-menu.show {
+        width: 100% !important;
     }
 
     .form-group button {
@@ -80,14 +44,6 @@ Contact Create
     .contact-details-div.org .dropdown.bootstrap-select.form-control {
         padding: 0 15px;
     }
-
-    .delete-btn-div {
-        text-align: center;
-    }
-
-    /* #view-contact-btn {
-        float: right;
-    } */
 
     h1 {
         text-align: center;
@@ -125,7 +81,7 @@ Contact Create
                     <label class="control-label sel-label-org pl-4">Organization Name: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <select class="form-control selectpicker" data-live-search="true" id="contact_organization_name"
-                            name="contact_organization_name" required>
+                            name="contact_organization_name" data-size="5" required>
                             @foreach($organization_name_list as $key => $org_name)
                             <option value="{{$org_name}}">{{$org_name}}</option>
                             @endforeach
