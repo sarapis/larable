@@ -51,7 +51,6 @@
 						<div class="dropdown">
 							<button class="dropbtn">(+)</button>
 							<div class="dropdown-content">
-								
 								<a href="/organization_create">New Organization</a>
 								<a href="/contact_create">New Contact</a>
 							</div>

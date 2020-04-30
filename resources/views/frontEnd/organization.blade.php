@@ -10,6 +10,50 @@
     max-height: 300px !important;
     width: 100% !important;
 }
+
+/*.dropbtn {
+    background: transparent;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-menu a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background: darkgreen;
+}
+
+.dropdown-menu a:hover {
+  background-color: yellow;
+  color: black;
+}*/
+
+/*.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #36459b;
+}*/
+  
 .table a{
     text-decoration:none !important;
     color: rgba(40,53,147,.9);
@@ -247,7 +291,7 @@ ul#ui-id-1 {
               </div>
 
               <div class="col-md-4 property">
-
+                  @if (Sentinel::getUser())
           				<div class="pt-10 pb-10 pl-0" style="display: flex;">
           					  <div class="dropdown" style="width: 100%; float: right;">
                           <button class="btn btn-primary dropdown-toggle" type="button"
@@ -263,7 +307,7 @@ ul#ui-id-1 {
                           </div>
                       </div>
           				</div>
-
+                  @endif
                   <div class="pt-10 pb-10 pl-0 btn-download">
                       <form method="GET" action="/organization/{{$organization->organization_recordid}}/tagging"
                           id="organization_tagging">
