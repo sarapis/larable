@@ -408,6 +408,45 @@ class ServiceController extends Controller
     }
 
 
+    public function create_in_organization($id)
+    {
+        $map = Map::find(1);
+        $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
+        return view('frontEnd.service-create-in-organization', compact('map', 'organization'));
+    }
+
+    public function add_new_service(Request $request)
+    {
+        $service = new Service;
+        
+        $service->service_name = $request->service_name;
+        $service->service_organization = $request->service_organization_id;
+        $service->service_description = $request->service_description;
+        $service->service_url = $request->service_url;
+        $service->service_email = $request->service_email;
+        $service->service_application_process = $request->service_application_process;
+        $service->service_program = $request->service_program;
+
+        $service_recordids = Service::select("service_recordid")->distinct()->get();
+        $service_recordid_list = array();
+        foreach ($service_recordids as $key => $value) {
+            $service_recordid = $value->service_recordid;
+            array_push($service_recordid_list, $service_recordid);
+        }
+        $service_recordid_list = array_unique($service_recordid_list);
+
+        $new_recordid = Service::max('service_recordid') + 1;
+        if (in_array($new_recordid, $service_recordid_list)) {
+            $new_recordid = Service::max('service_recordid') + 1;
+        }
+        $service->service_recordid = $new_recordid;
+
+        $service->save();
+
+        return redirect('services');
+    }
+
+
     public function services()
     {
         // $service_state_filter = 'Verified';

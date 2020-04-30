@@ -40,6 +40,8 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/service/{id}', 'ServiceController@service');
     Route::get('/service/{id}/edit', 'ServiceController@edit');
     Route::get('/service/{id}/update', 'ServiceController@update');
+    Route::get('/service_create/{id}', 'ServiceController@create_in_organization');
+    Route::get('/add_new_service', 'ServiceController@add_new_service');
 
     Route::resource('facilities', 'LocationController');
     Route::post('/get_all_facilities', 'LocationController@get_all_facilities');
