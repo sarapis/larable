@@ -622,26 +622,43 @@ class OrganizationController extends Controller
             }
         }
         
+        // if ($request->organization_phones) {
+        //     $phone_recordids = [];
+        //     foreach ($request->organization_phones as $key => $number) {
+        //         $phone = Phone::where('phone_number', $number);
+        //         if ($phone->count() > 0) {
+        //             $phone_record_id = $phone->first()->phone_recordid;
+        //             array_push($phone_recordids, $phone_record_id);
+        //         } else {
+        //             $new_phone = new Phone;
+        //             $new_phone_recordid = Phone::max('phone_recordid') + 1;
+        //             $new_phone->phone_recordid = $new_phone_recordid;
+        //             $new_phone->phone_number = $number;
+        //             $new_phone->save();
+        //             array_push($phone_recordids, $new_phone_recordid);
+        //         }
+        //     }
+        //     $organization->phones()->sync($phone_recordids);
+        // }
+
         if ($request->organization_phones) {
             $phone_recordids = [];
-            foreach ($request->organization_phones as $key => $number) {
-                $phone = Phone::where('phone_number', $number);
-                if ($phone->count() > 0) {
-                    $phone_record_id = $phone->first()->phone_recordid;
-                    array_push($phone_recordids, $phone_record_id);
-                } else {
-                    $new_phone = new Phone;
-                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                    $new_phone->phone_recordid = $new_phone_recordid;
-                    $new_phone->phone_number = $number;
-                    $new_phone->save();
-                    array_push($phone_recordids, $new_phone_recordid);
-                }
+            $number = $request->organization_phones;
+            $phone = Phone::where('phone_number', $number);
+            if ($phone->count() > 0) {
+                $phone_record_id = $phone->first()->phone_recordid;
+                array_push($phone_recordids, $phone_record_id);
+            } else {
+                $new_phone = new Phone;
+                $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                $new_phone->phone_recordid = $new_phone_recordid;
+                $new_phone->phone_number = $number;
+                $new_phone->save();
+                array_push($phone_recordids, $new_phone_recordid);
             }
+            
             $organization->phones()->sync($phone_recordids);
         }
-
-        
 
         if ($request->organization_locations) {
             $organization->organization_locations = join(',', $request->organization_locations);

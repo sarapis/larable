@@ -149,6 +149,12 @@ Organization Edit
                     </div>           
                 </div>
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-phones-div">
+                        <input class="form-control selectpicker"  type="text" id="organization_phones" name="organization_phones" value="{{$organization->phone_number}}">
+                    </div>
+                </div>
+               <!--  <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phones: </label>
                     <a id="add-phone-input">
                         <span class="glyphicon glyphicon-plus-sign"></span>
@@ -162,7 +168,7 @@ Organization Edit
                         </li> 
                         @endforeach
                     </ol>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Contacts: </label>
                     <ol>
@@ -255,14 +261,14 @@ Organization Edit
         var value = $(this).val();
         $('input#organization_recordid').val(value);
     });
-    $("#add-phone-input").click(function(){
-        $("ol#phones-ul").append(
-            "<li class='organization-phones-li mb-2'>"
-          + "<div class='col-md-12 col-sm-12 col-xs-12 organization-phones-div'>"
-          + "<input class='form-control selectpicker organization_phones'  type='text' name='organization_phones[]'>"
-          + "</div>"
-          + "</li>" );
-    });
+    // $("#add-phone-input").click(function(){
+    //     $("ol#phones-ul").append(
+    //         "<li class='organization-phones-li mb-2'>"
+    //       + "<div class='col-md-12 col-sm-12 col-xs-12 organization-phones-div'>"
+    //       + "<input class='form-control selectpicker organization_phones'  type='text' name='organization_phones[]'>"
+    //       + "</div>"
+    //       + "</li>" );
+    // });
     $("#add-location-input").click(function(){
         $("ol#other-locations-ul").append(
             "<li class='organization-locations-li mb-2'>"
