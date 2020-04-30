@@ -82,8 +82,8 @@ Contact Create
                 </div>
                 <div class="form-group">
                     <div class="col-md-12 text-center">
-                        <a href="/contacts" class="btn btn-danger btn-rounded" id="view-contact-btn"><i
-                                class="fa fa-arrow-left"></i> Back</a>
+                        <button type="button" class="btn btn-danger btn-rounded" id="back-contact-btn"><i
+                                class="fa fa-arrow-left"></i> Back</button>
                         <button type="submit" class="btn btn-success btn-rounded" id="save-contact-btn"><i
                                 class="fa fa-check"></i> Save</button>
                     </div>
@@ -94,6 +94,9 @@ Contact Create
     </div>
 </div>
 <script>
-
+    $('#back-contact-btn').click(function() {
+        history.go(-1);
+        return false;
+    });
 </script>
 @endsection

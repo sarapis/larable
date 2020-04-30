@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Contact Create
+Service Create
 @stop
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -88,13 +88,6 @@ Contact Create
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Service phone: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="service_phone"
-                            name="service_phone" value="">
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Program: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="service_program"
@@ -103,9 +96,9 @@ Contact Create
                 </div>
                 <div class="form-group">
                     <div class="col-md-12 text-center">
-                        <a href="/contacts" class="btn btn-danger btn-rounded" id="view-contact-btn"><i
-                                class="fa fa-arrow-left"></i> Back</a>
-                        <button type="submit" class="btn btn-success btn-rounded" id="save-contact-btn"><i
+                        <button type="button" class="btn btn-danger btn-rounded" id="back-service-btn"><i
+                                class="fa fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn btn-success btn-rounded" id="save-service-btn"><i
                                 class="fa fa-check"></i> Save</button>
                     </div>
                 </div>
@@ -115,6 +108,9 @@ Contact Create
     </div>
 </div>
 <script>
-
+    $('#back-service-btn').click(function() {
+        history.go(-1);
+        return false;
+    });
 </script>
 @endsection
