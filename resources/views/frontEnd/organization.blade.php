@@ -256,38 +256,41 @@ ul#ui-id-1 {
                     </div>
                     @endforeach
                     @endif
-
-                    <div class="card page-project">
-                        <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;"> Contacts (@if(isset($organization->contact)){{$organization->contact->count()}}@else 0 @endif)
-                        </h4>
-                        @foreach($organization->contact as $contact_info)
-                        <div class="card-block">
-                            @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
-                                <a href="/contact/{{$contact_info->contact_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
-                                    <i class="icon md-edit" style="margin-right: 0px;"></i>
-                                </a>
-                            @endif
-                            @if($contact_info->contact_name)
-                            <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
-                            @endif
-                            @if($contact_info->contact_title)
-                            <h4><span><b>Title:</b></span> {{$contact_info->contact_title}}</h4>
-                            @endif
-                            @if($contact_info->contact_department)
-                            <h4><span><b>Department:</b></span> {{$contact_info->contact_department}}</h4>
-                            @endif
-                            @if($contact_info->contact_email)
-                            <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
-                            @endif
-                            @if($contact_info->contact_phones)
-                              @if (isset($contact_info->phone->phone_number))
-                              <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
+                    @if(isset($organization->contact))
+                      @if ($organization->contact->count() > 0)
+                      <div class="card page-project">
+                          <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;"> Contacts (@if(isset($organization->contact)){{$organization->contact->count()}}@else 0 @endif)
+                          </h4>
+                          @foreach($organization->contact as $contact_info)
+                          <div class="card-block">
+                              @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                                  <a href="/contact/{{$contact_info->contact_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                      <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                  </a>
                               @endif
-                            @endif
-                        </div>
-                        </br>
-                        @endforeach
-                    </div>
+                              @if($contact_info->contact_name)
+                              <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
+                              @endif
+                              @if($contact_info->contact_title)
+                              <h4><span><b>Title:</b></span> {{$contact_info->contact_title}}</h4>
+                              @endif
+                              @if($contact_info->contact_department)
+                              <h4><span><b>Department:</b></span> {{$contact_info->contact_department}}</h4>
+                              @endif
+                              @if($contact_info->contact_email)
+                              <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
+                              @endif
+                              @if($contact_info->contact_phones)
+                                @if (isset($contact_info->phone->phone_number))
+                                <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
+                                @endif
+                              @endif
+                          </div>
+                          </br>
+                          @endforeach
+                      </div>
+                      @endif
+                    @endif
               </div>
 
               <div class="col-md-4 property">
