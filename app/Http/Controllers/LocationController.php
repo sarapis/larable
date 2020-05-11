@@ -408,21 +408,25 @@ class LocationController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     public function create_in_organization($id)
     {
         $map = Map::find(1);
         $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
         return view('frontEnd.facility-create-in-organization', compact('map', 'organization'));
+    }
+
+    public function create()
+    {
+        $map = Map::find(1);       
+        $organization_names = Organization::select("organization_name")->distinct()->get();
+        $organization_name_list = [];
+        foreach ($organization_names as $key => $value) {
+            $org_names = explode(", ", trim($value->organization_name));
+            $organization_name_list = array_merge($organization_name_list, $org_names);
+        }
+        $organization_name_list = array_unique($organization_name_list);
+
+        return view('frontEnd.facility-create', compact('map', 'organization_name_list'));
     }
 
 
@@ -431,7 +435,12 @@ class LocationController extends Controller
         $facility = new Location;
         
         $facility->location_name = $request->location_name;
-        $facility->location_organization = $request->location_organization_id;
+
+        $organization_name = $request->facility_organization;
+        $facility_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $facility_organization_id = $facility_organization["organization_recordid"];
+        $facility->location_organization = $facility_organization_id;
+
         $facility->location_description = $request->location_description;
 
         $facility_recordids = Location::select("location_recordid")->distinct()->get();
@@ -486,15 +495,21 @@ class LocationController extends Controller
     {
         $map = Map::find(1);
         $facility = Location::where('location_recordid', '=', $id)->first();
-        $schedule_info_list = Schedule::select('schedule_recordid', 'schedule_opens_at', 'schedule_closes_at')->get();
+
+        $organization_names = Organization::pluck("organization_name", "organization_recordid");
+        $organization_id = $facility->location_organization;
+        $organization_name_info = Organization::where('organization_recordid', '=', $organization_id)->select('organization_name')->first();
+        $facility_organization_name = '';
+        if ($organization_name_info) {
+            $facility_organization_name = $organization_name_info["organization_name"];
+        }
 
         $services_info_list = Service::select('service_recordid', 'service_name')->get();
         $facility_service_list = explode(',', $facility->location_services);
 
-        $organizations_info_list = Organization::select('organization_recordid', 'organization_name')->get();
         $facility_organization_list = explode(',', $facility->location_organization);
 
-        return view('frontEnd.location-edit', compact('facility', 'map', 'schedule_info_list', 'services_info_list', 'facility_service_list', 'organizations_info_list', 'facility_organization_list'));
+        return view('frontEnd.location-edit', compact('facility', 'map', 'facility_organization_name', 'services_info_list', 'facility_service_list', 'organization_names', 'facility_organization_list'));
     }
 
     /**
@@ -506,83 +521,14 @@ class LocationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $location = Location::find($id);
-        $location->location_name = $request->facility_location_name;
-        $location->location_alternate_name = $request->facility_location_alternate_name;
-        $location->location_transportation = $request->facility_location_transportation;
-        $location->location_latitude = $request->facility_location_latitude;
-        $location->location_description = $request->facility_location_description;
-        $location->location_details = $request->facility_location_details;
-        $location->location_schedule = $request->facility_location_schedule;
 
-        $facility_location_address1 = $request->facility_location_address1;
-        $facility_location_address2 = $request->facility_location_address2;
-        $facility_address_city = $request->facility_location_address_city;
-        $facility_address_state = $request->facility_location_address_state;
-        $facility_address_zip_code = $request->facility_location_address_zip_code;
-        $facility_address_region = $request->facility_location_address_region;
-        $facility_address_country = $request->facility_location_address_country;
-        $facility_address_attention = $request->facility_location_address_attention;
-        $facility_address_type = $request->facility_location_address_type;
+        $facility = Location::find($id);
 
+        $facility->location_name = $request->location_name;
+        $facility->location_organization = $request->facility_organization_name;
+        $facility->location_description = $request->location_description;
 
-        if ($request->facility_services) {
-            $location->location_services = join(',', $request->facility_services);
-        } else {
-            $location->location_services = '';
-        }
-
-        if ($request->facility_organizations) {
-            $location->location_organization = join(',', $request->facility_organizations);
-        } else {
-            $location->location_organization = '';
-        }        
-
-        $address = Address::where('address_1', '=', $facility_location_address1)->where('address_2', '=', $facility_location_address2)->where('address_city', '=', $facility_address_city)->where('address_state_province', '=', $facility_address_state)->where('address_postal_code', '=', $facility_address_zip_code)->where('address_region', '=', $facility_address_region)->where('address_country', '=', $facility_address_country)->where('address_attention', '=', $facility_address_attention)->where('address_type', '=', $facility_address_type)->first();
-        if ($address != null) {
-            $location->location_address = $address->address_recordid;
-            $location->address()->sync($address->address_recordid);
-        } else {
-            $address = new Address;
-            $new_recordid = Address::max('address_recordid') + 1;
-
-            $address->address_recordid = $new_recordid;
-            $address->address_1 = $facility_location_address1;
-            $address->address_2 = $facility_location_address2;
-            $address->address_city = $facility_address_city;
-            $address->address_state_province = $facility_address_state;
-            $address->address_postal_code = $facility_address_zip_code;   
-            $address->address_region = $facility_address_region;
-            $address->address_country = $facility_address_country;
-            $address->address_attention = $facility_address_attention;
-            $address->address_type = $facility_address_type;
-            $address->save();
-
-            $location->location_address = $new_recordid;
-            $location->address()->sync($new_recordid);
-        }
-
-
-        if ($request->facility_phones) {
-            $phone_recordids = [];
-            foreach ($request->facility_phones as $key => $number) {
-                $phone = Phone::where('phone_number', $number);
-                if ($phone->count() > 0) {
-                    $phone_record_id = $phone->first()->phone_recordid;
-                    array_push($phone_recordids, $phone_record_id);
-                } else {
-                    $new_phone = new Phone;
-                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                    $new_phone->phone_recordid = $new_phone_recordid;
-                    $new_phone->phone_number = $number;
-                    $new_phone->save();
-                    array_push($phone_recordids, $new_phone_recordid);
-                }
-            }
-            $location->phones()->sync($phone_recordids);
-        }
-
-        $location->save();
+        $facility->save();
 
         return redirect('facility/'.$id);
     }

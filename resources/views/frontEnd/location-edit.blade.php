@@ -15,19 +15,14 @@ Facility Edit
         width: 100%;
     }
 
-    button[data-id="facility_location_schedule"] {
+
+    button[data-id="facility_organization_name"] {
         height: 100%;
         border: 1px solid #ddd;
     }
 
-    button[data-id="facility_services"] {
-        height: 100%;
-        border: 1px solid #ddd;
-    }
-
-    button[data-id="facility_organizations"] {
-        height: 100%;
-        border: 1px solid #ddd;
+    .dropdown-menu.show {
+        width: 100% !important;
     }
 
     .form-group button {
@@ -64,206 +59,47 @@ Facility Edit
 <div class="wrapper">
     <div id="facilities-edit-content" class="container">
         <h1>Edit Facility</h1>
-        <div class="form-group delete-btn-div">
-            <button class="btn btn-danger delete-td" id="delete-facility-btn" value="{{$facility->location_recordid}}" data-toggle="modal" data-target=".bs-delete-modal-lg"><i class="fa fa-fw fa-remove"></i>Delete</button>
-        </div>
         <form action="/facility/{{$facility->location_recordid}}/update" method="GET">
             <div class="row">  
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Name: </label>
+                    <label class="control-label sel-label-org pl-4">Facility Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="location_name"
+                            name="location_name" value="{{$facility->location_name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Organization: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_name" name="facility_location_name" value="{{$facility->location_name}}">
-                    </div>
-                </div> 
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Alternative Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_alternate_name" name="facility_location_alternate_name" value="{{$facility->location_alternate_name}}">
-                    </div>
-                </div>             
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Transportation: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_transportation" name="facility_location_transportation" value="{{$facility->location_transportation}}">
+                        {!!
+                        Form::select('facility_organization_name',$organization_names,$facility->location_organization,['class'
+                        => 'form-control
+                        selectpicker','id' => 'facility_organization_name' ,'placeholder' => 'Select organization', 'data-live-search' => 'true', 'data-size' => '5']) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Latitude: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_latitude" name="facility_location_latitude" value="{{$facility->location_latitude}}">
+                    <label class="control-label sel-label-org pl-4">Facility Description: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <textarea id="location_description" name="location_description" class="form-control selectpicker" rows="5" cols="30"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Longitude: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_longitude" name="facility_location_longitude" value="{{$facility->location_longitude}}">
+                    <div class="col-md-12 text-center">
+                        <button type="button" class="btn btn-danger btn-rounded" id="back-facility-btn"><i
+                                class="fa fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn btn-success btn-rounded" id="save-facility-btn"><i
+                                class="fa fa-check"></i> Save</button>
                     </div>
-                </div>  
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Description: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_description" name="facility_location_description" value="{{$facility->location_description}}">
-                    </div>
-                </div> 
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Phones: </label>
-                    <a id="add-phone-input">
-                        <span class="glyphicon glyphicon-plus-sign"></span>
-                    </a>
-                    <ol id="phones-ul">
-                        @foreach($facility->phones as $phone)
-                        <li class="facility-phones-li mb-2">
-                            <div class="col-md-12 col-sm-12 col-xs-12 facility-phones-div">
-                                <input class="form-control selectpicker facility_phones"  type="text" name="facility_phones[]"value="{{$phone->phone_number}}">
-                            </div> 
-                        </li> 
-                        @endforeach
-                    </ol>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Details: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_details" name="facility_location_details" value="{{$facility->location_details}}">
-                    </div>
-                </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Services: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-services-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_services" data-size="5" name="facility_services[]">
-                            @foreach($services_info_list as $key => $services_info)                                
-                                <option value="{{$services_info->service_recordid}}" @if (in_array($services_info->service_recordid, $facility_service_list)) selected @endif>{{$services_info->service_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Organizations: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-organizations-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_organizations" data-size="5" name="facility_organizations[]">
-                            @foreach($organizations_info_list as $key => $organizations_info)                                
-                                <option value="{{$organizations_info->organization_recordid}}" @if (in_array($organizations_info->organization_recordid, $facility_organization_list)) selected @endif>{{$organizations_info->organization_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Schedule: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-schedule-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="facility_location_schedule" data-size="5" name="facility_location_schedule">
-                            @foreach($schedule_info_list as $key => $schedule_info)                                
-                                <option value="{{$schedule_info->schedule_recordid}}" @if ($schedule_info->schedule_recordid == $facility->location_schedule) selected @endif>{{$schedule_info->schedule_opens_at}} @if (($schedule_info->schedule_opens_at != '24 Hours') && ($schedule_info->schedule_opens_at != '24 hours')) ~ {{$schedule_info->schedule_closes_at}} @endif</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div>
-                 <div class="form-group" style="text-align: center;">    
-                    <h4>Address</h4>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Address1: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address1-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address1" name="facility_location_address1" @if ($facility->address) value="{{$facility->address[0]->address_1}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Address2: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address2-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address2" name="facility_location_address2" @if ($facility->address) value="{{$facility->address[0]->address_2}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">City: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-city-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_city" name="facility_location_address_city" @if ($facility->address) value="{{$facility->address[0]->address_city}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">State: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-state-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_state" name="facility_location_address_state" @if ($facility->address) value="{{$facility->address[0]->address_state_province}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Zip Code: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-zip-code-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_zip_code" name="facility_location_address_zip_code" @if ($facility->address) value="{{$facility->address[0]->address_postal_code}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Region: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-region-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_region" name="facility_location_address_region" @if ($facility->address) value="{{$facility->address[0]->address_region}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Country: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-country-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_country" name="facility_location_address_country" @if ($facility->address) value="{{$facility->address[0]->address_country}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Attention: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-attention-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_attention" name="facility_location_address_attention" @if ($facility->address) value="{{$facility->address[0]->address_attention}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Address Type: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 facility-address-type-div">
-                        <input class="form-control selectpicker"  type="text" id="facility_location_address_type" name="facility_location_address_type" @if ($facility->address) value="{{$facility->address[0]->address_type}}" @endif>
-                    </div>
-                </div>
-                <div class="form-group"> 
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary btn-rounded" id="save-facility-btn"><i class="fa fa-save"></i>Save</button>
-                        <a href="/facility/{{$facility->location_recordid}}" class="btn btn-success btn-rounded" id="view-facility-btn"><i class="fa fa-eye"></i>Close</a>
-                    </div>                   
                 </div>
             </div>
         </form>
-        <div class="modal fade bs-delete-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form action="/facility_delete_filter" method="POST" id="facility_delete_filter">
-                        {!! Form::token() !!}
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">Delete Facility</h4>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" id="facility_recordid" name="facility_recordid">
-                            <h4>Are you sure to delete this facility?</h4>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger btn-delete">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
 <script> 
-    $(document).ready(function() {
-        $("#facility_location_schedule").selectpicker("");  
-        $("#facility_services").selectpicker(""); 
-        $("#facility_organizations").selectpicker("");     
-    });
-
-    $('button.delete-td').on('click', function() {
-        var value = $(this).val();
-        $('input#facility_recordid').val(value);
-    });
-    $("#add-phone-input").click(function(){
-        $("ol#phones-ul").append(
-            "<li class='facility-phones-li mb-2'>"
-          + "<div class='col-md-12 col-sm-12 col-xs-12 facility-phones-div'>"
-          + "<input class='form-control selectpicker facility_phones'  type='text' name='facility_phones[]'>"
-          + "</div>"
-          + "</li>" );
+    $('#back-facility-btn').click(function() {
+        history.go(-1);
+        return false;
     });
     
 </script>

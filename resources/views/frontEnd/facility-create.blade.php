@@ -26,6 +26,11 @@ Facility Create
         width: auto;
     }
 
+    button[data-id="facility_organization"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     @media only screen and (max-width: 768px) {
         .form-group button {
             width: 100%;
@@ -58,7 +63,17 @@ Facility Create
                             name="location_name" value="">
                     </div>
                 </div>
-                <input type="hidden" id="facility_organization" name="facility_organization" value="{{$organization->organization_name}}">
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Organization Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="facility_organization"
+                            name="facility_organization" data-size="5" required>
+                            @foreach($organization_name_list as $key => $org_name)
+                            <option value="{{$org_name}}">{{$org_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
@@ -82,6 +97,9 @@ Facility Create
     $('#back-facility-btn').click(function() {
         history.go(-1);
         return false;
+    });
+    $(document).ready(function() {
+        $('select#facility_organization').val([]).change();
     });
 </script>
 @endsection
