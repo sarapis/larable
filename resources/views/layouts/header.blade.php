@@ -53,6 +53,8 @@
 							<div class="dropdown-content">
 								<a href="/organization_create">New Organization</a>
 								<a href="/contact_create">New Contact</a>
+								<a href="/service_create">New Service</a>
+								<a href="/facility_create">New Facility</a>
 							</div>
 						</div>
 					</li>

@@ -26,6 +26,11 @@ Service Create
         width: auto;
     }
 
+    button[data-id="service_organization"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     @media only screen and (max-width: 768px) {
         .form-group button {
             width: 100%;
@@ -58,7 +63,17 @@ Service Create
                             name="service_name" value="" required>
                     </div>
                 </div>
-                <input type="hidden" id="service_organization" name="service_organization" value="{{$organization->organization_name}}">
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Organization Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="service_organization"
+                            name="service_organization" data-size="5" required>
+                            @foreach($organization_name_list as $key => $org_name)
+                            <option value="{{$org_name}}">{{$org_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
@@ -97,9 +112,9 @@ Service Create
                 <div class="form-group">
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-danger btn-rounded" id="back-service-btn"><i
-                                class="fa fa-arrow-left"></i> Back</button>
+                                class="fa fa-arrow-left"></i> Back </button>
                         <button type="submit" class="btn btn-success btn-rounded" id="save-service-btn"><i
-                                class="fa fa-check"></i> Save</button>
+                                class="fa fa-check"></i> Save </button>
                     </div>
                 </div>
             </div>
@@ -111,6 +126,9 @@ Service Create
     $('#back-service-btn').click(function() {
         history.go(-1);
         return false;
+    });
+    $(document).ready(function() {
+        $('select#service_organization').val([]).change();
     });
 </script>
 @endsection

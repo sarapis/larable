@@ -415,12 +415,31 @@ class ServiceController extends Controller
         return view('frontEnd.service-create-in-organization', compact('map', 'organization'));
     }
 
+    public function create()
+    {
+        $map = Map::find(1);
+        $organization_names = Organization::select("organization_name")->distinct()->get();
+        $organization_name_list = [];
+        foreach ($organization_names as $key => $value) {
+            $org_names = explode(", ", trim($value->organization_name));
+            $organization_name_list = array_merge($organization_name_list, $org_names);
+        }
+        $organization_name_list = array_unique($organization_name_list);
+
+        return view('frontEnd.service-create', compact('map', 'organization_name_list'));
+    }
+
     public function add_new_service(Request $request)
     {
         $service = new Service;
         
         $service->service_name = $request->service_name;
-        $service->service_organization = $request->service_organization_id;
+
+        $organization_name = $request->service_organization;
+        $service_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $service_organization_id = $service_organization["organization_recordid"];
+        $service->service_organization = $service_organization_id;
+
         $service->service_description = $request->service_description;
         $service->service_url = $request->service_url;
         $service->service_email = $request->service_email;
