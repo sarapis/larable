@@ -380,6 +380,22 @@ ul#ui-id-1 {
                     </div>
                   </div>
 
+                  @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                    @if ($organization->organization_website_rating)
+                    <div class="pt-5 pb-0">
+                        <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Website Rating 
+                        </h4>
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="rating-body media-body" style="text-align: center;">
+                                    <h1><b>{{$organization->organization_website_rating}}</b></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                  @endif
+
                   @if (Sentinel::getUser())
                   <div class="pt-5 pb-0">
                       <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Session 

@@ -30,6 +30,10 @@ Organization Create
         height: 100%;
         border: 1px solid #ddd;
     }
+    button[data-id="organization_rating"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
 
     .form-group button {
         width: auto;
@@ -163,7 +167,18 @@ Organization Create
                     </li> 
                 </ol>
             </div>
-            
+            @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+            <div class="form-group">                 
+                <label class="control-label sel-label-org pl-4">Website Rating: </label>
+                <div class="col-md-12 col-sm-12 col-xs-12 organization-rating-div">
+                    <select class="form-control selectpicker" data-live-search="true" id="organization_rating" data-size="5" name="organization_rating">
+                        @foreach($rating_info_list as $key => $rating_info)                                
+                            <option value="{{$rating_info}}">{{$rating_info}}</option>
+                        @endforeach
+                    </select>
+                </div>           
+            </div>
+            @endif
             <div class="form-group">
                 <div class="col-md-12 text-center">
 

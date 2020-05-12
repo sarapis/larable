@@ -31,6 +31,10 @@ Organization Edit
         height: 100%;
         border: 1px solid #ddd;
     }
+    button[data-id="organization_rating"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
     .form-group button {
         width: 32.96%;
     }
@@ -127,7 +131,6 @@ Organization Edit
                         <input class="form-control selectpicker"  type="text" id="organization_year_incorporated" name="organization_year_incorporated" value="{{$organization->organization_year_incorporated}}">
                     </div>
                 </div>
-
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Services: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 organization-services-div">
@@ -215,7 +218,18 @@ Organization Edit
                         @endforeach
                     </ol>
                 </div>
-
+                @if (Sentinel::getUser() && Sentinel::getUser()->roles[0]->name == 'System Admin')
+                <div class="form-group">                 
+                    <label class="control-label sel-label-org pl-4">Website Rating: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 organization-rating-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="organization_rating" data-size="5" name="organization_rating">
+                            @foreach($rating_info_list as $key => $rating_info)                                
+                                <option value="{{$rating_info}}" @if ($rating_info == $organization->organization_website_rating) selected @endif>{{$rating_info}}</option>
+                            @endforeach
+                        </select>
+                    </div>           
+                </div>
+                @endif
                 <div class="form-group"> 
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-rounded" id="save-organization-btn"><i class="fa fa-save"></i>Save</button>

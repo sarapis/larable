@@ -466,7 +466,8 @@ class OrganizationController extends Controller
         $map = Map::find(1);
         $services_info_list = Service::select('service_recordid', 'service_name')->get();
         $organization_contacts_list = Contact::select('contact_recordid', 'contact_name')->get();
-        return view('frontEnd.organization-create', compact('map', 'services_info_list', 'organization_contacts_list'));
+        $rating_info_list = ['1', '2', '3', '4', '5'];
+        return view('frontEnd.organization-create', compact('map', 'services_info_list', 'organization_contacts_list', 'rating_info_list'));
     }
 
     /**
@@ -582,7 +583,10 @@ class OrganizationController extends Controller
         $organization_services_recordid_list = explode(',', $organization->organization_services);
         $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
 
-        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list', 'organization_locations_list', 'location_info_list', 'organization_services'));
+        $rating_info_list = ['1', '2', '3', '4', '5'];
+
+
+        return view('frontEnd.organization-edit', compact('organization', 'map', 'services_info_list', 'organization_service_list', 'organization_contacts_list', 'contact_info_list', 'organization_phones_list', 'phone_info_list', 'organization_locations_list', 'location_info_list', 'organization_services', 'rating_info_list'));
     }
 
     /**
@@ -603,6 +607,7 @@ class OrganizationController extends Controller
         $organization->organization_legal_status = $request->organization_legal_status;
         $organization->organization_tax_status = $request->organization_tax_status;
         $organization->organization_tax_id = $request->organization_tax_id;
+        $organization->organization_website_rating = $request->organization_rating;
 
         if ($request->organization_year_incorporated) {
             $organization->organization_year_incorporated = join(',', $request->organization_year_incorporated);
