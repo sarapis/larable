@@ -14,6 +14,10 @@ Contact Edit
         width: 100%;
     }
 
+    .dropdown-menu.show {
+        width: 100% !important;
+    }
+
     button[data-id="contact_organization"] {
         height: 100%;
         border: 1px solid #ddd;

@@ -5,12 +5,12 @@ Contact Create
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <style type="text/css">
-    #contacts-edit-content {
+    #contacts-create-content {
         margin-top: 50px;
         width: 35%;
     }
 
-    #contacts-edit-content .form-group {
+    #contacts-create-content .form-group {
         width: 100%;
     }
 
@@ -52,7 +52,7 @@ Contact Create
 
 @section('content')
 <div class="wrapper">
-    <div id="contacts-edit-content" class="container">
+    <div id="contacts-create-content" class="container">
         <h1>Create New Contact</h1>
         <form action="/add_new_contact_in_organization" method="GET">
             <div class="row">
@@ -97,6 +97,14 @@ Contact Create
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_cell_phones"
+                            name="contact_cell_phones" value="">
+                        <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-danger btn-rounded" id="back-contact-btn"><i
                                 class="fa fa-arrow-left"></i> Back</button>
@@ -117,5 +125,20 @@ Contact Create
     $(document).ready(function() {
         $('select#contact_service').val([]).change();
     });
+    $(document).ready(function(){
+        $('#error_cell_phone').hide();
+        $("#contacts-create-content").submit(function(event) {
+            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+            var contact_cell_phones_value = $("#contact_cell_phones").val();
+            if (contact_cell_phones_value != ''){
+                if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
+                    $('#error_cell_phone').show();              
+                    event.preventDefault();
+                } 
+            }
+        });
+    });
+
 </script>
 @endsection
