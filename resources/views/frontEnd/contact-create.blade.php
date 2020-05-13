@@ -112,11 +112,25 @@ Contact Create
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Phone: </label>
+                    <label class="control-label sel-label-org pl-4">Phone Number: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_cell_phones"
                             name="contact_cell_phones" value="">
                         <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Area Code(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_area_code" name="contact_phone_area_code"
+                            value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Extension(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_extension" name="contact_phone_extension"
+                            value="">
                     </div>
                 </div>
                 <div class="form-group">

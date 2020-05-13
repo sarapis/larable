@@ -148,12 +148,20 @@ Contact
                         </h4>
                         @if($contact->phone)
                         <h4 style="line-height: inherit;">
-                            <span class="badge bg-red pl-0 organize_font"><b>Phone:</b></span>
+                            <span class="badge bg-red pl-0 organize_font"><b>Phone Number:</b></span>
                             @foreach($contact->phone as $phone)
                             {{$phone->phone_number}}, 
                             @endforeach
                         </h4>
                         @endif
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Phone Area Code:</b></span>
+                            {{$contact->contact_phone_areacode}}
+                        </h4>
+                        <h4>
+                            <span class="badge bg-red pl-0 organize_font"><b>Phone Extension:</b></span>
+                            {{$contact->contact_phone_extension}}
+                        </h4>
                     </div>
                 </div>
 

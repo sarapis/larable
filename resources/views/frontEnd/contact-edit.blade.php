@@ -142,6 +142,21 @@ Contact Edit
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Area Code(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_area_code" name="contact_phone_area_code"
+                            value="{{$contact->contact_phone_areacode}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Extension(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_extension" name="contact_phone_extension"
+                            value="{{$contact->contact_phone_extension}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="col-md-12 text-center">
                         <a href="/contact/{{$contact->contact_recordid}}" class="btn btn-info btn-rounded"
                             id="view-contact-btn"><i class="fa fa-arrow-left"></i> Back</a>

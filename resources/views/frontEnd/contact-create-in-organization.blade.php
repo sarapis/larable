@@ -105,6 +105,20 @@ Contact Create
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Area Code(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_area_code" name="contact_phone_area_code"
+                            value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Extension(optional): </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="contact_phone_extension" name="contact_phone_extension"
+                            value="">
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-danger btn-rounded" id="back-contact-btn"><i
                                 class="fa fa-arrow-left"></i> Back</button>
