@@ -19,6 +19,11 @@ Contact Create
         border: 1px solid #ddd;
     }
 
+    button[data-id="contact_service"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     .dropdown-menu.show {
         width: 100% !important;
     }
@@ -64,6 +69,28 @@ Contact Create
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Organization: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="contact_organization_name"
+                            name="contact_organization_name" data-size="5" required>
+                            @foreach($organization_name_list as $key => $org_name)
+                            <option value="{{$org_name}}">{{$org_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Service: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="contact_service"
+                            name="contact_service[]" data-size="8">
+                            @foreach($service_info_list as $key => $service_info)
+                            <option value="{{$service_info->service_recordid}}">{{$service_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Contact Title: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_title"
@@ -75,17 +102,6 @@ Contact Create
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_department" name="contact_department"
                             value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Organization Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="contact_organization_name"
-                            name="contact_organization_name" data-size="5" required>
-                            @foreach($organization_name_list as $key => $org_name)
-                            <option value="{{$org_name}}">{{$org_name}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -109,8 +125,13 @@ Contact Create
     </div>
 </div>
 <script>
+    $('#back-contact-btn').click(function() {
+        history.go(-1);
+        return false;
+    });
     $(document).ready(function() {
         $('select#contact_organization_name').val([]).change();
+        $('select#contact_service').val([]).change();
     });
 
 </script>

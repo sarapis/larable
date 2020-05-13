@@ -26,6 +26,11 @@ Contact Create
         width: auto;
     }
 
+    button[data-id="contact_service"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+
     @media only screen and (max-width: 768px) {
         .form-group button {
             width: 100%;
@@ -58,6 +63,18 @@ Contact Create
                             name="contact_name" value="">
                     </div>
                 </div>
+                <input type="hidden" id="contact_organization_name" name="contact_organization_name" value="{{$organization->organization_name}}">
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Service: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="contact_service"
+                            name="contact_service[]" data-size="5">
+                            @foreach($service_info_list as $key => $service_info)
+                            <option value="{{$service_info->service_recordid}}">{{$service_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Contact Title: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
@@ -72,7 +89,6 @@ Contact Create
                             value="">
                     </div>
                 </div>
-                <input type="hidden" id="contact_organization_name" name="contact_organization_name" value="{{$organization->organization_name}}">
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Contact Email: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
@@ -97,6 +113,9 @@ Contact Create
     $('#back-contact-btn').click(function() {
         history.go(-1);
         return false;
+    });
+    $(document).ready(function() {
+        $('select#contact_service').val([]).change();
     });
 </script>
 @endsection

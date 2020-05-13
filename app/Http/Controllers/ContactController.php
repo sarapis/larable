@@ -298,7 +298,6 @@ class ContactController extends Controller
     {
         $map = Map::find(1);
         $organization_names = Organization::select("organization_name")->distinct()->get();
-
         $organization_name_list = [];
         foreach ($organization_names as $key => $value) {
             $org_names = explode(", ", trim($value->organization_name));
@@ -306,21 +305,24 @@ class ContactController extends Controller
         }
         $organization_name_list = array_unique($organization_name_list);
 
-        return view('frontEnd.contact-create', compact('map', 'organization_name_list'));
+        $service_info_list = Service::select('service_recordid', 'service_name')->orderBy('service_name')->distinct()->get();
+
+        return view('frontEnd.contact-create', compact('map', 'organization_name_list', 'service_info_list'));
     }
 
     public function create_in_organization($id)
     {
         $map = Map::find(1);
         $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
-        return view('frontEnd.contact-create-in-organization', compact('map', 'organization'));
+        $service_info_list = Service::select('service_recordid', 'service_name')->orderBy('service_name')->distinct()->get();
+        return view('frontEnd.contact-create-in-organization', compact('map', 'organization', 'service_info_list'));
     }
 
 
     public function add_new_contact(Request $request)
     {
-        $contact = new Contact;
-        
+        $contact = new Contact;       
+
         $contact->contact_name = $request->contact_name;
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
@@ -345,6 +347,14 @@ class ContactController extends Controller
         }
         $contact->contact_recordid = $new_recordid;
 
+        if ($request->contact_service) {
+            $contact->contact_services = join(',', $request->contact_service);
+        } else {
+            $contact->contact_services = '';
+        }
+        $contact->service()->sync($request->contact_service);
+
+        
         $contact->save();
 
         return redirect('contacts');
@@ -352,7 +362,7 @@ class ContactController extends Controller
 
     public function add_new_contact_in_organization(Request $request)
     {
-        $contact = new Contact;
+        $contact = new Contact;               
         
         $contact->contact_name = $request->contact_name;
         $contact->contact_title = $request->contact_title;
@@ -377,6 +387,13 @@ class ContactController extends Controller
             $new_recordid = Contact::max('contact_recordid') + 1;
         }
         $contact->contact_recordid = $new_recordid;
+
+        if ($request->contact_service) {
+            $contact->contact_services = join(',', $request->contact_service);
+        } else {
+            $contact->contact_services = '';
+        } 
+        $contact->service()->sync($request->contact_service);
 
         $contact->save();
 
