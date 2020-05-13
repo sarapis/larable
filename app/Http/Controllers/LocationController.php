@@ -462,6 +462,39 @@ class LocationController extends Controller
         return redirect('facilities');
     }
 
+    public function add_new_facility_in_organization(Request $request)
+    {
+        $facility = new Location;
+        
+        $facility->location_name = $request->location_name;
+
+        $organization_name = $request->facility_organization;
+        $facility_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $facility_organization_id = $facility_organization["organization_recordid"];
+        $facility->location_organization = $facility_organization_id;
+
+        $facility->location_description = $request->location_description;
+
+        $facility_recordids = Location::select("location_recordid")->distinct()->get();
+        $facility_recordid_list = array();
+        foreach ($facility_recordids as $key => $value) {
+            $facility_recordid = $value->location_recordid;
+            array_push($facility_recordid_list, $facility_recordid);
+        }
+        $facility_recordid_list = array_unique($facility_recordid_list);
+
+        $new_recordid = Location::max('location_recordid') + 1;
+        if (in_array($new_recordid, $facility_recordid_list)) {
+            $new_recordid = Contact::max('location_recordid') + 1;
+        }
+        $facility->location_recordid = $new_recordid;
+
+        $facility->save();
+
+        return redirect('organization/'.$facility_organization_id);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

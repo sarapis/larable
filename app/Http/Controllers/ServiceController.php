@@ -465,6 +465,42 @@ class ServiceController extends Controller
         return redirect('services');
     }
 
+    public function add_new_service_in_organization(Request $request)
+    {
+        $service = new Service;
+        
+        $service->service_name = $request->service_name;
+
+        $organization_name = $request->service_organization;
+        $service_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $service_organization_id = $service_organization["organization_recordid"];
+        $service->service_organization = $service_organization_id;
+
+        $service->service_description = $request->service_description;
+        $service->service_url = $request->service_url;
+        $service->service_email = $request->service_email;
+        $service->service_application_process = $request->service_application_process;
+        $service->service_program = $request->service_program;
+
+        $service_recordids = Service::select("service_recordid")->distinct()->get();
+        $service_recordid_list = array();
+        foreach ($service_recordids as $key => $value) {
+            $service_recordid = $value->service_recordid;
+            array_push($service_recordid_list, $service_recordid);
+        }
+        $service_recordid_list = array_unique($service_recordid_list);
+
+        $new_recordid = Service::max('service_recordid') + 1;
+        if (in_array($new_recordid, $service_recordid_list)) {
+            $new_recordid = Service::max('service_recordid') + 1;
+        }
+        $service->service_recordid = $new_recordid;
+
+        $service->save();
+
+        return redirect('organization/'.$service_organization_id);
+    }
+
 
     public function services()
     {

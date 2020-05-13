@@ -49,7 +49,7 @@ Facility Create
 <div class="wrapper">
     <div id="contacts-edit-content" class="container">
         <h1>Create New Facility</h1>
-        <form action="/add_new_facility" method="GET">
+        <form action="/add_new_facility_in_organization" method="GET">
             <div class="row">
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Name: </label>

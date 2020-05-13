@@ -49,7 +49,7 @@ Service Create
 <div class="wrapper">
     <div id="contacts-edit-content" class="container">
         <h1>Create New Service</h1>
-        <form action="/add_new_service" method="GET">
+        <form action="/add_new_service_in_organization" method="GET">
             <div class="row">
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Name: </label>

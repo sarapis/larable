@@ -350,6 +350,39 @@ class ContactController extends Controller
         return redirect('contacts');
     }
 
+    public function add_new_contact_in_organization(Request $request)
+    {
+        $contact = new Contact;
+        
+        $contact->contact_name = $request->contact_name;
+        $contact->contact_title = $request->contact_title;
+        $contact->contact_department = $request->contact_department;
+        $contact->contact_email = $request->contact_email;
+
+        $organization_name = $request->contact_organization_name;
+        $contact_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $contact_organization_id = $contact_organization["organization_recordid"];
+        $contact->contact_organizations = $contact_organization_id;
+
+        $contact_recordids = Contact::select("contact_recordid")->distinct()->get();
+        $contact_recordid_list = array();
+        foreach ($contact_recordids as $key => $value) {
+            $contact_recordid = $value->contact_recordid;
+            array_push($contact_recordid_list, $contact_recordid);
+        }
+        $contact_recordid_list = array_unique($contact_recordid_list);
+
+        $new_recordid = Contact::max('contact_recordid') + 1;
+        if (in_array($new_recordid, $contact_recordid_list)) {
+            $new_recordid = Contact::max('contact_recordid') + 1;
+        }
+        $contact->contact_recordid = $new_recordid;
+
+        $contact->save();
+
+        return redirect('organization/'.$contact_organization_id);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
