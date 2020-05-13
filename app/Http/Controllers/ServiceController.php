@@ -413,7 +413,18 @@ class ServiceController extends Controller
     {
         $map = Map::find(1);
         $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
-        return view('frontEnd.service-create-in-organization', compact('map', 'organization'));
+        $facility_info_list = Location::select('location_recordid', 'location_name')->orderBy('location_recordid')->distinct()->get();
+
+        $service_status_list = ['Yes', 'No'];
+
+        $taxonomy_info_list = Taxonomy::select('taxonomy_recordid', 'taxonomy_name')->orderBy('taxonomy_name')->distinct()->get();
+        $schedule_info_list = Schedule::select('schedule_recordid', 'schedule_opens_at', 'schedule_closes_at')->whereNotNull('schedule_opens_at')->orderBy('schedule_opens_at')->distinct()->get();
+
+        $contact_info_list = Contact::select('contact_recordid', 'contact_name')->orderBy('contact_recordid')->distinct()->get();
+        $detail_info_list = Detail::select('detail_recordid', 'detail_value')->orderBy('detail_value')->distinct()->get();
+        $address_info_list = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->orderBy('address_1')->distinct()->get();
+
+        return view('frontEnd.service-create-in-organization', compact('map', 'organization', 'facility_info_list', 'service_status_list', 'taxonomy_info_list', 'schedule_info_list', 'contact_info_list', 'detail_info_list', 'address_info_list'));
     }
 
     public function create()
@@ -563,19 +574,6 @@ class ServiceController extends Controller
     public function add_new_service_in_organization(Request $request)
     {
         $service = new Service;
-        
-        $service->service_name = $request->service_name;
-
-        $organization_name = $request->service_organization;
-        $service_organization = Organization::where('organization_name', '=', $organization_name)->first();
-        $service_organization_id = $service_organization["organization_recordid"];
-        $service->service_organization = $service_organization_id;
-
-        $service->service_description = $request->service_description;
-        $service->service_url = $request->service_url;
-        $service->service_email = $request->service_email;
-        $service->service_application_process = $request->service_application_process;
-        $service->service_program = $request->service_program;
 
         $service_recordids = Service::select("service_recordid")->distinct()->get();
         $service_recordid_list = array();
@@ -590,6 +588,102 @@ class ServiceController extends Controller
             $new_recordid = Service::max('service_recordid') + 1;
         }
         $service->service_recordid = $new_recordid;
+
+        $organization_name = $request->service_organization;
+        $service_organization = Organization::where('organization_name', '=', $organization_name)->first();
+        $service_organization_id = $service_organization["organization_recordid"];
+        $service->service_organization = $service_organization_id;
+        
+        $service->service_name = $request->service_name; 
+        $service->service_alternate_name = $request->service_alternate_name;
+        $service->service_url = $request->service_url;  
+        $service->service_program = $request->service_program;   
+        $service->service_email = $request->service_email; 
+        $service->service_status = '';
+        if ($request->service_status = 'Yes') {
+            $service->service_status = 'Verified';  
+        } 
+        $service->service_description = $request->service_description;
+        $service->service_application_process = $request->service_application_process;
+        $service->service_wait_time = $request->service_wait_time;
+        $service->service_fees = $request->service_fees;
+        $service->service_accreditations = $request->service_accrediations;
+        $service->service_licenses = $request->service_licenses;
+        $service->service_metadata = $request->service_metadata;
+        $service->service_airs_taxonomy_x = $request->service_airs_taxonomy_x;
+
+        if ($request->service_locations) {
+            $service->service_locations = join(',', $request->service_locations);
+        } else {
+            $service->service_locations = '';
+        }
+        $service->locations()->sync($request->service_locations);
+
+        if ($request->service_taxonomies) {
+            $service->service_taxonomy = join(',', $request->service_taxonomies);
+        } else {
+            $service->service_taxonomy = '';
+        }
+        $service->taxonomy()->sync($request->service_taxonomies);
+
+        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        $phone_recordid_list = array();
+        foreach ($phone_recordids as $key => $value) {
+            $phone_recordid = $value->phone_recordid;
+            array_push($phone_recordid_list, $phone_recordid);
+        }
+        $phone_recordid_list = array_unique($phone_recordid_list);
+
+        $service_phones = $request->service_phones;
+        $cell_phone = Phone::where('phone_number', '=', $service_phones)->first();
+        if ($cell_phone != null) {
+            $cell_phone_id = $cell_phone["phone_recordid"];
+            $service->service_phones = $cell_phone_id;
+        } else {
+            $phone = new Phone;
+            $new_recordid = Phone::max('phone_recordid') + 1;
+            if (in_array($new_recordid, $phone_recordid_list)) {
+                $new_recordid = Phone::max('phone_recordid') + 1;
+            }
+            $phone->phone_recordid = $new_recordid;
+            $phone->phone_number = $cell_phone;
+            $phone->phone_type = "voice";
+            $service->service_phones = $phone->phone_recordid;
+            $phone->save();
+        }
+
+        $service_phone_info_list = array();
+        array_push($service_phone_info_list, $service->service_phones);
+        $service_phone_info_list = array_unique($service_phone_info_list);
+        $service->phone()->sync($service_phone_info_list);
+
+        if ($request->service_schedules) {
+            $service->service_schedule = join(',', $request->service_schedules);
+        } else {
+            $service->service_schedule = '';
+        }
+        $service->schedules()->sync($request->service_schedules);
+
+        if ($request->service_contacts) {
+            $service->service_contacts = join(',', $request->service_contacts);
+        } else {
+            $service->service_contacts = '';
+        }
+        $service->contact()->sync($request->service_contacts);
+
+        if ($request->service_details) {
+            $service->service_details = join(',', $request->service_details);
+        } else {
+            $service->service_details = '';
+        }
+        $service->details()->sync($request->service_details);
+
+        if ($request->service_address) {
+            $service->service_address = join(',', $request->service_address);
+        } else {
+            $service->service_address = '';
+        }
+        $service->address()->sync($request->service_address);
 
         $service->save();
 
