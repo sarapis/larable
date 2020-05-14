@@ -456,8 +456,9 @@ class LocationController extends Controller
         
         $facility->location_name = $request->location_name;
         $facility->location_alternate_name = $request->location_alternate_name;
-        $facility->location_transporation = $request->location_transporation;
+        $facility->location_transportation = $request->location_transporation;
         $facility->location_description = $request->location_description;
+        $facility->location_details = $request->location_details;
 
         $organization_name = $request->facility_organization;
         $facility_organization = Organization::where('organization_name', '=', $organization_name)->first();
@@ -470,13 +471,6 @@ class LocationController extends Controller
             $facility->location_services = '';
         }
         $facility->services()->sync($request->facility_service);
-
-        if ($request->facility_details) {
-            $facility->location_details = join(',', $request->facility_details);
-        } else {
-            $facility->location_details = '';
-        }
-        $facility->detail()->sync($request->facility_details);
 
         if ($request->service_schedules) {
             $facility->location_schedule = join(',', $request->facility_schedules);
@@ -512,7 +506,7 @@ class LocationController extends Controller
                 $new_recordid = Phone::max('phone_recordid') + 1;
             }
             $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $cell_phone;
+            $phone->phone_number = $facility_phones;
             $phone->phone_type = "voice";
             $facility->location_phones = $phone->phone_recordid;
             $phone->save();

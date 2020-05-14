@@ -156,12 +156,8 @@ Facility Create
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Details: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_details"
-                            name="facility_details[]" data-size="5" >
-                            @foreach($detail_info_list as $key => $detail_info)
-                            <option value="{{$detail_info->detail_recordid}}">{{$detail_info->detail_value}}</option>
-                            @endforeach
-                        </select>
+                        <input class="form-control selectpicker" type="text" id="location_details"
+                            name="location_details" value="">
                     </div>
                 </div>
                 <div class="form-group">
@@ -186,7 +182,6 @@ Facility Create
         $('select#facility_organization').val([]).change();
         $('select#facility_schedules').val([]).change();
         $('select#facility_address').val([]).change();
-        $('select#facility_details').val([]).change();
     });
     $(document).ready(function(){
         $('#error_cell_phone').hide();
