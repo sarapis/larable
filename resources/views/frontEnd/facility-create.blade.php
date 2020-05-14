@@ -5,12 +5,12 @@ Facility Create
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <style type="text/css">
-    #contacts-edit-content {
+    #facility-create-content {
         margin-top: 50px;
         width: 35%;
     }
 
-    #contacts-edit-content .form-group {
+    #facility-create-content .form-group {
         width: 100%;
     }
 
@@ -27,6 +27,22 @@ Facility Create
     }
 
     button[data-id="facility_organization"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="facility_schedules"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="facility_details"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="facility_service"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="facility_address"] {
         height: 100%;
         border: 1px solid #ddd;
     }
@@ -52,7 +68,7 @@ Facility Create
 
 @section('content')
 <div class="wrapper">
-    <div id="contacts-edit-content" class="container">
+    <div id="facility-create-content" class="container">
         <h1>Create New Facility</h1>
         <form action="/add_new_facility" method="GET">
             <div class="row">
@@ -75,9 +91,77 @@ Facility Create
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Alternate Name: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="location_alternate_name"
+                            name="location_alternate_name" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Transportation: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="location_transporation"
+                            name="location_transporation" value="">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <textarea id="location_description" name="location_description" class="form-control selectpicker" rows="5" cols="30"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Service: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_service"
+                            name="facility_service[]" data-size="8">
+                            @foreach($service_info_list as $key => $service_info)
+                            <option value="{{$service_info->service_recordid}}">{{$service_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phone Number: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="facility_phones"
+                            name="facility_phones" value="">
+                        <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Schedule: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_schedules"
+                            name="facility_schedules[]" data-size="5" >
+                            @foreach($schedule_info_list as $key => $schedule_info)
+                            <option value="{{$schedule_info->schedule_recordid}}">{{$schedule_info->schedule_opens_at}} ~ {{$schedule_info->schedule_closes_at}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_address"
+                            name="facility_address[]" data-size="5" >
+                            @foreach($address_info_list as $key => $address_info)
+                            @if($address_info->address_1)
+                            <option value="{{$address_info->address_recordid}}">{{$address_info->address_1}}, {{$address_info->address_city}}, {{$address_info->address_state_province}}, {{$address_info->address_postal_code}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Facility Details: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="facility_details"
+                            name="facility_details[]" data-size="5" >
+                            @foreach($detail_info_list as $key => $detail_info)
+                            <option value="{{$detail_info->detail_recordid}}">{{$detail_info->detail_value}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -100,6 +184,24 @@ Facility Create
     });
     $(document).ready(function() {
         $('select#facility_organization').val([]).change();
+        $('select#facility_schedules').val([]).change();
+        $('select#facility_address').val([]).change();
+        $('select#facility_details').val([]).change();
+    });
+    $(document).ready(function(){
+        $('#error_cell_phone').hide();
+        $("#facility-create-content").submit(function(event){
+            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+            var facility_phones = $("#facility_phones").val();
+            if (facility_phones != ''){
+                if(mob.test(facility_phones) == false && facility_phones != 10){ 
+                    $('#error_cell_phone').show();              
+                    event.preventDefault();
+                } 
+            }
+           
+        });
     });
 </script>
 @endsection
