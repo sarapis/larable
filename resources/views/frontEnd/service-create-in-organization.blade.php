@@ -191,13 +191,26 @@ Service Create
                             name="service_licenses" value="">
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Phone: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="service_phones"
                             name="service_phones" value="">
                         <p id="error_service_phones" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
                     </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        <li class="service-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 service-phones-div">
+                                <input class="form-control selectpicker service_phones"  type="text" name="service_phones[]" value="">
+                            </div> 
+                        </li> 
+                    </ol>
                 </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Schedule: </label>
@@ -281,20 +294,28 @@ Service Create
         $('select#service_locations').val([]).change();
         $('select#service_schedules').val([]).change();
     });
-    $(document).ready(function(){
-        $('#error_service_phones').hide();
-        $("#service-create-content").submit(function(event){
-            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
-            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
-            var service_phones = $("#service_phones").val();
-            if (service_phones != ''){
-                if(mob.test(service_phones) == false && service_phones != 10){ 
-                    $('#error_service_phones').show();              
-                    event.preventDefault();
-                } 
-            }
+    // $(document).ready(function(){
+    //     $('#error_service_phones').hide();
+    //     $("#service-create-content").submit(function(event){
+    //         // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+    //         var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+    //         var service_phones = $("#service_phones").val();
+    //         if (service_phones != ''){
+    //             if(mob.test(service_phones) == false && service_phones != 10){ 
+    //                 $('#error_service_phones').show();              
+    //                 event.preventDefault();
+    //             } 
+    //         }
            
-        });
+    //     });
+    // });
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='service-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 service-phones-div'>"
+          + "<input class='form-control selectpicker service_phones'  type='text' name='service_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
 </script>
 @endsection
