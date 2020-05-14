@@ -70,62 +70,67 @@ Contact Edit
         <form action="/contact/{{$contact->contact_recordid}}/update" method="GET">
             <div class="row">
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Name: </label>
+                    <label class="control-label sel-label-org pl-4">Contact Name: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_name"
                             name="contact_name" value="{{$contact->contact_name}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Title: </label>
+                    <label class="control-label sel-label-org pl-4">Organization: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="contact_organization"
+                            name="contact_organization" data-size="5" required>
+                            @foreach($organization_info_list as $key => $org_info)
+                            <option value="{{$org_info->organization_recordid}}" @if($org_info->organization_recordid == $contact->contact_organizations) selected @endif>{{$org_info->organization_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Services: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="contact_services"
+                            name="contact_services[]" data-size="5">
+                            @foreach($service_info_list as $key => $service_info)
+                            <option value="{{$service_info->service_recordid}}" @if(in_array($service_info->service_recordid, $contact_service_recordid_list)) selected @endif>{{$service_info->service_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Contact Title: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_title"
                             name="contact_title" value="{{$contact->contact_title}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Department: </label>
+                    <label class="control-label sel-label-org pl-4">Contact Department: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_department"
                             name="contact_department" value="{{$contact->contact_department}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Email: </label>
+                    <label class="control-label sel-label-org pl-4">Contact Email: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="contact_email"
+                        <input class="form-control selectpicker" type="email" id="contact_email"
                             name="contact_email" value="{{$contact->contact_email}}">
                     </div>
                 </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Organization: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="contact_organization" data-size="5" name="contact_organization">
-                            @foreach($organization_info_list as $key => $organization_info)                                
-                                <option value="{{$organization_info->organization_recordid}}" @if ($organization_info->organization_recordid == $contact->contact_organizations) selected @endif>{{$organization_info->organization_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div>
-                <div class="form-group">                 
-                    <label class="control-label sel-label-org pl-4">Services: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" data-size="5" id="contact_services" name="contact_services[]">
-                            @foreach($service_info_list as $key => $service_info)                                
-                                <option value="{{$service_info->service_recordid}}" @if (in_array($service_info->service_recordid, $contact_services)) selected @endif>{{$service_info->service_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>           
-                </div>
-                <!-- <div class="form-group">
+                
+                
+                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="contact_phone"
-                            name="contact_phone" @if ($contact_phone) value="{{$contact_phone->phone_number}}" @endif>
+                        <input class="form-control selectpicker" type="text" id="contact_cell_phones"
+                            name="contact_cell_phones" @if ($contact_phone) value="{{$contact_phone->phone_number}}" @endif>
+                        <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
                     </div>
-                </div> -->
+                </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phones: </label>
                     <a id="add-phone-input">
                         <span class="glyphicon glyphicon-plus-sign"></span>
@@ -139,7 +144,7 @@ Contact Edit
                         </li> 
                         @endforeach
                     </ol>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Area Code(optional): </label>
@@ -201,6 +206,21 @@ Contact Edit
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#contact_recordid').val(value);
+    });
+    $(document).ready(function(){
+        $('#error_cell_phone').hide();
+        $("#contacts-edit-content").submit(function(event){
+            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+            var contact_cell_phones_value = $("#contact_cell_phones").val();
+            if (contact_cell_phones_value != ''){
+                if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
+                    $('#error_cell_phone').show();              
+                    event.preventDefault();
+                } 
+            }
+           
+        });
     });
     $("#add-phone-input").click(function(){
         $("ol#phones-ul").append(

@@ -432,11 +432,11 @@ class ContactController extends Controller
 
         if ($request->contact_service) {
             $contact->contact_services = join(',', $request->contact_service);
+            $contact->service()->sync($request->contact_service);
         } else {
             $contact->contact_services = '';
         } 
-        $contact->service()->sync($request->contact_service);
-
+        
         $contact_cell_phones = $request->contact_cell_phones;
         $cell_phone = Phone::where('phone_number', '=', $contact_cell_phones)->first();
         if ($cell_phone != null) {
@@ -498,7 +498,7 @@ class ContactController extends Controller
     {
         $contact = Contact::where('contact_recordid', '=', $id)->first();
         $organization_info_list = Organization::select('organization_recordid', 'organization_name')->get();
-        $service_info_list = Service::select('service_recordid', 'service_name')->get();
+        $service_info_list = Service::select('service_name', 'service_recordid')->get();
         $contact_services = [];
         foreach ($contact->service as $key => $value) {
              array_push($contact_services, $value->service_recordid);
@@ -509,9 +509,13 @@ class ContactController extends Controller
         } else {
             $contact_phone = NULL;
         }
+        $contact_service_recordid_list = [];
+        if ($contact->contact_services) {
+            $contact_service_recordid_list = explode(',', $contact->contact_services);
+        }
              
         $map = Map::find(1);
-        return view('frontEnd.contact-edit', compact('contact', 'map', 'organization_info_list', 'service_info_list', 'contact_services', 'contact_phone'));
+        return view('frontEnd.contact-edit', compact('contact', 'map', 'organization_info_list', 'service_info_list', 'contact_services', 'contact_phone', 'contact_service_recordid_list'));
     }
 
     /**
@@ -539,24 +543,36 @@ class ContactController extends Controller
             $contact->contact_services = '';
         }
 
-        if ($request->contact_phones) {
-            $phone_recordids = [];
-            foreach ($request->contact_phones as $key => $number) {
-                $phone = Phone::where('phone_number', $number);
-                if ($phone->count() > 0) {
-                    $phone_record_id = $phone->first()->phone_recordid;
-                    array_push($phone_recordids, $phone_record_id);
-                } else {
-                    $new_phone = new Phone;
-                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                    $new_phone->phone_recordid = $new_phone_recordid;
-                    $new_phone->phone_number = $number;
-                    $new_phone->save();
-                    array_push($phone_recordids, $new_phone_recordid);
-                }
-            }
-            $contact->phone()->sync($phone_recordids);
+        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        $phone_recordid_list = array();
+        foreach ($phone_recordids as $key => $value) {
+            $phone_recordid = $value->phone_recordid;
+            array_push($phone_recordid_list, $phone_recordid);
         }
+        $phone_recordid_list = array_unique($phone_recordid_list);   
+
+        $contact_cell_phones = $request->contact_cell_phones;
+        $cell_phone = Phone::where('phone_number', '=', $contact_cell_phones)->first();
+        if ($cell_phone != null) {
+            $cell_phone_id = $cell_phone["phone_recordid"];
+            $contact->contact_phones = $cell_phone_id;
+        } else {
+            $phone = new Phone;
+            $new_recordid = Phone::max('phone_recordid') + 1;
+            if (in_array($new_recordid, $phone_recordid_list)) {
+                $new_recordid = Phone::max('phone_recordid') + 1;
+            }
+            $phone->phone_recordid = $new_recordid;
+            $phone->phone_number = $contact_cell_phones;
+            $phone->phone_type = "voice";
+            $contact->contact_phones = $phone->phone_recordid;
+            $phone->save();
+        }
+
+        $contact_phone_info_list = array();
+        array_push($contact_phone_info_list, $contact->contact_phones);
+        $contact_phone_info_list = array_unique($contact_phone_info_list);
+        $contact->phone()->sync($contact_phone_info_list);
 
         
         $contact->flag = 'modified';
