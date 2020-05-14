@@ -247,17 +247,6 @@ Service Create
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Service Details: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" multiple data-live-search="true" id="service_details"
-                            name="service_details[]" data-size="5" >
-                            @foreach($detail_info_list as $key => $detail_info)
-                            <option value="{{$detail_info->detail_recordid}}">{{$detail_info->detail_value}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Address: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <select class="form-control selectpicker" multiple data-live-search="true" id="service_address"
