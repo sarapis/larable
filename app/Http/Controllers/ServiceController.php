@@ -507,36 +507,58 @@ class ServiceController extends Controller
         }
         $service->taxonomy()->sync($request->service_taxonomies);
 
-        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        $phone_recordid_list = array();
-        foreach ($phone_recordids as $key => $value) {
-            $phone_recordid = $value->phone_recordid;
-            array_push($phone_recordid_list, $phone_recordid);
-        }
-        $phone_recordid_list = array_unique($phone_recordid_list);
+        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        // $phone_recordid_list = array();
+        // foreach ($phone_recordids as $key => $value) {
+        //     $phone_recordid = $value->phone_recordid;
+        //     array_push($phone_recordid_list, $phone_recordid);
+        // }
+        // $phone_recordid_list = array_unique($phone_recordid_list);
 
-        $service_phones = $request->service_phones;
-        $cell_phone = Phone::where('phone_number', '=', $service_phones)->first();
-        if ($cell_phone != null) {
-            $cell_phone_id = $cell_phone["phone_recordid"];
-            $service->service_phones = $cell_phone_id;
-        } else {
-            $phone = new Phone;
-            $new_recordid = Phone::max('phone_recordid') + 1;
-            if (in_array($new_recordid, $phone_recordid_list)) {
-                $new_recordid = Phone::max('phone_recordid') + 1;
+        // $service_phones = $request->service_phones;
+        // $cell_phone = Phone::where('phone_number', '=', $service_phones)->first();
+        // if ($cell_phone != null) {
+        //     $cell_phone_id = $cell_phone["phone_recordid"];
+        //     $service->service_phones = $cell_phone_id;
+        // } else {
+        //     $phone = new Phone;
+        //     $new_recordid = Phone::max('phone_recordid') + 1;
+        //     if (in_array($new_recordid, $phone_recordid_list)) {
+        //         $new_recordid = Phone::max('phone_recordid') + 1;
+        //     }
+        //     $phone->phone_recordid = $new_recordid;
+        //     $phone->phone_number = $cell_phone;
+        //     $phone->phone_type = "voice";
+        //     $service->service_phones = $phone->phone_recordid;
+        //     $phone->save();
+        // }
+
+        // $service_phone_info_list = array();
+        // array_push($service_phone_info_list, $service->service_phones);
+        // $service_phone_info_list = array_unique($service_phone_info_list);
+        // $service->phone()->sync($service_phone_info_list);
+
+        $service->service_phones = '';
+        $phone_recordid_list = [];
+        if ($request->service_phones) {
+            $service_phone_number_list = $request->service_phones;
+            foreach ($service_phone_number_list as $key => $service_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $service_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $service->service_phones = $service->service_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $service_phone_number;
+                    $new_phone->save();
+                    $service->service_phones = $service->service_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
-            $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $cell_phone;
-            $phone->phone_type = "voice";
-            $service->service_phones = $phone->phone_recordid;
-            $phone->save();
         }
-
-        $service_phone_info_list = array();
-        array_push($service_phone_info_list, $service->service_phones);
-        $service_phone_info_list = array_unique($service_phone_info_list);
-        $service->phone()->sync($service_phone_info_list);
+        $service->phone()->sync($phone_recordid_list);
 
         if ($request->service_schedules) {
             $service->service_schedule = join(',', $request->service_schedules);
@@ -1112,68 +1134,28 @@ class ServiceController extends Controller
         } else {
             $service->service_details = '';
         }
-        
-        $service_phone1 = $request->service_phone1;
-        $service_phone2 = $request->service_phone2;
 
         $service->service_phones = '';
-        if ($service_phone1 && !$service_phone2) {
-            $phone1_info = Phone::where('phone_number', '=', $service_phone1)->select('phone_recordid')->first();
-            if ($phone1_info) {
-                $service->service_phones = $phone1_info->phone_recordid;
-            }
-            else {
-                $new_phone = new Phone;
-                $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                $new_phone->phone_recordid = $new_phone_recordid;
-                $new_phone->phone_number = $service_phone1;
-                $new_phone->save();
-                $service->service_phones = $new_phone_recordid;
-
-            }
-        }
-        if (!$service_phone1 && $service_phone2) {
-            $phone2_info = Phone::where('phone_number', '=', $service_phone2)->select('phone_recordid')->first();
-            if ($phone2_info) {
-                $service->service_phones = $phone2_info->phone_recordid;
-            }
-            else {
-                $new_phone = new Phone;
-                $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                $new_phone->phone_recordid = $new_phone_recordid;
-                $new_phone->phone_number = $service_phone2;
-                $new_phone->save();
-                $service->service_phones = $new_phone_recordid;
+        $phone_recordid_list = [];
+        if ($request->service_phones) {
+            $service_phone_number_list = $request->service_phones;
+            foreach ($service_phone_number_list as $key => $service_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $service_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $service->service_phones = $service->service_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $service_phone_number;
+                    $new_phone->save();
+                    $service->service_phones = $service->service_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
         }
-
-        if ($service_phone1 && $service_phone2) {
-            $phone1_info = Phone::where('phone_number', '=', $service_phone1)->select('phone_recordid')->first();
-            $phone2_info = Phone::where('phone_number', '=', $service_phone2)->select('phone_recordid')->first();
-            if ($phone1_info) {
-                $service_phones_1 = $phone1_info->phone_recordid;
-            }
-            else {
-                $new_phone = new Phone;
-                $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                $new_phone->phone_recordid = $new_phone_recordid;
-                $new_phone->phone_number = $service_phone1;
-                $new_phone->save();
-                $service_phones_1 = $new_phone_recordid;
-            }
-            if ($phone2_info) {
-                $service_phones_2 = $phone2_info->phone_recordid;
-            }
-            else {
-                $new_phone = new Phone;
-                $new_phone_recordid = Phone::max('phone_recordid') + 1;
-                $new_phone->phone_recordid = $new_phone_recordid;
-                $new_phone->phone_number = $service_phone2;
-                $new_phone->save();
-                $service_phones_2 = $new_phone_recordid;
-            }
-            $service->service_phones = $service_phones_1.','.$service_phones_2;
-        }
+        $service->phone()->sync($phone_recordid_list);
 
         $service_address_info = $request->service_address;
         $address_infos = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->distinct()->get();

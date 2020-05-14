@@ -137,8 +137,7 @@ Edit Service
                         </select>
                     </div>           
                 </div>
-
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone1: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 service-phone1-div">
                         <input class="form-control selectpicker"  type="text" id="service_phone1" name="service_phone1" @if($service_phone1) value="{{$service_phone1->phone_number}}" @endif>
@@ -149,6 +148,21 @@ Edit Service
                     <div class="col-md-12 col-sm-12 col-xs-12 service-phone2-div">
                         <input class="form-control selectpicker"  type="text" id="service_phone2" name="service_phone2" @if($service_phone2) value="{{$service_phone2->phone_number}}" @endif>
                     </div>  
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        @foreach($service->phone as $phone)
+                        <li class="service-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 service-phones-div">
+                                <input class="form-control selectpicker service_phones"  type="text" name="service_phones[]" value="{{$phone->phone_number}}">
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
                 </div>
                 <div class="form-group">                 
                     <label class="control-label sel-label-org pl-4">Contacts: </label>
@@ -260,6 +274,15 @@ Edit Service
     $('button.delete-td').on('click', function() {
         var value = $(this).val();
         $('input#service_recordid').val(value);
+    });
+
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='service-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 service-phones-div'>"
+          + "<input class='form-control selectpicker service_phones'  type='text' name='service_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
 
 </script>
