@@ -145,14 +145,6 @@ Contact Edit
                         @endforeach
                     </ol>
                 </div> -->
-
-              <!--   <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Phone Area Code(optional): </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="contact_phone_area_code" name="contact_phone_area_code"
-                            value="{{$contact->contact_phone_areacode}}">
-                    </div>
-                </div> -->
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Extension: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
