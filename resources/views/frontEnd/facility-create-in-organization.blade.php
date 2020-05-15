@@ -26,7 +26,11 @@ Facility Create
         height: 100%;
         border: 1px solid #ddd;
     }
-    button[data-id="facility_address"] {
+    button[data-id="facility_address_city"] {
+        height: 100%;
+        border: 1px solid #ddd;
+    }
+    button[data-id="facility_address_state"] {
         height: 100%;
         border: 1px solid #ddd;
     }
@@ -139,7 +143,7 @@ Facility Create
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Address: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <select class="form-control selectpicker" multiple data-live-search="true" id="facility_address"
@@ -150,6 +154,42 @@ Facility Create
                             @endif
                             @endforeach
                         </select>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Street Address: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker" type="text" id="facility_street_address"
+                            name="facility_street_address" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">City: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="facility_address_city"
+                            name="facility_address_city", data-size="5">
+                            @foreach($address_city_list as $key => $address_city)
+                            <option value="{{$address_city}}">{{$address_city}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">State: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <select class="form-control selectpicker" data-live-search="true" id="facility_address_state"
+                            name="facility_address_state", data-size="5">
+                            @foreach($address_states_list as $key => $address_state)
+                            <option value="{{$address_state}}">{{$address_state}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Zip Code: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 facility-details-div">
+                        <input class="form-control selectpicker" type="text" id="facility_zip_code"
+                            name="facility_zip_code" value="">
                     </div>
                 </div>
                 <div class="form-group">
@@ -179,7 +219,8 @@ Facility Create
     });
     $(document).ready(function() {
         $('select#facility_schedules').val([]).change();
-        $('select#facility_address').val([]).change();
+        $('select#facility_address_city').val([]).change();
+        $('select#facility_address_state').val([]).change();
     });
     // $(document).ready(function(){
     //     $('#error_cell_phone').hide();
@@ -196,7 +237,7 @@ Facility Create
            
     //     });
     // });
-    
+
     $("#add-phone-input").click(function(){
         $("ol#phones-ul").append(
             "<li class='facility-phones-li mb-2'>"

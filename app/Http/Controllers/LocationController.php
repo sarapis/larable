@@ -418,7 +418,24 @@ class LocationController extends Controller
         $address_info_list = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->orderBy('address_1')->distinct()->get();
         $detail_info_list = Detail::select('detail_recordid', 'detail_value')->orderBy('detail_value')->distinct()->get();
 
-        return view('frontEnd.facility-create-in-organization', compact('map', 'organization', 'service_info_list', 'schedule_info_list', 'address_info_list', 'detail_info_list'));
+        $address_cities = Address::select("address_city")->distinct()->get();
+        $address_states = Address::select("address_state_province")->distinct()->get();
+
+        $address_states_list = [];
+        foreach ($address_states as $key => $value) {
+            $state = explode(", ", trim($value->address_state_province));
+            $address_states_list = array_merge($address_states_list, $state);
+        }
+        $address_states_list = array_unique($address_states_list);
+
+        $address_city_list = [];
+        foreach ($address_cities as $key => $value) {
+            $cities = explode(", ", trim($value->address_city));
+            $address_city_list = array_merge($address_city_list, $cities);
+        }
+        $address_city_list = array_unique($address_city_list);
+
+        return view('frontEnd.facility-create-in-organization', compact('map', 'organization', 'service_info_list', 'schedule_info_list', 'address_info_list', 'detail_info_list', 'address_states_list', 'address_city_list'));
     }
 
     public function create()
@@ -437,7 +454,24 @@ class LocationController extends Controller
         $address_info_list = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->orderBy('address_1')->distinct()->get();
         $detail_info_list = Detail::select('detail_recordid', 'detail_value')->orderBy('detail_value')->distinct()->get();
 
-        return view('frontEnd.facility-create', compact('map', 'organization_name_list', 'service_info_list', 'schedule_info_list', 'address_info_list', 'detail_info_list'));
+        $address_cities = Address::select("address_city")->distinct()->get();
+        $address_states = Address::select("address_state_province")->distinct()->get();
+
+        $address_states_list = [];
+        foreach ($address_states as $key => $value) {
+            $state = explode(", ", trim($value->address_state_province));
+            $address_states_list = array_merge($address_states_list, $state);
+        }
+        $address_states_list = array_unique($address_states_list);
+
+        $address_city_list = [];
+        foreach ($address_cities as $key => $value) {
+            $cities = explode(", ", trim($value->address_city));
+            $address_city_list = array_merge($address_city_list, $cities);
+        }
+        $address_city_list = array_unique($address_city_list);
+
+        return view('frontEnd.facility-create', compact('map', 'organization_name_list', 'service_info_list', 'schedule_info_list', 'address_info_list', 'detail_info_list', 'address_states_list', 'address_city_list'));
     }
 
 
@@ -484,12 +518,42 @@ class LocationController extends Controller
         }
         $facility->schedules()->sync($request->facility_schedules);
 
-        if ($request->facility_address) {
-            $facility->location_address = join(',', $request->facility_address);
-        } else {
-            $facility->location_address = '';
+        // if ($request->facility_address) {
+        //     $facility->location_address = join(',', $request->facility_address);
+        // } else {
+        //     $facility->location_address = '';
+        // }
+        // $facility->address()->sync($request->facility_address);
+
+        $facility_address_city = $request->facility_address_city;
+        $facility_street_address = $request->facility_street_address;
+        $facility_address_state = '';
+        if ($request->facility_address_state) {
+            $facility_address_state = $request->facility_address_state;
         }
-        $facility->address()->sync($request->facility_address);
+        $facility_address_zip_code = $request->facility_zip_code;
+        $facility_address_info = $facility_street_address . ', ' . $facility_address_city . ', ' . $facility_address_state . ', ' . $facility_address_zip_code;
+
+        $address = Address::where('address_1', '=', $facility_street_address)->first();
+        $address_recordid_list = [];
+        $address_id = '';
+        if ($address) {
+            $address_id = $address["address_recordid"];
+            $facility->location_address = $address_id;            
+        } else {
+            $address = new Address;
+            $new_recordid = Address::max('address_recordid') + 1;
+            $address->address_recordid = $new_recordid;
+            $address->address_1 = $facility_street_address;
+            $address->address_city = $facility_address_city;
+            $address->address_state_province = $facility_address_state;
+            $address->address_postal_code = $facility_address_zip_code;
+            $facility->location_address = $new_recordid;
+            $address_id = $new_recordid;
+            $address->save();
+        }
+        array_push($address_recordid_list, $address_id);
+        $facility->address()->sync($address_recordid_list);
 
         // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
         // $phone_recordid_list = array();
@@ -592,12 +656,42 @@ class LocationController extends Controller
         }
         $facility->schedules()->sync($request->facility_schedules);
 
-        if ($request->facility_address) {
-            $facility->location_address = join(',', $request->facility_address);
-        } else {
-            $facility->location_address = '';
+        // if ($request->facility_address) {
+        //     $facility->location_address = join(',', $request->facility_address);
+        // } else {
+        //     $facility->location_address = '';
+        // }
+        // $facility->address()->sync($request->facility_address);
+
+        $facility_address_city = $request->facility_address_city;
+        $facility_street_address = $request->facility_street_address;
+        $facility_address_state = '';
+        if ($request->facility_address_state) {
+            $facility_address_state = $request->facility_address_state;
         }
-        $facility->address()->sync($request->facility_address);
+        $facility_address_zip_code = $request->facility_zip_code;
+        $facility_address_info = $facility_street_address . ', ' . $facility_address_city . ', ' . $facility_address_state . ', ' . $facility_address_zip_code;
+
+        $address = Address::where('address_1', '=', $facility_street_address)->first();
+        $address_recordid_list = [];
+        $address_id = '';
+        if ($address) {
+            $address_id = $address["address_recordid"];
+            $facility->location_address = $address_id;            
+        } else {
+            $address = new Address;
+            $new_recordid = Address::max('address_recordid') + 1;
+            $address->address_recordid = $new_recordid;
+            $address->address_1 = $facility_street_address;
+            $address->address_city = $facility_address_city;
+            $address->address_state_province = $facility_address_state;
+            $address->address_postal_code = $facility_address_zip_code;
+            $facility->location_address = $new_recordid;
+            $address_id = $new_recordid;
+            $address->save();
+        }
+        array_push($address_recordid_list, $address_id);
+        $facility->address()->sync($address_recordid_list);
 
         // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
         // $phone_recordid_list = array();
@@ -714,8 +808,37 @@ class LocationController extends Controller
         $address_info_list = Address::select('address_recordid', 'address_1', 'address_city', 'address_state_province', 'address_postal_code')->orderBy('address_1')->distinct()->get();
         $detail_info_list = Detail::select('detail_recordid', 'detail_value')->orderBy('detail_value')->distinct()->get();
 
+        $address_cities = Address::select("address_city")->distinct()->get();
+        $address_states = Address::select("address_state_province")->distinct()->get();
 
-        return view('frontEnd.location-edit', compact('facility', 'map', 'facility_organization_name', 'service_info_list', 'facility_service_list', 'organization_names', 'facility_organization_list', 'facility_phone_number', 'schedule_info_list', 'address_info_list', 'detail_info_list'));
+        $address_states_list = [];
+        foreach ($address_states as $key => $value) {
+            $state = explode(", ", trim($value->address_state_province));
+            $address_states_list = array_merge($address_states_list, $state);
+        }
+        $address_states_list = array_unique($address_states_list);
+
+        $address_city_list = [];
+        foreach ($address_cities as $key => $value) {
+            $cities = explode(", ", trim($value->address_city));
+            $address_city_list = array_merge($address_city_list, $cities);
+        }
+        $address_city_list = array_unique($address_city_list);
+
+
+        $facility_location_address = Location::where('location_recordid', '=', $id)->select('location_address')->first();
+        $facility_location_address_id = $facility_location_address['location_address'];
+        $address_city_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_city')->first();
+        $location_address_city = $address_city_info['address_city'];
+        $address_street_address_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_1')->first();
+        $location_street_address = $address_street_address_info['address_1'];
+        $address_zip_code_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_postal_code')->first();
+        $location_zip_code = $address_zip_code_info['address_postal_code'];
+        $address_state_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_state_province')->first();
+        $location_state = $address_state_info['address_state_province'];
+
+
+        return view('frontEnd.location-edit', compact('facility', 'map', 'facility_organization_name', 'service_info_list', 'facility_service_list', 'organization_names', 'facility_organization_list', 'facility_phone_number', 'schedule_info_list', 'address_info_list', 'detail_info_list', 'address_states_list', 'address_city_list', 'location_address_city', 'location_street_address', 'location_zip_code', 'location_state'));
     }
 
     /**
@@ -743,6 +866,36 @@ class LocationController extends Controller
             $facility->location_services = '';
         }
         $facility->services()->sync($request->facility_service);
+
+        $facility_address_city = $request->facility_address_city;
+        $facility_street_address = $request->facility_street_address;
+        $facility_address_state = '';
+        if ($request->facility_address_state) {
+            $facility_address_state = $request->facility_address_state;
+        }
+        $facility_address_zip_code = $request->facility_zip_code;
+        $facility_address_info = $facility_street_address . ', ' . $facility_address_city . ', ' . $facility_address_state . ', ' . $facility_address_zip_code;
+
+        $address = Address::where('address_1', '=', $facility_street_address)->first();
+        $address_recordid_list = [];
+        $address_id = '';
+        if ($address) {
+            $address_id = $address["address_recordid"];
+            $facility->location_address = $address_id;            
+        } else {
+            $address = new Address;
+            $new_recordid = Address::max('address_recordid') + 1;
+            $address->address_recordid = $new_recordid;
+            $address->address_1 = $facility_street_address;
+            $address->address_city = $facility_address_city;
+            $address->address_state_province = $facility_address_state;
+            $address->address_postal_code = $facility_address_zip_code;
+            $facility->location_address = $new_recordid;
+            $address_id = $new_recordid;
+            $address->save();
+        }
+        array_push($address_recordid_list, $address_id);
+        $facility->address()->sync($address_recordid_list);
 
         // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
         // $phone_recordid_list = array();
