@@ -335,7 +335,7 @@ class ContactController extends Controller
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
         $contact->contact_email = $request->contact_email;
-        $contact->contact_phone_areacode = $request->contact_phone_area_code;
+        // $contact->contact_phone_areacode = $request->contact_phone_area_code;
         $contact->contact_phone_extension = $request->contact_phone_extension;
 
         $organization_name = $request->contact_organization_name;
@@ -408,7 +408,7 @@ class ContactController extends Controller
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
         $contact->contact_email = $request->contact_email;
-        $contact->contact_phone_areacode = $request->contact_phone_area_code;
+        // $contact->contact_phone_areacode = $request->contact_phone_area_code;
         $contact->contact_phone_extension = $request->contact_phone_extension;
 
         $organization_name = $request->contact_organization_name;
@@ -532,7 +532,7 @@ class ContactController extends Controller
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
         $contact->contact_email = $request->contact_email;
-        $contact->contact_phone_areacode = $request->contact_phone_area_code;
+        // $contact->contact_phone_areacode = $request->contact_phone_area_code;
         $contact->contact_phone_extension = $request->contact_phone_extension;
         $contact->contact_organizations = $request->contact_organization;
 
