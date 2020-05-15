@@ -491,37 +491,58 @@ class LocationController extends Controller
         }
         $facility->address()->sync($request->facility_address);
 
-        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        $phone_recordid_list = array();
-        foreach ($phone_recordids as $key => $value) {
-            $phone_recordid = $value->phone_recordid;
-            array_push($phone_recordid_list, $phone_recordid);
-        }
-        $phone_recordid_list = array_unique($phone_recordid_list);
+        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        // $phone_recordid_list = array();
+        // foreach ($phone_recordids as $key => $value) {
+        //     $phone_recordid = $value->phone_recordid;
+        //     array_push($phone_recordid_list, $phone_recordid);
+        // }
+        // $phone_recordid_list = array_unique($phone_recordid_list);
 
-        $facility_phones = $request->facility_phones;
-        $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        if ($cell_phone != null) {
-            $cell_phone_id = $cell_phone["phone_recordid"];
-            $facility->location_phones = $cell_phone_id;
-        } else {
-            $phone = new Phone;
-            $new_recordid = Phone::max('phone_recordid') + 1;
-            if (in_array($new_recordid, $phone_recordid_list)) {
-                $new_recordid = Phone::max('phone_recordid') + 1;
+        // $facility_phones = $request->facility_phones;
+        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
+        // if ($cell_phone != null) {
+        //     $cell_phone_id = $cell_phone["phone_recordid"];
+        //     $facility->location_phones = $cell_phone_id;
+        // } else {
+        //     $phone = new Phone;
+        //     $new_recordid = Phone::max('phone_recordid') + 1;
+        //     if (in_array($new_recordid, $phone_recordid_list)) {
+        //         $new_recordid = Phone::max('phone_recordid') + 1;
+        //     }
+        //     $phone->phone_recordid = $new_recordid;
+        //     $phone->phone_number = $facility_phones;
+        //     $phone->phone_type = "voice";
+        //     $facility->location_phones = $phone->phone_recordid;
+        //     $phone->save();
+        // }
+
+        // $facility_phone_info_list = array();
+        // array_push($facility_phone_info_list, $facility->location_phones);
+        // $facility_phone_info_list = array_unique($facility_phone_info_list);
+        // $facility->phones()->sync($facility_phone_info_list);
+
+        $facility->location_phones = '';
+        $phone_recordid_list = [];
+        if ($request->facility_phones) {
+            $facility_phone_number_list = $request->facility_phones;
+            foreach ($facility_phone_number_list as $key => $facility_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $facility_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $facility->location_phones = $facility->location_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $facility_phone_number;
+                    $new_phone->save();
+                    $facility->location_phones = $facility->location_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
-            $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $facility_phones;
-            $phone->phone_type = "voice";
-            $facility->location_phones = $phone->phone_recordid;
-            $phone->save();
         }
-
-        $facility_phone_info_list = array();
-        array_push($facility_phone_info_list, $facility->location_phones);
-        $facility_phone_info_list = array_unique($facility_phone_info_list);
-        $facility->phones()->sync($facility_phone_info_list);
-
+        $facility->phones()->sync($phone_recordid_list);
 
         $facility->save();
 
@@ -578,36 +599,58 @@ class LocationController extends Controller
         }
         $facility->address()->sync($request->facility_address);
 
-        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        $phone_recordid_list = array();
-        foreach ($phone_recordids as $key => $value) {
-            $phone_recordid = $value->phone_recordid;
-            array_push($phone_recordid_list, $phone_recordid);
-        }
-        $phone_recordid_list = array_unique($phone_recordid_list);
+        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        // $phone_recordid_list = array();
+        // foreach ($phone_recordids as $key => $value) {
+        //     $phone_recordid = $value->phone_recordid;
+        //     array_push($phone_recordid_list, $phone_recordid);
+        // }
+        // $phone_recordid_list = array_unique($phone_recordid_list);
 
-        $facility_phones = $request->facility_phones;
-        $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        if ($cell_phone != null) {
-            $cell_phone_id = $cell_phone["phone_recordid"];
-            $facility->location_phones = $cell_phone_id;
-        } else {
-            $phone = new Phone;
-            $new_recordid = Phone::max('phone_recordid') + 1;
-            if (in_array($new_recordid, $phone_recordid_list)) {
-                $new_recordid = Phone::max('phone_recordid') + 1;
+        // $facility_phones = $request->facility_phones;
+        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
+        // if ($cell_phone != null) {
+        //     $cell_phone_id = $cell_phone["phone_recordid"];
+        //     $facility->location_phones = $cell_phone_id;
+        // } else {
+        //     $phone = new Phone;
+        //     $new_recordid = Phone::max('phone_recordid') + 1;
+        //     if (in_array($new_recordid, $phone_recordid_list)) {
+        //         $new_recordid = Phone::max('phone_recordid') + 1;
+        //     }
+        //     $phone->phone_recordid = $new_recordid;
+        //     $phone->phone_number = $facility_phones;
+        //     $phone->phone_type = "voice";
+        //     $facility->location_phones = $phone->phone_recordid;
+        //     $phone->save();
+        // }
+
+        // $facility_phone_info_list = array();
+        // array_push($facility_phone_info_list, $facility->location_phones);
+        // $facility_phone_info_list = array_unique($facility_phone_info_list);
+        // $facility->phones()->sync($facility_phone_info_list);
+
+        $facility->location_phones = '';
+        $phone_recordid_list = [];
+        if ($request->facility_phones) {
+            $facility_phone_number_list = $request->facility_phones;
+            foreach ($facility_phone_number_list as $key => $facility_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $facility_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $facility->location_phones = $facility->location_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $facility_phone_number;
+                    $new_phone->save();
+                    $facility->location_phones = $facility->location_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
-            $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $facility_phones;
-            $phone->phone_type = "voice";
-            $facility->location_phones = $phone->phone_recordid;
-            $phone->save();
         }
-
-        $facility_phone_info_list = array();
-        array_push($facility_phone_info_list, $facility->location_phones);
-        $facility_phone_info_list = array_unique($facility_phone_info_list);
-        $facility->phones()->sync($facility_phone_info_list);
+        $facility->phones()->sync($phone_recordid_list);
 
         $facility->save();
 
@@ -701,36 +744,58 @@ class LocationController extends Controller
         }
         $facility->services()->sync($request->facility_service);
 
-        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        $phone_recordid_list = array();
-        foreach ($phone_recordids as $key => $value) {
-            $phone_recordid = $value->phone_recordid;
-            array_push($phone_recordid_list, $phone_recordid);
-        }
-        $phone_recordid_list = array_unique($phone_recordid_list);
+        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        // $phone_recordid_list = array();
+        // foreach ($phone_recordids as $key => $value) {
+        //     $phone_recordid = $value->phone_recordid;
+        //     array_push($phone_recordid_list, $phone_recordid);
+        // }
+        // $phone_recordid_list = array_unique($phone_recordid_list);
 
-        $facility_phones = $request->facility_phones;
-        $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        if ($cell_phone != null) {
-            $cell_phone_id = $cell_phone["phone_recordid"];
-            $facility->location_phones = $cell_phone_id;
-        } else {
-            $phone = new Phone;
-            $new_recordid = Phone::max('phone_recordid') + 1;
-            if (in_array($new_recordid, $phone_recordid_list)) {
-                $new_recordid = Phone::max('phone_recordid') + 1;
+        // $facility_phones = $request->facility_phones;
+        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
+        // if ($cell_phone != null) {
+        //     $cell_phone_id = $cell_phone["phone_recordid"];
+        //     $facility->location_phones = $cell_phone_id;
+        // } else {
+        //     $phone = new Phone;
+        //     $new_recordid = Phone::max('phone_recordid') + 1;
+        //     if (in_array($new_recordid, $phone_recordid_list)) {
+        //         $new_recordid = Phone::max('phone_recordid') + 1;
+        //     }
+        //     $phone->phone_recordid = $new_recordid;
+        //     $phone->phone_number = $facility_phones;
+        //     $phone->phone_type = "voice";
+        //     $facility->location_phones = $phone->phone_recordid;
+        //     $phone->save();
+        // }
+
+        // $facility_phone_info_list = array();
+        // array_push($facility_phone_info_list, $facility->location_phones);
+        // $facility_phone_info_list = array_unique($facility_phone_info_list);
+        // $facility->phones()->sync($facility_phone_info_list);
+
+        $facility->location_phones = '';
+        $phone_recordid_list = [];
+        if ($request->facility_phones) {
+            $facility_phone_number_list = $request->facility_phones;
+            foreach ($facility_phone_number_list as $key => $facility_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $facility_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $facility->location_phones = $facility->location_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $facility_phone_number;
+                    $new_phone->save();
+                    $facility->location_phones = $facility->location_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
-            $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $facility_phones;
-            $phone->phone_type = "voice";
-            $facility->location_phones = $phone->phone_recordid;
-            $phone->save();
         }
-
-        $facility_phone_info_list = array();
-        array_push($facility_phone_info_list, $facility->location_phones);
-        $facility_phone_info_list = array_unique($facility_phone_info_list);
-        $facility->phones()->sync($facility_phone_info_list);
+        $facility->phones()->sync($phone_recordid_list);
 
         $facility->save();
 

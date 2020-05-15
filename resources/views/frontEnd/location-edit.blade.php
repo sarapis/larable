@@ -126,13 +126,28 @@ Facility Edit
                         selectpicker','id' => 'facility_service', 'multiple' => 'true', 'data-live-search' => 'true', 'data-size' => '5']) !!}
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Number: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="facility_phones"
                             name="facility_phones" value="{{$facility_phone_number}}">
                         <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
                     </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        @foreach($facility->phones as $phone)
+                        <li class="facility-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 facility-phones-div">
+                                <input class="form-control selectpicker facility_phones"  type="text" name="facility_phones[]" value="{{$phone->phone_number}}">
+                            </div> 
+                        </li> 
+                        @endforeach
+                    </ol>
                 </div>
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Facility Schedule: </label>
@@ -183,20 +198,28 @@ Facility Edit
         history.go(-1);
         return false;
     });
-    $(document).ready(function(){
-        $('#error_cell_phone').hide();
-        $("#facilities-edit-content").submit(function(event){
-            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
-            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
-            var facility_phones = $("#facility_phones").val();
-            if (facility_phones != ''){
-                if(mob.test(facility_phones) == false && facility_phones != 10){ 
-                    $('#error_cell_phone').show();              
-                    event.preventDefault();
-                } 
-            }
+    // $(document).ready(function(){
+    //     $('#error_cell_phone').hide();
+    //     $("#facilities-edit-content").submit(function(event){
+    //         // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+    //         var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+    //         var facility_phones = $("#facility_phones").val();
+    //         if (facility_phones != ''){
+    //             if(mob.test(facility_phones) == false && facility_phones != 10){ 
+    //                 $('#error_cell_phone').show();              
+    //                 event.preventDefault();
+    //             } 
+    //         }
            
-        });
+    //     });
+    // });
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='facility-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 facility-phones-div'>"
+          + "<input class='form-control selectpicker facility_phones'  type='text' name='facility_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
     
 </script>
