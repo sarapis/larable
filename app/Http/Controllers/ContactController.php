@@ -574,7 +574,7 @@ class ContactController extends Controller
         $contact->contact_title = $request->contact_title;
         $contact->contact_department = $request->contact_department;
         $contact->contact_email = $request->contact_email;
-        $contact->contact_phone_extension = $request->contact_phone_extension;
+        // $contact->contact_phone_extension = $request->contact_phone_extension;
         $contact->contact_organizations = $request->contact_organization;
 
         if ($request->contact_services) {
@@ -592,29 +592,50 @@ class ContactController extends Controller
         }
         $phone_recordid_list = array_unique($phone_recordid_list);   
 
-        $contact_cell_phones = $request->contact_cell_phones;
-        $cell_phone = Phone::where('phone_number', '=', $contact_cell_phones)->first();
-        if ($cell_phone != null) {
-            $cell_phone_id = $cell_phone["phone_recordid"];
-            $contact->contact_phones = $cell_phone_id;
-        } else {
-            $phone = new Phone;
-            $new_recordid = Phone::max('phone_recordid') + 1;
-            if (in_array($new_recordid, $phone_recordid_list)) {
-                $new_recordid = Phone::max('phone_recordid') + 1;
+        // $contact_cell_phones = $request->contact_cell_phones;
+        // $cell_phone = Phone::where('phone_number', '=', $contact_cell_phones)->first();
+        // if ($cell_phone != null) {
+        //     $cell_phone_id = $cell_phone["phone_recordid"];
+        //     $contact->contact_phones = $cell_phone_id;
+        // } else {
+        //     $phone = new Phone;
+        //     $new_recordid = Phone::max('phone_recordid') + 1;
+        //     if (in_array($new_recordid, $phone_recordid_list)) {
+        //         $new_recordid = Phone::max('phone_recordid') + 1;
+        //     }
+        //     $phone->phone_recordid = $new_recordid;
+        //     $phone->phone_number = $contact_cell_phones;
+        //     $phone->phone_type = "voice";
+        //     $contact->contact_phones = $phone->phone_recordid;
+        //     $phone->save();
+        // }
+
+        // $contact_phone_info_list = array();
+        // array_push($contact_phone_info_list, $contact->contact_phones);
+        // $contact_phone_info_list = array_unique($contact_phone_info_list);
+        // $contact->phone()->sync($contact_phone_info_list);
+
+        $contact->contact_phones = '';
+        $phone_recordid_list = [];
+        if ($request->contact_phones) {
+            $contact_phone_number_list = $request->contact_phones;
+            foreach ($contact_phone_number_list as $key => $contact_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $contact_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $contact->contact_phones = $contact->contact_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $contact_phone_number;
+                    $new_phone->save();
+                    $contact->contact_phones = $contact->contact_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
             }
-            $phone->phone_recordid = $new_recordid;
-            $phone->phone_number = $contact_cell_phones;
-            $phone->phone_type = "voice";
-            $contact->contact_phones = $phone->phone_recordid;
-            $phone->save();
         }
-
-        $contact_phone_info_list = array();
-        array_push($contact_phone_info_list, $contact->contact_phones);
-        $contact_phone_info_list = array_unique($contact_phone_info_list);
-        $contact->phone()->sync($contact_phone_info_list);
-
+        $contact->phone()->sync($phone_recordid_list);
         
         $contact->flag = 'modified';
         $contact->save();

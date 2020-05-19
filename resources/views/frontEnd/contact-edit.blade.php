@@ -121,16 +121,16 @@ Contact Edit
                 </div>
                 
                 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_cell_phones"
                             name="contact_cell_phones" @if ($contact_phone) value="{{$contact_phone->phone_number}}" @endif>
                         <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
                     </div>
-                </div>
+                </div> -->
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phones: </label>
                     <a id="add-phone-input">
                         <span class="glyphicon glyphicon-plus-sign"></span>
@@ -144,14 +144,14 @@ Contact Edit
                         </li> 
                         @endforeach
                     </ol>
-                </div> -->
-                <div class="form-group">
+                </div>
+               <!--  <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Extension: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_phone_extension" name="contact_phone_extension"
                             value="{{$contact->contact_phone_extension}}">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="col-md-12 text-center">
@@ -199,21 +199,21 @@ Contact Edit
         var value = $(this).val();
         $('input#contact_recordid').val(value);
     });
-    $(document).ready(function(){
-        $('#error_cell_phone').hide();
-        $("#contacts-edit-content").submit(function(event){
-            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
-            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
-            var contact_cell_phones_value = $("#contact_cell_phones").val();
-            if (contact_cell_phones_value != ''){
-                if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
-                    $('#error_cell_phone').show();              
-                    event.preventDefault();
-                } 
-            }
+    // $(document).ready(function(){
+    //     $('#error_cell_phone').hide();
+    //     $("#contacts-edit-content").submit(function(event){
+    //         // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+    //         var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+    //         var contact_cell_phones_value = $("#contact_cell_phones").val();
+    //         if (contact_cell_phones_value != ''){
+    //             if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
+    //                 $('#error_cell_phone').show();              
+    //                 event.preventDefault();
+    //             } 
+    //         }
            
-        });
-    });
+    //     });
+    // });
     $("#add-phone-input").click(function(){
         $("ol#phones-ul").append(
             "<li class='contact-phones-li mb-2'>"
