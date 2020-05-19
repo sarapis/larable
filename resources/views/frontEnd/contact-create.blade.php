@@ -111,21 +111,34 @@ Contact Create
                             name="contact_email" value="">
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Number: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_cell_phones"
                             name="contact_cell_phones" value="">
                         <p id="error_cell_phone" style="font-style: italic; color: red;">Invalid phone number! Example: +39 422 789611, 0422-78961, (042)589-6000, +39 (0422)7896, 0422 (789611), 39 422/789 611 </p>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Phones: </label>
+                    <a id="add-phone-input">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </a>
+                    <ol id="phones-ul">
+                        <li class="contact-phones-li mb-2">
+                            <div class="col-md-12 col-sm-12 col-xs-12 contact-phones-div">
+                                <input class="form-control selectpicker contact_phones"  type="text" name="contact_phones[]" value="">
+                            </div> 
+                        </li> 
+                    </ol>
+                </div>
+                <!-- <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Phone Extension: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="contact_phone_extension" name="contact_phone_extension"
                             value="">
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <div class="col-md-12 text-center">
                         <a href="/contacts" class="btn btn-danger btn-rounded" id="view-contact-btn"><i
@@ -149,20 +162,29 @@ Contact Create
         $('select#contact_service').val([]).change();
     });
 
-    $(document).ready(function(){
-        $('#error_cell_phone').hide();
-        $("#contacts-create-content").submit(function(event){
-            // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
-            var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
-            var contact_cell_phones_value = $("#contact_cell_phones").val();
-            if (contact_cell_phones_value != ''){
-                if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
-                    $('#error_cell_phone').show();              
-                    event.preventDefault();
-                } 
-            }
+    // $(document).ready(function(){
+    //     $('#error_cell_phone').hide();
+    //     $("#contacts-create-content").submit(function(event){
+    //         // var mob = /^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12})$/;
+    //         var mob = /^(?!.*([\(\)\-\/]{2,}|\([^\)]+$|^[^\(]+\)|\([^\)]+\(|\s{2,}).*)\+?([\-\s\(\)\/]*\d){9,15}[\s\(\)]*$/;
+    //         var contact_cell_phones_value = $("#contact_cell_phones").val();
+    //         if (contact_cell_phones_value != ''){
+    //             if(mob.test(contact_cell_phones_value) == false && contact_cell_phones_value != 10){ 
+    //                 $('#error_cell_phone').show();              
+    //                 event.preventDefault();
+    //             } 
+    //         }
            
-        });
+    //     });
+    // });
+
+    $("#add-phone-input").click(function(){
+        $("ol#phones-ul").append(
+            "<li class='service-phones-li mb-2'>"
+          + "<div class='col-md-12 col-sm-12 col-xs-12 contact-phones-div'>"
+          + "<input class='form-control selectpicker contact_phones'  type='text' name='contact_phones[]'>"
+          + "</div>"
+          + "</li>" );
     });
 
 </script>
