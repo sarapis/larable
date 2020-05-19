@@ -800,7 +800,7 @@ class LocationController extends Controller
         $facility_service_list = explode(',', $facility->location_services);
 
         $facility_phone_number = '';
-        if ($facility->phones) {
+        if (sizeof($facility->phones)) {
             $facility_phone_number = $facility->phones[0]['phone_number'];
         }
 
@@ -829,14 +829,30 @@ class LocationController extends Controller
         $facility_location_address = Location::where('location_recordid', '=', $id)->select('location_address')->first();
         $facility_location_address_id = $facility_location_address['location_address'];
         $address_city_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_city')->first();
-        $location_address_city = $address_city_info['address_city'];
-        $address_street_address_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_1')->first();
-        $location_street_address = $address_street_address_info['address_1'];
-        $address_zip_code_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_postal_code')->first();
-        $location_zip_code = $address_zip_code_info['address_postal_code'];
-        $address_state_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_state_province')->first();
-        $location_state = $address_state_info['address_state_province'];
 
+        $location_address_city = '';
+        if ($address_city_info) {
+            $location_address_city = $address_city_info['address_city'];
+        }
+        
+        $address_street_address_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_1')->first();
+
+        $location_street_address = '';
+        if ($address_street_address_info) {
+            $location_street_address = $address_street_address_info['address_1'];
+        }
+        
+        $address_zip_code_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_postal_code')->first();
+        $location_zip_code = '';
+        if ($address_zip_code_info) {
+            $location_zip_code = $address_zip_code_info['address_postal_code'];
+        }
+        
+        $address_state_info = Address::where('address_recordid', '=', $facility_location_address_id)->select('address_state_province')->first();
+        $location_state = '';
+        if ($address_state_info) {
+            $location_state = $address_state_info['address_state_province'];
+        }
 
         return view('frontEnd.location-edit', compact('facility', 'map', 'facility_organization_name', 'service_info_list', 'facility_service_list', 'organization_names', 'facility_organization_list', 'facility_phone_number', 'schedule_info_list', 'address_info_list', 'detail_info_list', 'address_states_list', 'address_city_list', 'location_address_city', 'location_street_address', 'location_zip_code', 'location_state'));
     }
