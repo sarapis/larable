@@ -6,6 +6,11 @@ Facility
 
 
 <style type="text/css">
+
+.dropdown-menu.show {
+    max-height: 300px !important;
+    width: 100% !important;
+}
 .table a{
     text-decoration:none !important;
     color: rgba(40,53,147,.9);
@@ -59,7 +64,7 @@ table#tbl-location-profile-history {
 }
 
 #tagging-div {
-    margin-top: 12px !important;
+    width: 100% !important;
 }
 
 #content-location-profile {
@@ -267,6 +272,38 @@ table#tbl-location-profile-history {
             </div> 
 
             <div class="col-md-4 property">
+                @if (Sentinel::getUser())
+                <div class="pt-10 pb-10 pl-0" style="display: flex;">
+                    <div class="dropdown" style="width: 100%; float: right;">
+                        <button class="btn btn-primary dropdown-toggle" type="button"
+                            id="dropdownMenuButton-group" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" style="width: 100%;">
+                            (+) Add New
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-new"
+                              style="width: 100%;">
+                            <a href="/service_create/{{$facility->location_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Service</a>
+                            <a href="/contact_create/{{$facility->location_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Contact</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <div class="pt-10 pb-10 pl-0 btn-download">
+                    <form method="GET" action="/facility/{{$facility->location_recordid}}/tagging"
+                          id="organization_tagging">
+                        <div class="row" id="tagging-div">
+                            <div class="col-md-10">
+                                  <input type="text" class="form-control" id="tokenfield" name="tokenfield"
+                                      value="{{$facility->location_tag}}" />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-secondary btn-tag-save" style="float: right;">
+                                      <i class="fas fa-save"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="card pt-15 pb-15">
                     <div id="map" style="width:initial;margin-top: 0; height: 49vh;"></div>
                 </div>
@@ -317,7 +354,20 @@ table#tbl-location-profile-history {
 
 <script type="text/javascript" src="http://sliptree.github.io/bootstrap-tokenfield/dist/bootstrap-tokenfield.js"></script>
 <script type="text/javascript" src="http://sliptree.github.io/bootstrap-tokenfield/docs-assets/js/typeahead.bundle.min.js"></script>
+    
 <script>
+
+    var tag_source = <?php print_r(json_encode($existing_tags)) ?>; 
+
+    $(document).ready(function() {   
+        $('#tokenfield').tokenfield({
+            autocomplete: {
+                source: tag_source,
+                delay: 100
+            },
+            showAutocompleteOnFocus: true
+        });
+    });
 
     $(document).ready(function() {
         $('.comment-reply').hide();

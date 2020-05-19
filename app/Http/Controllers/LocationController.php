@@ -367,9 +367,29 @@ class LocationController extends Controller
         $facility_organizations = Organization::whereIn('organization_recordid', $facility_organization_recordid_list)->orderBy('organization_name')->paginate(10);
 
         $comment_list = Comment::where('comments_location', '=', $id)->get();
-        
-        return view('frontEnd.location', compact('facility', 'map', 'locations', 'facility_organizations', 'facility_services', 'comment_list'));
 
+        $existing_tag_element_list = Location::whereNotNull('location_tag')->get()->pluck('location_tag');
+        $existing_tags = [];
+        foreach ($existing_tag_element_list as $key => $existing_tag_element) {
+            $existing_tag_list = explode(", ", $existing_tag_element);
+            foreach ($existing_tag_list as $key => $existing_tag) {
+                if (!in_array($existing_tag, $existing_tags, true)) {
+                    array_push($existing_tags, $existing_tag);
+                }
+            }
+        }
+        
+        return view('frontEnd.location', compact('facility', 'map', 'locations', 'facility_organizations', 'facility_services', 'comment_list', 'existing_tags'));
+
+    }
+
+
+    public function tagging(Request $request, $id)
+    {
+        $facility = Location::find($id);
+        $facility->location_tag = $request->tokenfield;
+        $facility->save();
+        return redirect('facility/' . $id);
     }
 
 
