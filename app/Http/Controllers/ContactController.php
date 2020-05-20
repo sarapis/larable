@@ -318,6 +318,14 @@ class ContactController extends Controller
         return view('frontEnd.contact-create-in-organization', compact('map', 'organization', 'service_info_list'));
     }
 
+    public function create_in_facility($id)
+    {
+        $map = Map::find(1);
+        $facility = Location::where('location_recordid', '=', $id)->first();
+        $service_info_list = Service::select('service_recordid', 'service_name')->orderBy('service_name')->distinct()->get();
+        return view('frontEnd.contact-create-in-facility', compact('map', 'facility', 'service_info_list'));
+    }
+
 
     public function add_new_contact(Request $request)
     {
@@ -411,6 +419,77 @@ class ContactController extends Controller
         $contact->save();
 
         return redirect('contacts');
+    }
+
+
+    public function add_new_contact_in_facility(Request $request)
+    {
+        $contact = new Contact;       
+
+        $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
+        $phone_recordid_list = array();
+        foreach ($phone_recordids as $key => $value) {
+            $phone_recordid = $value->phone_recordid;
+            array_push($phone_recordid_list, $phone_recordid);
+        }
+        $phone_recordid_list = array_unique($phone_recordid_list);
+
+        $contact->contact_name = $request->contact_name;
+        $contact->contact_title = $request->contact_title;
+        $contact->contact_department = $request->contact_department;
+        $contact->contact_email = $request->contact_email;
+        
+        $contact_organization_id = $request->contact_organization;
+        $contact->contact_organizations = $contact_organization_id;
+
+        $contact_recordids = Contact::select("contact_recordid")->distinct()->get();
+        $contact_recordid_list = array();
+        foreach ($contact_recordids as $key => $value) {
+            $contact_recordid = $value->contact_recordid;
+            array_push($contact_recordid_list, $contact_recordid);
+        }
+        $contact_recordid_list = array_unique($contact_recordid_list);
+
+        $new_recordid = Contact::max('contact_recordid') + 1;
+        if (in_array($new_recordid, $contact_recordid_list)) {
+            $new_recordid = Contact::max('contact_recordid') + 1;
+        }
+        $contact->contact_recordid = $new_recordid;
+
+        if ($request->contact_service) {
+            $contact->contact_services = join(',', $request->contact_service);
+        } else {
+            $contact->contact_services = '';
+        }
+        $contact->service()->sync($request->contact_service);
+
+        $contact->contact_phones = '';
+        $phone_recordid_list = [];
+        if ($request->contact_phones) {
+            $contact_phone_number_list = $request->contact_phones;
+            foreach ($contact_phone_number_list as $key => $contact_phone_number) {
+                $phone_info = Phone::where('phone_number', '=', $contact_phone_number)->select('phone_recordid')->first();
+                if ($phone_info) {
+                    $contact->contact_phones = $contact->contact_phones . $phone_info->phone_recordid . ',';
+                    array_push($phone_recordid_list, $phone_info->phone_recordid);
+                } else {
+                    $new_phone = new Phone;
+                    $new_phone_recordid = Phone::max('phone_recordid') + 1;
+                    $new_phone->phone_recordid = $new_phone_recordid;
+                    $new_phone->phone_number = $contact_phone_number;
+                    $new_phone->save();
+                    $contact->contact_phones = $contact->contact_phones . $new_phone_recordid . ',';
+                    array_push($phone_recordid_list, $new_phone_recordid);
+                }
+            }
+        }
+        $contact->phone()->sync($phone_recordid_list);
+
+        $contact_facility_id = $request->contact_facility_recordid;
+
+        $contact->save();
+
+        return redirect('facility/'.$contact_facility_id);
     }
 
     public function add_new_contact_in_organization(Request $request)

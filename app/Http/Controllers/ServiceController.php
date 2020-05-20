@@ -432,14 +432,6 @@ class ServiceController extends Controller
     {
         $map = Map::find(1);
         $facility = Location::where('location_recordid', '=', $id)->first();
-
-        $organization_names = Organization::select("organization_name")->distinct()->get();
-        $organization_name_list = [];
-        foreach ($organization_names as $key => $value) {
-            $org_names = explode(", ", trim($value->organization_name));
-            $organization_name_list = array_merge($organization_name_list, $org_names);
-        }
-        $organization_name_list = array_unique($organization_name_list);
     
         $service_status_list = ['Yes', 'No'];
 
@@ -449,7 +441,7 @@ class ServiceController extends Controller
         $contact_info_list = Contact::select('contact_recordid', 'contact_name')->orderBy('contact_recordid')->distinct()->get();
         $detail_info_list = Detail::select('detail_recordid', 'detail_value')->orderBy('detail_value')->distinct()->get();
 
-        return view('frontEnd.service-create-in-facility', compact('map', 'facility', 'organization_name_list', 'service_status_list', 'taxonomy_info_list', 'schedule_info_list', 'contact_info_list', 'detail_info_list'));
+        return view('frontEnd.service-create-in-facility', compact('map', 'facility', 'service_status_list', 'taxonomy_info_list', 'schedule_info_list', 'contact_info_list', 'detail_info_list'));
     }
 
     public function create()
@@ -788,9 +780,7 @@ class ServiceController extends Controller
         array_push($service_locations_info_list, $request->service_locations);
         $service->locations()->sync($service_locations_info_list);
 
-        $organization_name = $request->service_organization;
-        $service_organization = Organization::where('organization_name', '=', $organization_name)->first();
-        $service_organization_id = $service_organization["organization_recordid"];
+        $service_organization_id = $request->service_organization;
         $service->service_organization = $service_organization_id;
         
         $service->service_name = $request->service_name; 

@@ -76,6 +76,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::post('/get_all_contacts', 'ContactController@get_all_contacts');
     Route::get('/contact_create', 'ContactController@create');
     Route::get('/add_new_contact_in_organization', 'ContactController@add_new_contact_in_organization');
+    Route::get('/add_new_contact_in_facility', 'ContactController@add_new_contact_in_facility');
     Route::get('/contact_create/{id}', 'ContactController@create_in_organization');
     Route::get('/contact_create/{id}/facility', 'ContactController@create_in_facility');
     Route::get('/add_new_contact', 'ContactController@add_new_contact');

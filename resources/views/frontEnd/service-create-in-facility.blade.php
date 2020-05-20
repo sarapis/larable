@@ -95,17 +95,8 @@ Service Create
                     </div>
                 </div>
                 <input type="hidden" id="service_locations" name="service_locations" value="{{$facility->location_recordid}}">
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Organization Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="service_organization"
-                            name="service_organization" data-size="5" required>
-                            @foreach($organization_name_list as $key => $org_name)
-                            <option value="{{$org_name}}">{{$org_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                <input type="hidden" id="service_organization" name="service_organization" value="{{$facility->location_organization}}">
+                
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Service Description: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
