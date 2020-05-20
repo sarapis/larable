@@ -41,9 +41,11 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/service/{id}/edit', 'ServiceController@edit');
     Route::get('/service/{id}/update', 'ServiceController@update');
     Route::get('/service_create/{id}', 'ServiceController@create_in_organization');
+    Route::get('/service_create/{id}/facility', 'ServiceController@create_in_facility');
     Route::get('/service_create', 'ServiceController@create');
     Route::get('/add_new_service', 'ServiceController@add_new_service');
     Route::get('/add_new_service_in_organization', 'ServiceController@add_new_service_in_organization');
+    Route::get('/add_new_service_in_facility', 'ServiceController@add_new_service_in_facility');
 
     Route::resource('facilities', 'LocationController');
     Route::post('/get_all_facilities', 'LocationController@get_all_facilities');
@@ -75,6 +77,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/contact_create', 'ContactController@create');
     Route::get('/add_new_contact_in_organization', 'ContactController@add_new_contact_in_organization');
     Route::get('/contact_create/{id}', 'ContactController@create_in_organization');
+    Route::get('/contact_create/{id}/facility', 'ContactController@create_in_facility');
     Route::get('/add_new_contact', 'ContactController@add_new_contact');
 
     Route::get('/category/{id}', 'ServiceController@taxonomy');

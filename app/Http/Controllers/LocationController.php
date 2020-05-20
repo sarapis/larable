@@ -360,9 +360,6 @@ class LocationController extends Controller
         $locations = Location::with('services', 'address', 'phones')->where('location_recordid', '=', $id)->get();
         $map = Map::find(1);
 
-        $facility_services_recordid_list = explode(',', $facility->location_services);
-        $facility_services = Service::whereIn('service_recordid', $facility_services_recordid_list)->orderBy('service_name')->paginate(10);
-
         $facility_organization_recordid_list = explode(',', $facility->location_organization);
         $facility_organizations = Organization::whereIn('organization_recordid', $facility_organization_recordid_list)->orderBy('organization_name')->paginate(10);
 
@@ -379,7 +376,7 @@ class LocationController extends Controller
             }
         }
         
-        return view('frontEnd.location', compact('facility', 'map', 'locations', 'facility_organizations', 'facility_services', 'comment_list', 'existing_tags'));
+        return view('frontEnd.location', compact('facility', 'map', 'locations', 'facility_organizations', 'comment_list', 'existing_tags'));
 
     }
 

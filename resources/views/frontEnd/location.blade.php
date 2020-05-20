@@ -146,11 +146,11 @@ table#tbl-location-profile-history {
                     </div>
                 </div>
 
-                @if(isset($facility_services))
-                    @if($facility_services->count() > 0)
-                    <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($facility_services)){{$facility_services->count()}}@else 0 @endif)
+                @if(isset($facility->services))
+                    @if($facility->services->count() > 0)
+                    <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Services (@if(isset($facility->services)){{$facility->services->count()}}@else 0 @endif)
                     </h4>
-                        @foreach($facility_services as $service)
+                        @foreach($facility->services as $service)
                         <div class="card">
                             <div class="card-block">
                                 <h4 class="card-title">
@@ -282,8 +282,8 @@ table#tbl-location-profile-history {
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-new"
                               style="width: 100%;">
-                            <a href="/service_create/{{$facility->location_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Service</a>
-                            <a href="/contact_create/{{$facility->location_recordid}}" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Contact</a>
+                            <a href="/service_create/{{$facility->location_recordid}}/facility" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Service</a>
+                            <a href="/contact_create/{{$facility->location_recordid}}/facility" class="btn btn-info btn-rounded"  id="add-new-services" style="width: 100%;">Add New Contact</a>
                         </div>
                     </div>
                 </div>
@@ -354,7 +354,7 @@ table#tbl-location-profile-history {
 
 <script type="text/javascript" src="http://sliptree.github.io/bootstrap-tokenfield/dist/bootstrap-tokenfield.js"></script>
 <script type="text/javascript" src="http://sliptree.github.io/bootstrap-tokenfield/docs-assets/js/typeahead.bundle.min.js"></script>
-    
+
 <script>
 
     var tag_source = <?php print_r(json_encode($existing_tags)) ?>; 
