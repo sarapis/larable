@@ -23,13 +23,13 @@
 							<input type="text" class="form-control search-form" name="find" placeholder="Search for Services" id="search_address" @if(isset($chip_service)) value="{{$chip_service}}" @endif>
 						</div>    
 					</div>
-					<div class="col-md-4">
+					<!-- <div class="col-md-4">
 						<div class="input-search">
 							<i class="input-search-icon md-pin" aria-hidden="true"></i>
 							<input id="location2" type="text" class="form-control search-form" name="search_address" placeholder="Search Address" @if(isset($chip_address)) value="{{$chip_address}}" @endif>
 							<button type="button" class="input-search-btn" title="Services Near Me"><a href="/services_near_me"><i class="icon md-gps-dot"></i></a></button>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-md-2">
 						<button class="btn btn-primary btn-block waves-effect waves-classic btn-button" title="Search" style="line-height: 31px;">Search</button>
 					</div>
