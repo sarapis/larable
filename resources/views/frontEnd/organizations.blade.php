@@ -36,7 +36,7 @@ ul#ui-id-1 {
 @section('content')
 @include('layouts.filter')
 <div class="wrapper">
-    @include('layouts.sidebar')
+   
     <!-- Page Content Holder -->
     <div id="content" class="container">
         <!-- <div id="map" style="height: 30vh;"></div> -->
