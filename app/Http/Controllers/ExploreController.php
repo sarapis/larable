@@ -809,6 +809,25 @@ class ExploreController extends Controller
         return view('frontEnd.services', compact('services','locations', 'chip_service', 'chip_address', 'map', 'parent_taxonomy', 'child_taxonomy', 'search_results', 'pagination', 'sort', 'meta_status', 'target_populations', 'grandparent_taxonomies',  'sort_by_distance_clickable', 'service_taxonomy_info_list', 'service_details_info_list'))->with('taxonomy_tree', $taxonomy_tree);
 
     }
+
+
+    public function filter_organization(Request $request)
+    {   
+        $chip_organization = $request->input('find');
+
+        $organizations= Organization::where('organization_name', 'like', '%'.$chip_organization.'%')->orwhere('organization_description', 'like', '%'.$chip_organization.'%');          
+        
+        $search_results = $organizations->count();
+        
+        $pagination = strval($request->input('paginate'));
+        $organizations = $organizations->paginate($pagination);
+       
+        $map = Map::find(1);
+
+        return view('frontEnd.organizations', compact('map', 'organizations', 'chip_organization', 'search_results'));
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

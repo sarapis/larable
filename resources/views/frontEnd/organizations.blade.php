@@ -34,7 +34,7 @@ ul#ui-id-1 {
 </style>
 
 @section('content')
-@include('layouts.filter')
+@include('layouts.filter_organization')
 <div class="wrapper">
    
     <!-- Page Content Holder -->

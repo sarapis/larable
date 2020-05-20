@@ -26,6 +26,9 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::match(['get', 'post'], '/search', [
         'uses'          => 'ExploreController@filter'
     ]);
+    Route::match(['get', 'post'], '/search_organization', [
+        'uses'          => 'ExploreController@filter_organization'
+    ]);
 
     Route::get('/about', ['uses' => 'HomeController@about']);
     Route::get('/feedback', ['uses' => 'HomeController@feedback']);

@@ -139,6 +139,11 @@ class AppServiceProvider extends ServiceProvider
         {
             $view->with('layout', \App\Layout::first());
         });
+
+        view()->composer('layouts.filter_organization', function($view)
+        {
+            $view->with('layout', \App\Layout::first());
+        });
     }
 
     /**

@@ -16,7 +16,7 @@
 		              	@endif
 		          	</div> -->
 		          	<input type="hidden" name="meta_status" id="status" @if(isset($meta_status)) value="{{$meta_status}}" @else value="On" @endif>
-					<div class="col-md-4">
+					<div class="col-md-8">
 						<div class="input-search">
 							
 							<i class="input-search-icon md-search" aria-hidden="true"></i>
