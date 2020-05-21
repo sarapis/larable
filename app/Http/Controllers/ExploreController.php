@@ -816,13 +816,13 @@ class ExploreController extends Controller
         $organization_tag_list = Organization::whereNotNull('organization_tag')->select('organization_tag')->pluck('organization_tag')->toArray();
         $chip_organization = $request->input('find');
         $sort = $request->input('sort');
-        $filter_tag = $request->input('organization_tag');    
+        $filter_tags = $request->input('organization_tag');    
 
         // $organizations = Organization::where('organization_name', 'like', '%'.$chip_organization.'%')->orwhere('organization_description', 'like', '%'.$chip_organization.'%');  
         $organizations = Organization::where('organization_name', 'like', '%'.$chip_organization.'%');
 
-        if ($filter_tag) {
-            $organizations = $organizations->where('organization_tag', '=', $filter_tag);
+        if ($filter_tags) {
+            $organizations = $organizations->whereIn('organization_tag', $filter_tags);
         }   
         
         $search_results = $organizations->count();

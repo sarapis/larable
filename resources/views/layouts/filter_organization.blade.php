@@ -25,7 +25,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="organization-tags-div">
-		                    <select class="form-control selectpicker" data-live-search="true" id="organization_tag" data-size="3" name="organization_tag">
+		                    <select class="form-control selectpicker" multiple data-live-search="true" id="organization_tag" data-size="3" name="organization_tag[]">
 		                    	<option value="">Filter by Tag</option>
 		                        @foreach($organization_tag_list as $key => $organization_tag)                                
 		                            <option value="{{$organization_tag}}">{{$organization_tag}}</option>
