@@ -103,7 +103,7 @@
 	            </ul>
 	        </li>
 	        @endif
-	        <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="10" @endif>
+	        <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="20" @endif>
 	        <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
 		</ul>
 	</nav>
