@@ -104,13 +104,8 @@ ul#ui-id-1 {
 </style>
 
 @section('content')
-@include('layouts.filter')
 <div class="wrapper">
-    @include('layouts.sidebar')
-    <!-- Page Content Holder -->
     <div id="content" class="container">
-        <!-- <div id="map" style="height: 30vh;"></div> -->
-		    <!-- Example Striped Rows -->
     		<div class="row m-0">
             	<div class="col-md-8 pt-15 pb-15 pl-30">
                    <div class="card">

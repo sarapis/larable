@@ -275,8 +275,11 @@ class OrganizationController extends Controller
 
     public function organizations()
     {
-        $organizations = Organization::orderBy('organization_name')->paginate(30);
+        $organizations = Organization::orderBy('organization_name')->paginate(20);
+        $organization_tag_list = Organization::whereNotNull('organization_tag')->select('organization_tag')->pluck('organization_tag')->toArray();
+
         $map = Map::find(1);
+
         $parent_taxonomy = [];
         $child_taxonomy = [];
         $checked_organizations = [];
@@ -338,7 +341,7 @@ class OrganizationController extends Controller
             $taxonomy_tree['parent_taxonomies'] = $parent_taxonomies;
         }
 
-        return view('frontEnd.organizations', compact('organizations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree'));
+        return view('frontEnd.organizations', compact('organizations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'organization_tag_list'));
     }
 
     public function organization($id)

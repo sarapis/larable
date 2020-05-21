@@ -92,17 +92,6 @@
 </style>
 	<nav id="sidebar" style="display: none;">
 	   	<ul class="list-unstyled components pt-0">
-	        @if ((Request::path() == 'services') || (Request::segment(1) == 'search') || (Request::segment(1) == 'service') || (Request::segment(1) == 'organization') || (Request::segment(1) == 'services_near_me') || (Request::segment(1) == 'organizations'))
-	        <li class="option-side mobile-btn">
-	            <a href="#sort" class="text-side" data-toggle="collapse" aria-expanded="false">Sort by Updated</a>
-	            <ul class="collapse list-unstyled option-ul">
-	                <li class="nobranch">
-	                    <a @if(isset($sort) && $sort == 'From Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">From Latest Updated</a>
-	                    <a @if(isset($sort) && $sort == 'To Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">To Latest Updated</a>
-	                </li>   
-	            </ul>
-	        </li>
-	        @endif
 	        <input type="hidden" name="paginate" id="paginate" @if(isset($pagination)) value="{{$pagination}}" @else value="20" @endif>
 	        <input type="hidden" name="sort" id="sort" @if(isset($sort)) value="{{$sort}}" @endif>
 		</ul>
