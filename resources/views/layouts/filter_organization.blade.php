@@ -1,9 +1,9 @@
-  <form action="/search_organization" method="GET" id="filter_organization">
-  <div class="filter-bar container-fluid bg-secondary" style="padding: 14px;    background-color: #abcae9 !important;">
-	<div class="row">
-		<div class="col-md-2 col-sm-2"></div>
-		<div class="col-md-8 col-sm-8 col-xs-12">
-			
+
+<form action="/search_organization" method="GET" id="filter_organization">
+  	<div class="filter-bar container-fluid bg-secondary" style="padding: 14px;    background-color: #abcae9 !important;">
+		<div class="row">
+			<div class="col-md-2 col-sm-2"></div>
+			<div class="col-md-8 col-sm-8 col-xs-12">
 				<div class="row">
 		          	<input type="hidden" name="meta_status" id="status" @if(isset($meta_status)) value="{{$meta_status}}" @else value="On" @endif>
 					<div class="col-md-8">
@@ -18,10 +18,10 @@
 						<button class="btn btn-primary btn-block waves-effect waves-classic btn-button" title="Search" style="line-height: 31px;">Search</button>
 					</div>
 				</div>
-			
-		</div>  
-	</div>
-  </div>
+			</div>  
+		</div>
+  	</div>
+
 <style>
 @media (max-width: 768px){
   .filter-bar{
@@ -29,6 +29,7 @@
   }
 }
 </style>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.dropdown-status').click(function(){

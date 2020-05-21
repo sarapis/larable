@@ -814,13 +814,21 @@ class ExploreController extends Controller
     public function filter_organization(Request $request)
     {   
         $chip_organization = $request->input('find');
+        $sort = $request->input('sort');
 
         $organizations= Organization::where('organization_name', 'like', '%'.$chip_organization.'%')->orwhere('organization_description', 'like', '%'.$chip_organization.'%');          
         
         $search_results = $organizations->count();
-        
         $pagination = strval($request->input('paginate'));
-        $organizations = $organizations->paginate($pagination);
+
+        if($sort == 'From Latest Updated'){
+            $organizations = $organizations->orderBy('organization_recordid', 'desc')->paginate($pagination);
+        }
+        else if ($sort == 'To Latest Updated'){
+            $organizations = $organizations->orderBy('organization_recordid')->paginate($pagination);
+        } else {
+            $organizations = $organizations->orderBy('organization_name')->paginate($pagination);
+        }
        
         $map = Map::find(1);
 
