@@ -343,12 +343,12 @@ ul#ui-id-1 {
                             </a>
                         @endif
           							<h4>
-          								<span><i class="icon fas fa-building font-size-24 vertical-align-top  "></i>
-          									{{$location->location_name}}
+          								<span><i class="icon fas fa-building font-size-24 vertical-align-top"></i>
+          									<a href="/facility/{{$location->location_recordid}}">{{$location->location_name}}</a>
           								</span> 
-          							</h4>                        
+          							</h4> 
           							<h4>
-          								<span><i class="icon md-pin font-size-24 vertical-align-top  "></i>
+          								<span><i class="icon md-pin font-size-24 vertical-align-top"></i>
           									@if(isset($location->address))
           										@foreach($location->address as $address)
           										{{ $address->address_1 }} {{ $address->address_2 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
