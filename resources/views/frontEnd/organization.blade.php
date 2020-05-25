@@ -521,43 +521,61 @@ ul#ui-id-1 {
         latitude = avglat;
         longitude = avglng;
       }
-
     
-      var mymap = new GMaps({
-        el: '#map',
-        lat: latitude,
-        lng: longitude,
-        zoom: zoom
+      // var mymap = new GMaps({
+      //   el: '#map',
+      //   lat: latitude,
+      //   lng: longitude,
+      //   zoom: zoom
+      // });
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoom,
+            center: {lat: parseFloat(latitude), lng: parseFloat(longitude)}
+        });
+
+      var latlongbounds = new google.maps.LatLngBounds();
+      var markers = locations.map(function(location, i) {
+          var position = {
+              lat: location.location_latitude,
+              lng: location.location_longitude
+          }
+          var latlong = new google.maps.LatLng(position.lat, position.lng);
+          latlongbounds.extend(latlong);
+
+          var marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: location.location_name,
+          });
+          return marker;
       });
 
+      map.fitBounds(latlongbounds);
 
-      $.each( locations, function(index, value ){
-            // console.log(locations);
-            var name = value.organization==null?'':value.organization.organization_name;
-            var serviceid = value.services.length == 0?'':value.services[0].service_recordid;
-            var service_name = value.services.length == 0?'':value.services[0].service_name;
+      // $.each( locations, function(index, value ){
+      //       // console.log(locations);
+      //       var name = value.organization==null?'':value.organization.organization_name;
+      //       var serviceid = value.services.length == 0?'':value.services[0].service_recordid;
+      //       var service_name = value.services.length == 0?'':value.services[0].service_name;
 
-            var content = "";
-            for(i = 0; i < value.services.length; i ++){
-                content +=  '<a href="/service/'+value.services[i].service_recordid+'" style="color:#428bca;font-weight:500;font-size:14px;">'+value.services[i].service_name+'</a><br>';
-            }
-            content += '<p>'+name+'</p>';
+      //       if(value.location_latitude){
+      //           mymap.addMarker({
 
-            if(value.location_latitude){
-                mymap.addMarker({
-
-                    lat: value.location_latitude,
-                    lng: value.location_longitude,
-                    title: value.city,
+      //               lat: value.location_latitude,
+      //               lng: value.location_longitude,
+      //               title: value.city,
                            
-                    infoWindow: {
-                        maxWidth: 250,
-                        content: (content)
-                    }
-                });
-            }
-      });
+      //               infoWindow: {
+      //                   maxWidth: 250,
+      //                   content: (content)
+      //               }
+      //           });
+      //       }
+      // });
+
     }, 2000)
+
   });
 
   $(document).ready(function() {
