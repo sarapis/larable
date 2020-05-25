@@ -264,7 +264,7 @@ ul#ui-id-1 {
                                   </a>
                               @endif
                               @if($contact_info->contact_name)
-                              <h4><span><b>Name:</b></span> {{$contact_info->contact_name}}</h4>
+                              <h4><span><b>Name:</b></span> <a href="/contact/{{$contact_info->contact_recordid}}">{{$contact_info->contact_name}}</a></h4>
                               @endif
                               @if($contact_info->contact_title)
                               <h4><span><b>Title:</b></span> {{$contact_info->contact_title}}</h4>

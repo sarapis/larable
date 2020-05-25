@@ -336,21 +336,29 @@ $(document).ready(function(){
             longitude = avglng;
         }
 
-        var mymap = new GMaps({
-          el: '#map',
-          lat: latitude,
-          lng: longitude,
-          zoom: zoom
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: zoom,
+            center: {lat: parseFloat(latitude), lng: parseFloat(longitude)}
         });
 
-        
-        $.each( locations, function(index, value ){
-            mymap.addMarker({
-                lat: value.location_latitude,
-                lng: value.location_longitude,
-                title: value.location_name
+        var latlongbounds = new google.maps.LatLngBounds();
+        var markers = locations.map(function(location, i) {
+            var position = {
+                lat: location.location_latitude,
+                lng: location.location_longitude
+            }
+            var latlong = new google.maps.LatLng(position.lat, position.lng);
+            latlongbounds.extend(latlong);
+
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: location.location_name,
             });
+            return marker;
         });
+
+        map.fitBounds(latlongbounds);
         
     }, 2000);
 
