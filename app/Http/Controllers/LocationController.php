@@ -22,6 +22,7 @@ use App\Airtables;
 use App\Map;
 use App\CSV_Source;
 use App\Source_data;
+use Spatie\Geocoder\Geocoder;
 use App\Services\Stringtoint;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -572,36 +573,27 @@ class LocationController extends Controller
         array_push($address_recordid_list, $address_id);
         $facility->address()->sync($address_recordid_list);
 
-        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        // $phone_recordid_list = array();
-        // foreach ($phone_recordids as $key => $value) {
-        //     $phone_recordid = $value->phone_recordid;
-        //     array_push($phone_recordid_list, $phone_recordid);
-        // }
-        // $phone_recordid_list = array_unique($phone_recordid_list);
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocode_api_key = env('GEOCODE_GOOGLE_APIKEY');
+        $geocoder->setApiKey($geocode_api_key);
 
-        // $facility_phones = $request->facility_phones;
-        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        // if ($cell_phone != null) {
-        //     $cell_phone_id = $cell_phone["phone_recordid"];
-        //     $facility->location_phones = $cell_phone_id;
-        // } else {
-        //     $phone = new Phone;
-        //     $new_recordid = Phone::max('phone_recordid') + 1;
-        //     if (in_array($new_recordid, $phone_recordid_list)) {
-        //         $new_recordid = Phone::max('phone_recordid') + 1;
-        //     }
-        //     $phone->phone_recordid = $new_recordid;
-        //     $phone->phone_number = $facility_phones;
-        //     $phone->phone_type = "voice";
-        //     $facility->location_phones = $phone->phone_recordid;
-        //     $phone->save();
-        // }
+        if ($facility->location_address) {
+            $address_recordid = $facility->location_address;
+            $address_info = Address::where('address_recordid', '=', $address_recordid)->select('address_1', 'address_city', 'address_state_province', 'address_postal_code')->first();
+            $full_address_info = $address_info->address_1 . ', ' .$address_info->address_city .', '. $address_info->address_state_province . ', ' . $address_info->address_postal_code;
 
-        // $facility_phone_info_list = array();
-        // array_push($facility_phone_info_list, $facility->location_phones);
-        // $facility_phone_info_list = array_unique($facility_phone_info_list);
-        // $facility->phones()->sync($facility_phone_info_list);
+            $response = $geocoder->getCoordinatesForAddress($full_address_info);
+
+            if ($response['lat']) {
+                $latitude = $response['lat'];
+                $longitude = $response['lng'];
+                $facility->location_latitude = $latitude;
+                $facility->location_longitude = $longitude;
+            } else {
+                return redirect()->back()->with('error', 'Address info is not valid. We can not get longitude and latitude for this address')->withInput();
+            }
+        }
 
         $facility->location_phones = '';
         $phone_recordid_list = [];
@@ -710,36 +702,27 @@ class LocationController extends Controller
         array_push($address_recordid_list, $address_id);
         $facility->address()->sync($address_recordid_list);
 
-        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        // $phone_recordid_list = array();
-        // foreach ($phone_recordids as $key => $value) {
-        //     $phone_recordid = $value->phone_recordid;
-        //     array_push($phone_recordid_list, $phone_recordid);
-        // }
-        // $phone_recordid_list = array_unique($phone_recordid_list);
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocode_api_key = env('GEOCODE_GOOGLE_APIKEY');
+        $geocoder->setApiKey($geocode_api_key);
 
-        // $facility_phones = $request->facility_phones;
-        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        // if ($cell_phone != null) {
-        //     $cell_phone_id = $cell_phone["phone_recordid"];
-        //     $facility->location_phones = $cell_phone_id;
-        // } else {
-        //     $phone = new Phone;
-        //     $new_recordid = Phone::max('phone_recordid') + 1;
-        //     if (in_array($new_recordid, $phone_recordid_list)) {
-        //         $new_recordid = Phone::max('phone_recordid') + 1;
-        //     }
-        //     $phone->phone_recordid = $new_recordid;
-        //     $phone->phone_number = $facility_phones;
-        //     $phone->phone_type = "voice";
-        //     $facility->location_phones = $phone->phone_recordid;
-        //     $phone->save();
-        // }
+        if ($facility->location_address) {
+            $address_recordid = $facility->location_address;
+            $address_info = Address::where('address_recordid', '=', $address_recordid)->select('address_1', 'address_city', 'address_state_province', 'address_postal_code')->first();
+            $full_address_info = $address_info->address_1 . ', ' .$address_info->address_city .', '. $address_info->address_state_province . ', ' . $address_info->address_postal_code;
 
-        // $facility_phone_info_list = array();
-        // array_push($facility_phone_info_list, $facility->location_phones);
-        // $facility_phone_info_list = array_unique($facility_phone_info_list);
-        // $facility->phones()->sync($facility_phone_info_list);
+            $response = $geocoder->getCoordinatesForAddress($full_address_info);
+
+            if ($response['lat']) {
+                $latitude = $response['lat'];
+                $longitude = $response['lng'];
+                $facility->location_latitude = $latitude;
+                $facility->location_longitude = $longitude;
+            } else {
+                return redirect()->back()->with('error', 'Address info is not valid. We can not get longitude and latitude for this address')->withInput();
+            }
+        }
 
         $facility->location_phones = '';
         $phone_recordid_list = [];
@@ -930,36 +913,28 @@ class LocationController extends Controller
         array_push($address_recordid_list, $address_id);
         $facility->address()->sync($address_recordid_list);
 
-        // $phone_recordids = Phone::select("phone_recordid")->distinct()->get();
-        // $phone_recordid_list = array();
-        // foreach ($phone_recordids as $key => $value) {
-        //     $phone_recordid = $value->phone_recordid;
-        //     array_push($phone_recordid_list, $phone_recordid);
-        // }
-        // $phone_recordid_list = array_unique($phone_recordid_list);
+        $client = new \GuzzleHttp\Client();
+        $geocoder = new Geocoder($client);
+        $geocode_api_key = env('GEOCODE_GOOGLE_APIKEY');
+        $geocoder->setApiKey($geocode_api_key);
 
-        // $facility_phones = $request->facility_phones;
-        // $cell_phone = Phone::where('phone_number', '=', $facility_phones)->first();
-        // if ($cell_phone != null) {
-        //     $cell_phone_id = $cell_phone["phone_recordid"];
-        //     $facility->location_phones = $cell_phone_id;
-        // } else {
-        //     $phone = new Phone;
-        //     $new_recordid = Phone::max('phone_recordid') + 1;
-        //     if (in_array($new_recordid, $phone_recordid_list)) {
-        //         $new_recordid = Phone::max('phone_recordid') + 1;
-        //     }
-        //     $phone->phone_recordid = $new_recordid;
-        //     $phone->phone_number = $facility_phones;
-        //     $phone->phone_type = "voice";
-        //     $facility->location_phones = $phone->phone_recordid;
-        //     $phone->save();
-        // }
+        if ($facility->location_address) {
+            $address_recordid = $facility->location_address;
+            $address_info = Address::where('address_recordid', '=', $address_recordid)->select('address_1', 'address_city', 'address_state_province', 'address_postal_code')->first();
+            $full_address_info = $address_info->address_1 . ', ' .$address_info->address_city .', '. $address_info->address_state_province . ', ' . $address_info->address_postal_code;
 
-        // $facility_phone_info_list = array();
-        // array_push($facility_phone_info_list, $facility->location_phones);
-        // $facility_phone_info_list = array_unique($facility_phone_info_list);
-        // $facility->phones()->sync($facility_phone_info_list);
+            $response = $geocoder->getCoordinatesForAddress($full_address_info);
+
+            if ($response['lat']) {
+                $latitude = $response['lat'];
+                $longitude = $response['lng'];
+                $facility->location_latitude = $latitude;
+                $facility->location_longitude = $longitude;
+            } else {
+                return redirect()->back()->with('error', 'Address info is not valid. We can not get longitude and latitude for this address')->withInput();
+            }
+        }
+
 
         $facility->location_phones = '';
         $phone_recordid_list = [];
