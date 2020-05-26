@@ -347,10 +347,8 @@ class OrganizationController extends Controller
     public function organization($id)
     {
         $organization = Organization::where('organization_recordid', '=', $id)->first();
-        $locations = Location::with('services', 'address', 'phones')->where('location_organization', '=', $id)->get();
-        
-        // $organization_services_recordid_list = explode(',', $organization->organization_services);
-        // $organization_services = Service::whereIn('service_recordid', $organization_services_recordid_list)->orderBy('service_name')->paginate(10);
+        $locations = Location::with('services', 'address', 'phones')->where('location_organization', '=', $id)->get();       
+
 
         $organization_services = $organization->services()->orderBy('service_name')->paginate(10);
 
@@ -434,7 +432,7 @@ class OrganizationController extends Controller
         }
 
         $comment_list = Comment::where('comments_organization', '=', $id)->get();
-        $session_list = Session::where('session_organization', '=', $id)->get();
+        $session_list = Session::where('session_organization', '=', $id)->select('session_recordid', 'session_edits', 'session_performed_at', 'session_disposition')->get();
 
         return view('frontEnd.organization', compact('organization', 'locations', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree', 'contact_info_list', 'organization_services', 'location_info_list', 'existing_tags', 'comment_list', 'session_list'));
     }
