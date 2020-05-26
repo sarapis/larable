@@ -51,6 +51,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/add_new_service_in_facility', 'ServiceController@add_new_service_in_facility');
 
     Route::resource('sessions', 'SessionController');
+    Route::get('/session/{id}', 'SessionController@session');
     Route::get('/session_create/{id}', 'SessionController@create_in_organization');
     Route::get('/add_new_session_in_organization', 'SessionController@add_new_session_in_organization');
 

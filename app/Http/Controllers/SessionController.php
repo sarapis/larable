@@ -80,6 +80,14 @@ class SessionController extends Controller
         //
     }
 
+
+    public function session($id) 
+    {
+        $map = Map::find(1);
+        $session = Session::where('session_recordid', '=', $id)->first();
+        return view('frontEnd.session', compact('session', 'map'));
+    }
+
     /**
      * Display the specified resource.
      *
