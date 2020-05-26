@@ -133,7 +133,29 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 pt-15 pb-15 pl-30 pl-30">
-			</div>			
+                <div class="card">
+                    <div class="card-block">
+                        <h3 class="mt-0 mb-20">Interaction Log
+                        </h3>
+                        <div class="col-md-12">
+                            <table class="table table-striped jambo_table bulk_action nowrap"
+                                id="tbl-session-log">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Timestamp</th>
+                                        <th>Notes</th>
+                                        <th>Disposition</th>
+                                        <th>Records Edited</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>			
 		</div>
 	</div>
 </div>
