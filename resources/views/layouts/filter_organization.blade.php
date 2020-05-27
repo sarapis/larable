@@ -42,16 +42,18 @@
 							<input type="text" class="form-control search-form" name="find" placeholder="Search for Organization" id="search_organization" @if(isset($chip_organization)) value="{{$chip_organization}}" @endif>
 						</div>    
 					</div>
+					@if (Sentinel::getUser())
 					<div class="col-md-4 m-auto">
 						<div class="organization-tags-div">
 		                    <select class="form-control selectpicker" multiple data-live-search="true" id="organization_tag" data-size="3" name="organization_tag[]">
-		                    	<option value="" selected disabled>Filter by Tags</option>
+		                    	<option value="" selected disabled hidden>Filter by Tags</option>
 		                        @foreach($organization_tag_list as $key => $organization_tag)                                
 		                            <option value="{{$organization_tag}}">{{$organization_tag}}</option>
 		                        @endforeach
 		                    </select>
 		                </div>  
 		            </div>
+		            @endif
 					<div class="col-md-2 m-auto">
 						<button class="btn btn-primary btn-block waves-effect waves-classic btn-button" title="Search" style="line-height: 31px;">Search</button>
 					</div>

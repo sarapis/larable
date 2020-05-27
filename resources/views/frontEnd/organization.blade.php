@@ -267,6 +267,8 @@ ul#ui-id-1 {
                       </div>
           				</div>
                   @endif
+                  
+                  @if (Sentinel::getUser())
                   <div class="pt-10 pb-10 pl-0 btn-download">
                       <form method="GET" action="/organization/{{$organization->organization_recordid}}/tagging"
                           id="organization_tagging">
@@ -283,6 +285,7 @@ ul#ui-id-1 {
                           </div>
                       </form>
                   </div>
+                  @endif
     				
           				<div class="card">
           					<div id="map" style="width:initial;margin-top: 0;height: 50vh;"></div>
