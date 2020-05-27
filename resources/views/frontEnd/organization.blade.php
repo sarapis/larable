@@ -139,7 +139,9 @@ ul#ui-id-1 {
                 						<h4 style="line-height: inherit;">
                               	<span><i class="icon md-phone font-size-24 vertical-align-top  mr-5 pr-10"></i>
                   								@foreach($organization->phones as $phone)
-                  								{{$phone->phone_number}}
+                                    @if ($phone->phone_number)
+                  								  {{$phone->phone_number}}
+                                    @endif
                   								@endforeach
                 							</span> 
                             </h4>

@@ -137,11 +137,13 @@ Contact Edit
                     </a>
                     <ol id="phones-ul">
                         @foreach($contact->phone as $phone)
-                        <li class="contact-phones-li mb-2">
-                            <div class="col-md-12 col-sm-12 col-xs-12 contact-phones-div">
-                                <input class="form-control selectpicker contact_phones"  type="text" name="contact_phones[]" value="{{$phone->phone_number}}">
-                            </div> 
-                        </li> 
+                            @if ($phone->phone_number)
+                            <li class="contact-phones-li mb-2">
+                                <div class="col-md-12 col-sm-12 col-xs-12 contact-phones-div">
+                                    <input class="form-control selectpicker contact_phones"  type="text" name="contact_phones[]" value="{{$phone->phone_number}}">
+                                </div> 
+                            </li> 
+                            @endif
                         @endforeach
                     </ol>
                 </div>
