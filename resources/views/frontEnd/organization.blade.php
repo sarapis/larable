@@ -275,10 +275,12 @@ ul#ui-id-1 {
                               @if($contact_info->contact_email)
                               <h4><span><b>Email:</b></span> {{$contact_info->contact_email}}</h4>
                               @endif
-                              @if($contact_info->contact_phones)
-                                @if (isset($contact_info->phone->phone_number))
-                                <h4><span><b>Phones:</b></span> {{$contact_info->phone->phone_number}}</h4>
-                                @endif
+                              @if($contact_info->phone->count())
+                                <h4><span><b>Phones:</b></span> 
+                                  @foreach($contact_info->phone as $phone_info)
+                                  {{$phone_info->phone_number}}, 
+                                  @endforeach
+                                </h4>
                               @endif
                           </div>
                           </br>
