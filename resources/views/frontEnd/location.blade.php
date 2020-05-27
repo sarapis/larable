@@ -307,6 +307,8 @@ table#tbl-location-profile-history {
                 <div class="card pt-15 pb-15">
                     <div id="map" style="width:initial;margin-top: 0; height: 49vh;"></div>
                 </div>
+
+                @if (Sentinel::getUser())
                 <div class="pt-5 pb-0">
                     <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Comments 
                     </h4>
@@ -347,6 +349,8 @@ table#tbl-location-profile-history {
                         </div>
                     </div>
                 </div>
+                @endif
+                
             </div> 
         </div>
     </div>
