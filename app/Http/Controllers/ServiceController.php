@@ -1340,8 +1340,12 @@ class ServiceController extends Controller
             $service->service_address = $service_address_info;
         }
 
-
         $service->save();
+
+        $service_organization = $request->service_organization;
+        $organization = Organization::where('organization_recordid', '=', $service_organization)->select('organization_recordid', 'updated_at')->first();
+        $organization->updated_at = date("Y-m-d H:i:s");
+        $organization->save();
 
         return redirect('service/'.$id);
     }
