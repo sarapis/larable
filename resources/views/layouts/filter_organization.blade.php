@@ -11,6 +11,9 @@
     .organization-tags-div {
     	height: 45px;
     }
+    li.disabled  {
+		display: none;
+	}
 
 </style>
 <form action="/search_organization" method="GET" id="filter_organization">
@@ -42,7 +45,7 @@
 					<div class="col-md-4 m-auto">
 						<div class="organization-tags-div">
 		                    <select class="form-control selectpicker" multiple data-live-search="true" id="organization_tag" data-size="3" name="organization_tag[]">
-		                    	<option value="">Filter by Tag</option>
+		                    	<option value="" selected disabled>Filter by Tags</option>
 		                        @foreach($organization_tag_list as $key => $organization_tag)                                
 		                            <option value="{{$organization_tag}}">{{$organization_tag}}</option>
 		                        @endforeach
