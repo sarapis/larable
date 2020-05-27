@@ -38,17 +38,6 @@ ul#ui-id-1 {
 <div class="wrapper">
     @include('layouts.sidebar_organization')
     <div id="content" class="container">
-        <div class="col-md-8 pt-15 pb-15 pl-15">
-            <div class="btn-group dropdown btn-feature">
-                <button type="button" class="btn btn-primary dropdown-toggle btn-button"  id="exampleSizingDropdown2" data-toggle="dropdown" aria-expanded="false">
-                    Sort by Updated
-                </button>
-                <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
-                    <a @if(isset($sort) && $sort == 'From Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">From Latest Updated</a>               
-                    <a @if(isset($sort) && $sort == 'To Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">To Latest Updated</a>
-                </div>
-            </div>
-        </div>
         
         <div class="col-sm-12 p-20 card-columns">
             @foreach($organizations as $organization)
