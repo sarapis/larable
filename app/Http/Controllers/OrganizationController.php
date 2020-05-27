@@ -247,7 +247,7 @@ class OrganizationController extends Controller
             $organization->organization_tax_id = $row['tax_id']!='NULL'?$row['tax_id']:null;
             $organization->organization_year_incorporated = $row['year_incorporated']!='NULL'?$row['year_incorporated']:null;
             $organization->organization_legal_status = $row['legal_status']!='NULL'?$row['legal_status']:null;
-           
+            $organization->updated_at = date("Y-m-d h:i:sa");
                                      
             $organization->save();
 
@@ -441,6 +441,7 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $organization->organization_tag = $request->tokenfield;
+        $organization->updated_at = date("Y-m-d h:i:sa");
         $organization->save();
         return redirect('organization/' . $id);
     }
@@ -538,6 +539,8 @@ class OrganizationController extends Controller
         } else {
             $organization->organization_locations = '';
         }
+
+        $organization->updated_at = date("Y-m-d h:i:sa");
        
         $organization->save();
 
@@ -674,6 +677,8 @@ class OrganizationController extends Controller
         } else {
             $organization->organization_locations = '';
         }
+
+        $organization->updated_at = date("Y-m-d h:i:sa");
        
         $organization->save();
 
