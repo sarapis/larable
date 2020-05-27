@@ -829,10 +829,10 @@ class ExploreController extends Controller
 
         $pagination = strval($request->input('paginate'));
 
-        if($sort == 'From Latest Updated'){
+        if($sort == 'Most Recently Updated'){
             $organizations = $organizations->orderBy('updated_at', 'desc')->paginate($pagination);
         }
-        else if ($sort == 'To Latest Updated'){
+        else if ($sort == 'Least Recently Updated'){
             $organizations = $organizations->orderBy('updated_at')->paginate($pagination);
         } else {
             $organizations = $organizations->orderBy('updated_at', 'desc')->paginate($pagination);

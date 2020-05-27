@@ -26,8 +26,8 @@
 				                    Sort by Updated
 				                </button>
 				                <div class="dropdown-menu bullet" aria-labelledby="exampleSizingDropdown2" role="menu">
-				                    <a @if(isset($sort) && $sort == 'From Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">From Latest Updated</a>               
-				                    <a @if(isset($sort) && $sort == 'To Latest Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">To Latest Updated</a>
+				                    <a @if(isset($sort) && $sort == 'Most Recently Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Most Recently Updated</a>               
+				                    <a @if(isset($sort) && $sort == 'Least Recently Updated') class="dropdown-item drop-sort active" @else class="dropdown-item drop-sort" @endif href="javascript:void(0)" role="menuitem">Least Recently Updated</a>
 				                </div>
 				            </div>
 				        </div>
