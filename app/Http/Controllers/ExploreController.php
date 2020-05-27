@@ -835,7 +835,7 @@ class ExploreController extends Controller
         else if ($sort == 'To Latest Updated'){
             $organizations = $organizations->orderBy('updated_at')->paginate($pagination);
         } else {
-            $organizations = $organizations->orderBy('organization_name')->paginate($pagination);
+            $organizations = $organizations->orderBy('updated_at', 'desc')->paginate($pagination);
         }
        
         $map = Map::find(1);

@@ -247,7 +247,6 @@ class OrganizationController extends Controller
             $organization->organization_tax_id = $row['tax_id']!='NULL'?$row['tax_id']:null;
             $organization->organization_year_incorporated = $row['year_incorporated']!='NULL'?$row['year_incorporated']:null;
             $organization->organization_legal_status = $row['legal_status']!='NULL'?$row['legal_status']:null;
-            $organization->updated_at = date("Y-m-d h:i:sa");
                                      
             $organization->save();
 
@@ -441,7 +440,7 @@ class OrganizationController extends Controller
     {
         $organization = Organization::find($id);
         $organization->organization_tag = $request->tokenfield;
-        $organization->updated_at = date("Y-m-d h:i:sa");
+        $organization->updated_at = date("Y-m-d H:i:s");
         $organization->save();
         return redirect('organization/' . $id);
     }
@@ -540,7 +539,7 @@ class OrganizationController extends Controller
             $organization->organization_locations = '';
         }
 
-        $organization->updated_at = date("Y-m-d h:i:sa");
+        $organization->updated_at = date("Y-m-d H:i:s");
        
         $organization->save();
 
@@ -678,7 +677,7 @@ class OrganizationController extends Controller
             $organization->organization_locations = '';
         }
 
-        $organization->updated_at = date("Y-m-d h:i:sa");
+        $organization->updated_at = date("Y-m-d H:i:s");
        
         $organization->save();
 
@@ -691,7 +690,7 @@ class OrganizationController extends Controller
         $organization = Organization::find($id);
         $comment_content = $request->reply_content;
         $user = Sentinel::getUser();
-        $date_time = date("Y-m-d h:i:sa");
+        $date_time = date("Y-m-d H:i:s");
         $comment = new Comment();
 
         $comment_recordids = Comment::select("comments_recordid")->distinct()->get();
