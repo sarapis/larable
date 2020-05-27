@@ -89,9 +89,11 @@ table#tbl-location-profile-history {
                         <h4 class="card-title">
 							<a href="">{{$facility->location_name}}
                             </a>
+                            @if (Sentinel::getUser())
                             <a href="/facility/{{$facility->location_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
                                 <i class="icon md-edit" style="margin-right: 0px;"></i>
                             </a>
+                            @endif
                         </h4>
                         <h4>
                             <span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span>
