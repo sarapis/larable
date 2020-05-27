@@ -871,6 +871,7 @@ class LocationController extends Controller
 
         $facility->location_name = $request->location_name;
         $facility->location_organization = $request->facility_organization_name;
+
         $facility->location_description = $request->location_description;
         $facility->location_alternate_name = $request->location_alternate_name;
         $facility->location_transportation = $request->location_transporation;
@@ -957,8 +958,12 @@ class LocationController extends Controller
             }
         }
         $facility->phones()->sync($phone_recordid_list);
-
         $facility->save();
+
+        $location_organization = $request->facility_organization_name;
+        $organization = Organization::where('organization_recordid', '=', $location_organization)->select('organization_recordid', 'updated_at')->first();
+        $organization->updated_at = date("Y-m-d H:i:s");
+        $organization->save();
 
         return redirect('facility/'.$id);
     }
