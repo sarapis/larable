@@ -501,7 +501,7 @@ ul#ui-id-1 {
   });
 
   $(document).ready(function(){  
-    setTimeout(function(){
+
       var locations = <?php print_r(json_encode($locations)) ?>;
       var organization = <?php print_r(json_encode($organization->organization_name)) ?>;
       var maplocation = <?php print_r(json_encode($map)) ?>;
@@ -510,7 +510,7 @@ ul#ui-id-1 {
       if(maplocation.active == 1){
         avglat = maplocation.lat;
         avglng = maplocation.long;
-        zoom = maplocation.zoom;
+        zoom = maplocation.zoom_profile;
       }
       else
       {
@@ -526,18 +526,11 @@ ul#ui-id-1 {
         latitude = avglat;
         longitude = avglng;
       }
-    
-      // var mymap = new GMaps({
-      //   el: '#map',
-      //   lat: latitude,
-      //   lng: longitude,
-      //   zoom: zoom
-      // });
 
       var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: zoom,
-            center: {lat: parseFloat(latitude), lng: parseFloat(longitude)}
-        });
+          zoom: zoom,
+          center: {lat: parseFloat(latitude), lng: parseFloat(longitude)}
+      });
 
       var latlongbounds = new google.maps.LatLngBounds();
       var markers = locations.map(function(location, i) {
@@ -556,30 +549,9 @@ ul#ui-id-1 {
           return marker;
       });
 
-      map.fitBounds(latlongbounds);
-
-      // $.each( locations, function(index, value ){
-      //       // console.log(locations);
-      //       var name = value.organization==null?'':value.organization.organization_name;
-      //       var serviceid = value.services.length == 0?'':value.services[0].service_recordid;
-      //       var service_name = value.services.length == 0?'':value.services[0].service_name;
-
-      //       if(value.location_latitude){
-      //           mymap.addMarker({
-
-      //               lat: value.location_latitude,
-      //               lng: value.location_longitude,
-      //               title: value.city,
-                           
-      //               infoWindow: {
-      //                   maxWidth: 250,
-      //                   content: (content)
-      //               }
-      //           });
-      //       }
-      // });
-
-    }, 2000)
+      if (locations.length > 1) {
+          map.fitBounds(latlongbounds);
+      }
 
   });
 
