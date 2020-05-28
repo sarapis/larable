@@ -13,12 +13,12 @@
         width: 100%;
     }
 
-    button[data-id="session_method"] {
+    button[data-id="interaction_method"] {
         height: 100%;
         border: 1px solid #ddd;
     }
 
-    button[data-id="session_disposition"] {
+    button[data-id="interaction_disposition"] {
         height: 100%;
         border: 1px solid #ddd;
     }
@@ -132,8 +132,7 @@
                                             <div class="form-group">
                                                 <label class="control-label sel-label-org pl-4">Session Method: </label>
                                                 <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                                                    <select class="form-control selectpicker" data-live-search="true" id="session_method"
-                                                        name="session_method" data-size="5">
+                                                    <select class="form-control selectpicker" data-live-search="true" id="interaction_method" name="interaction_method" data-size="5">
                                                         @foreach($method_list as $key => $method)
                                                         <option value="{{$method}}">{{$method}}</option>
                                                         @endforeach
@@ -141,11 +140,13 @@
                                                 </div>
                                             </div>
 
+                                            <input type="hidden" id="session_recordid" name="session_recordid" value="{{$session->session_recordid}}">
+
                                             <div class="form-group">
                                                 <label class="control-label sel-label-org pl-4">Session Disposition: </label>
                                                 <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                                                    <select class="form-control selectpicker" data-live-search="true" id="session_disposition"
-                                                        name="session_disposition" data-size="5">
+                                                    <select class="form-control selectpicker" data-live-search="true" id="interaction_disposition"
+                                                        name="interaction_disposition" data-size="5">
                                                         @foreach($disposition_list as $key => $disposition)
                                                         <option value="{{$disposition}}">{{$disposition}}</option>
                                                         @endforeach
@@ -156,22 +157,22 @@
                                             <div class="form-group">
                                                 <label class="control-label sel-label-org pl-4">Session Notes: </label>
                                                 <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                                                    <input class="form-control selectpicker" type="text" id="session_notes"
-                                                        name="session_notes" value="">
+                                                    <input class="form-control selectpicker" type="text" id="interaction_notes"
+                                                        name="interaction_notes" value="">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="control-label sel-label-org pl-4">Records Edited: </label>
                                                 <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                                                    <input class="form-control selectpicker" type="text" id="session_records_edited"
-                                                        name="session_records_edited" value="">
+                                                    <input class="form-control selectpicker" type="text" id="interaction_records_edited"
+                                                        name="interaction_records_edited" value="">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="col-md-12 text-center">
-                                                    <button type="submit" class="btn btn-success btn-rounded" id="save-session-btn"><i class="fa fa-check"></i> Add</button>
+                                                    <button type="submit" class="btn btn-success btn-rounded" id="save-interaction-btn"><i class="fa fa-check"></i> Add</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,6 +203,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($interaction_list as $key => $interaction)
+                                    <tr>
+                                        <td>{{$interaction->interaction_method}}</td>
+                                        <td>{{$interaction->interaction_timestamp}}</td>
+                                        <td>{{$interaction->interaction_notes}}</td>
+                                        <td>{{$interaction->interaction_disposition}}</td>
+                                        <td>{{$interaction->interaction_records_edited}}</td>
+                                    </tr>
+                                    @endforeach
                                 <tbody>
                             </table>
                         </div>

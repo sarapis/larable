@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Map;
 use App\Session;
+use App\Sessioninteraction;
 use App\Organization;
 use Sentinel;
 
@@ -71,15 +72,23 @@ class SessionController extends Controller
 
     public function add_interaction(Request $request) 
     {
-        var_dump('add interaction!!!');
-        exit;
-        $interaction = new Interaction;
-        $interaction->interaction_method = $request->session_method;
-        $interaction->interaction_disposition = $request->session_disposition;
-        $interaction->interaction_notes = $request->session_notes;
-        $interaction->interaction_edits = $request->session_records_edited;
+        $interaction = new Sessioninteraction;
+        $session_recordid = $request->session_recordid;
+        $interaction->interaction_session = $request->session_recordid;
+
+        $new_recordid = Sessioninteraction::max('interaction_recordid') + 1;
+        $interaction->interaction_recordid = $new_recordid;
+
+        $interaction->interaction_method = $request->interaction_method;
+        $interaction->interaction_disposition = $request->interaction_disposition;
+        $interaction->interaction_notes = $request->interaction_notes;
+        $interaction->interaction_records_edited = $request->interaction_records_edited;
         $date_time = date("Y-m-d h:i:sa");
-        $interaction->time_stamp = $date_time;
+        $interaction->interaction_timestamp = $date_time;
+
+        $interaction->save();
+
+        return redirect('session/'. $session_recordid);
     }
 
     /**
@@ -100,7 +109,8 @@ class SessionController extends Controller
         $session = Session::where('session_recordid', '=', $id)->first();
         $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
         $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
-        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list'));
+        $interaction_list = Sessioninteraction::where('interaction_session', '=', $id)->get();
+        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list', 'interaction_list'));
     }
 
     /**
