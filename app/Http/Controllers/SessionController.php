@@ -56,17 +56,30 @@ class SessionController extends Controller
         $session->session_method = $request->session_method;
         $session->session_disposition = $request->session_disposition;
         $session->session_notes = $request->session_notes;
+        $session->session_edits = $request->session_records_edited;
 
         $session_organization_id = $request->session_organization;
         $session->session_organization = $session_organization_id;
 
         $session->session_performed_by = $user->id;
         $session->session_performed_at = $date_time;
-        $session->session_edits = '1';
 
         $session->save();
 
         return redirect('organization/'.$session_organization_id);
+    }
+
+    public function add_interaction(Request $request) 
+    {
+        var_dump('add interaction!!!');
+        exit;
+        $interaction = new Interaction;
+        $interaction->interaction_method = $request->session_method;
+        $interaction->interaction_disposition = $request->session_disposition;
+        $interaction->interaction_notes = $request->session_notes;
+        $interaction->interaction_edits = $request->session_records_edited;
+        $date_time = date("Y-m-d h:i:sa");
+        $interaction->time_stamp = $date_time;
     }
 
     /**
@@ -85,7 +98,9 @@ class SessionController extends Controller
     {
         $map = Map::find(1);
         $session = Session::where('session_recordid', '=', $id)->first();
-        return view('frontEnd.session', compact('session', 'map'));
+        $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
+        $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
+        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list'));
     }
 
     /**

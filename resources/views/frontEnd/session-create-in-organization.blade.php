@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Facility Create
+Add Interaction
 @stop
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -58,7 +58,7 @@ Facility Create
 @section('content')
 <div class="wrapper">
     <div id="facility-create-content" class="container">
-        <h1>Create New Session</h1>
+        <h1>Add Interaction</h1>
         <form action="/add_new_session_in_organization" method="GET">
             <div class="row">
                 <div class="form-group">
@@ -100,6 +100,14 @@ Facility Create
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="session_notes"
                             name="session_notes" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label sel-label-org pl-4">Records Edited: </label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
+                        <input class="form-control selectpicker" type="text" id="session_records_edited"
+                            name="session_records_edited" value="">
                     </div>
                 </div>
 
