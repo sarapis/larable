@@ -63,42 +63,9 @@ Add Interaction
 @section('content')
 <div class="wrapper">
     <div id="facility-create-content" class="container">
-        <h1>Add Interaction</h1>
-        <form action="/add_new_session_in_organization" method="GET">
+        <h1>Edit Session Info</h1>
+        <form action="/session_info/{{$session->session_recordid}}/update" method="GET">
             <div class="row">
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Session Name: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="session_name"
-                            name="session_name" value="">
-                    </div>
-                </div>
-
-                <input type="hidden" id="session_organization" name="session_organization" value="{{$organization->organization_recordid}}">
-
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Session Method: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="session_method"
-                            name="session_method" data-size="5">
-                            @foreach($method_list as $key => $method)
-                            <option value="{{$method}}">{{$method}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Session Disposition: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <select class="form-control selectpicker" data-live-search="true" id="session_disposition"
-                            name="session_disposition" data-size="5">
-                            @foreach($disposition_list as $key => $disposition)
-                            <option value="{{$disposition}}">{{$disposition}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label class="control-label sel-label-org pl-4">Session Status: </label>
@@ -106,7 +73,7 @@ Add Interaction
                         <select class="form-control selectpicker" data-live-search="true" id="session_status"
                             name="session_status" data-size="5">
                             @foreach($session_status_list as $key => $session_status)
-                            <option value="{{$session_status}}">{{$session_status}}</option>
+                            <option value="{{$session_status}}" @if ($session->session_status == $session_status) selected @endif>{{$session_status}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -116,15 +83,7 @@ Add Interaction
                     <label class="control-label sel-label-org pl-4">Session Notes: </label>
                     <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
                         <input class="form-control selectpicker" type="text" id="session_notes"
-                            name="session_notes" value="">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label sel-label-org pl-4">Records Edited: </label>
-                    <div class="col-md-12 col-sm-12 col-xs-12 contact-details-div">
-                        <input class="form-control selectpicker" type="text" id="session_records_edited"
-                            name="session_records_edited" value="">
+                            name="session_notes" value="{{$session->session_notes}}">
                     </div>
                 </div>
 

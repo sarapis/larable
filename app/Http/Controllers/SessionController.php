@@ -38,8 +38,9 @@ class SessionController extends Controller
         $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
         $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
         $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
+        $session_status_list = ['Success', 'Partial Success', 'Unable to verify', 'Out of business'];
         
-        return view('frontEnd.session-create-in-organization', compact('map', 'organization', 'disposition_list', 'method_list'));
+        return view('frontEnd.session-create-in-organization', compact('map', 'organization', 'disposition_list', 'method_list', 'session_status_list'));
     }
 
 
@@ -62,7 +63,10 @@ class SessionController extends Controller
         $session_organization_id = $request->session_organization;
         $session->session_organization = $session_organization_id;
 
-        $session->session_performed_by = $user->id;
+        if ($user) {
+            $session->session_performed_by = $user->id;
+        }
+        
         $session->session_performed_at = $date_time;
 
         $session->save();
@@ -121,7 +125,7 @@ class SessionController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -132,7 +136,10 @@ class SessionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $map = Map::find(1);
+        $session = Session::where('session_recordid', '=', $id)->first();
+        $session_status_list = ['Success', 'Partial Success', 'Unable to verify', 'Out of business'];
+        return view('frontEnd.session-edit', compact('session', 'map', 'session_status_list'));
     }
 
     /**
@@ -144,7 +151,11 @@ class SessionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $session = Session::where('session_recordid', '=', $id)->first();
+        $session->session_notes = $request->session_notes;
+        $session->session_verification_status = $request->session_status;
+        $session->save();
+        return redirect('session/'. $id);
     }
 
     /**
