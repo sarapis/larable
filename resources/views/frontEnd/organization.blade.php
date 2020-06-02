@@ -375,11 +375,11 @@ ul#ui-id-1 {
                                           @foreach($session_list as $key => $session)
                                           <tr>
                                               <td>
-                                                <a href="/session/{{$session->session_recordid}}" style="color: #3949ab">
+                                                <a href="/session/{{$session->session_recordid}}" target="_blank" style="color: #3949ab">
                                                   {{$session->session_performed_at}}
                                                 </a>
                                               </td>
-                                              <td>{{$session->session_disposition}}</td>
+                                              <td>{{$session->session_verification_status}}</td>
                                               <td>{{$session->session_edits}}</td>
                                           </tr>
                                           @endforeach
