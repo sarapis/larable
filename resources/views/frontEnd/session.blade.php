@@ -6,7 +6,7 @@ Session Profile Page
 <style type="text/css">
     #facility-create-content {
         margin-top: 50px;
-        width: 35%;
+        width: 80%;
     }
 
     #facility-create-content .form-group {
@@ -62,62 +62,71 @@ Session Profile Page
 <div class="wrapper">
 	<div id="content" class="container">
 		<div class="row m-50">
-			<div class="col-md-4 pl-30">
+			<div class="col-md-8 pl-30">
 				<div class="card">
                     <div class="card-block"> 
-                    	<h4 class="card-title">
-                            Info box
-                        </h4>  
-                        <div id="carouselButtons">
-						    <button id="playButton" type="button" class="btn btn-default btn-xs">
-						        <span class="glyphicon glyphicon-play"></span>
-						     </button>
-						    <button id="pauseButton" type="button" class="btn btn-default btn-xs">
-						        <span class="glyphicon glyphicon-pause"></span>
-						    </button>
-						</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            	<h4 class="card-title">
+                                    Info box
+                                </h4>  
+                                <div>
+                                    <div id="carouselButtons">
+                                        <button id="playButton" type="button" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-play"></span>
+                                         </button>
+                                        <button id="pauseButton" type="button" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-pause"></span>
+                                        </button>
+                                    </div>
 
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Timer:</b></span>
-                            <label id="minutes">00</label>:<label id="seconds">00</label>
-                        </h4>
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Session ID:</b></span>
-                            {{$session->session_recordid}}
-                        </h4> 
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>User Name:</b></span>
-                            {{$session->user->first_name}} {{$session->user->last_name}}
-                        </h4> 
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span>
-                            <a href="/organization/{{$session->organization->organization_recordid}}">{{$session->organization->organization_name}}</a>
-                        </h4> 
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Start Time:</b></span>
-                            <label id="start-time"></label>
-                        </h4>   
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>End Time:</b></span>
-                            <label id="end-time"></label>
-                        </h4>                    	
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Timer:</b></span>
+                                        <label id="minutes">00</label>:<label id="seconds">00</label>
+                                    </h4>
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Session ID:</b></span>
+                                        {{$session->session_recordid}}
+                                    </h4> 
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>User Name:</b></span>
+                                        {{$session->user->first_name}} {{$session->user->last_name}}
+                                    </h4> 
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Organization:</b></span>
+                                        <a href="/organization/{{$session->organization->organization_recordid}}">{{$session->organization->organization_name}}</a>
+                                    </h4> 
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Start Time:</b></span>
+                                        <label id="start-time"></label>
+                                    </h4>   
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>End Time:</b></span>
+                                        <label id="end-time"></label>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                <div class="card-block">
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Status:</b></span>
+                                        {{$session->session_verification_status}}
+                                    </h4>
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Notes:</b></span>
+                                        {{$session->session_notes}}
+                                    </h4>
+                                    <a href="/session_info/{{$session->session_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
+                                        <i class="icon md-edit" style="margin-right: 0px;"></i>
+                                    </a>
+                                </div>                   	
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-block">
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Status:</b></span>
-                            {{$session->session_verification_status}}
-                        </h4>
-                        <h4>
-                            <span class="badge bg-red pl-0 organize_font"><b>Notes:</b></span>
-                            {{$session->session_notes}}
-                        </h4>
-                        <a href="/session_info/{{$session->session_recordid}}/edit" class="btn btn-floating btn-success waves-effect waves-classic" style="float: right;">
-                            <i class="icon md-edit" style="margin-right: 0px;"></i>
-                        </a>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="col-md-8 pl-30">
+            <div class="col-md-4 pl-30">
             	<div class="card">
                     <div class="card-block">
                     	<h4 class="card-title">
