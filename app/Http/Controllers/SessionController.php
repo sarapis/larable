@@ -59,6 +59,8 @@ class SessionController extends Controller
         }
         
         $session->session_performed_at = $date_time;
+        $session->session_edits = '0';
+
         $session->save();
 
         $map = Map::find(1);
@@ -114,6 +116,12 @@ class SessionController extends Controller
         $interaction->interaction_timestamp = $date_time;
 
         $interaction->save();
+
+        $session = Session::where('session_recordid', '=', $session_recordid)->first();
+        $session_original_edits = $session->session_edits;
+        $session_new_edits = $session_original_edits + $request->interaction_records_edited;
+        $session->session_edits = $session_new_edits;
+        $session->save();
 
         return redirect('session/'. $session_recordid);
     }
