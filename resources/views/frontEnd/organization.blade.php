@@ -357,7 +357,7 @@ ul#ui-id-1 {
 
                   @if (Sentinel::getUser())
                   <div class="pt-5 pb-0">
-                      <a class='button btn-primary' style='color: white; padding: 8px; float: right; margin: 8px;' href="/session_create/{{$organization->organization_recordid}}">Add Session</a>
+                      <a class='button btn-primary' style='color: white; padding: 8px; float: right; margin: 8px;' href="/session_create/{{$organization->organization_recordid}}" target="_blank">Add Session</a>
                       <h4 class="p-15 m-0 text-left bg-secondary" style=" border-radius:0; font-size:20px; background: #3f51b5;color: #fff;">Session 
                       </h4>
                       <div class="card">

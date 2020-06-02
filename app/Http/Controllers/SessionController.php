@@ -32,15 +32,38 @@ class SessionController extends Controller
     }
 
 
+    // public function create_in_organization($id)
+    // {
+    //     $map = Map::find(1);
+    //     $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
+    //     $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
+    //     $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
+    //     $session_status_list = ['Success', 'Partial Success', 'Unable to verify', 'Out of business'];
+        
+    //     return view('frontEnd.session-create-in-organization', compact('map', 'organization', 'disposition_list', 'method_list', 'session_status_list'));
+    // }
+
     public function create_in_organization($id)
     {
-        $map = Map::find(1);
-        $organization = Organization::where('organization_recordid', '=', $id)->select('organization_recordid', 'organization_name')->first();
-        $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
-        $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
-        $session_status_list = ['Success', 'Partial Success', 'Unable to verify', 'Out of business'];
+
+        $session = new Session;
+        $new_recordid = Session::max('session_recordid') + 1;
+        $session->session_recordid = $new_recordid;
+        $user = Sentinel::getUser();
+        $date_time = date("Y-m-d h:i:sa");
+        $session->session_name = 'session' . $new_recordid;
+        $session->session_organization = $id;
+
+        if ($user) {
+            $session->session_performed_by = $user->id;
+        }
         
-        return view('frontEnd.session-create-in-organization', compact('map', 'organization', 'disposition_list', 'method_list', 'session_status_list'));
+        $session->session_performed_at = $date_time;
+        $session->save();
+
+        $map = Map::find(1);
+        
+        return redirect('session/'. $new_recordid);
     }
 
 
