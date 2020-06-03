@@ -179,12 +179,11 @@ class SessionController extends Controller
         $id = $request->input('session_id');
         $session = Session::where('session_recordid', '=', $id)->first();
         $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
-        $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
-        $interaction_list = Sessioninteraction::where('interaction_session', '=', $id)->get();
         $session_start_time = $request->input('session_start_time');
         $session->session_start = $session_start_time;
+        $session->session_start_datetime = date("Y-m-d H:i:sa"); 
         $session->save();
-        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list', 'interaction_list'));
+        return 'success';
     }
 
     public function session_end(Request $request) 
@@ -197,8 +196,22 @@ class SessionController extends Controller
         $interaction_list = Sessioninteraction::where('interaction_session', '=', $id)->get();
         $session_end_time = $request->input('session_end_time');
         $session->session_end = $session_end_time;
+        $session->session_end_datetime = date("Y-m-d H:i:sa"); 
+
+        $date1 = strtotime($session->session_start_datetime);  
+        $date2 = strtotime(date("Y-m-d h:i:sa"));
+        $diff = abs($date2 - $date1);  
+        $years = floor($diff / (365*60*60*24));  
+        $months = floor(($diff - $years * 365*60*60*24)/(30*60*60*24));
+        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/(60*60*24));
+        $hours = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24) / (60*60));
+        $minutes = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);  
+        $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minutes*60));
+        $duration = $years . " years,  ". $months . " months, " . $days . " days, ". $hours . " hours, " . $minutes . " minutes, ". $seconds . " seconds";
+        $session->session_duration = $duration;
         $session->save();
-        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list', 'interaction_list'));
+
+        return response()->json($duration);
     }
 
     /**

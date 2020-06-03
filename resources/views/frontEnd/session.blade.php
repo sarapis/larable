@@ -104,6 +104,10 @@ Session Profile Page
                                         <span class="badge bg-red pl-0 organize_font"><b>End Time:</b></span>
                                         <label id="end-time">{{$session->session_end}}</label>
                                     </h4>
+                                    <h4>
+                                        <span class="badge bg-red pl-0 organize_font"><b>Duration:</b></span>
+                                        <label id="duration">{{$session->session_duration}}</label>
+                                    </h4>
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex justify-content-center align-items-center">
@@ -237,6 +241,7 @@ Session Profile Page
 	var secondsLabel = document.getElementById("seconds");
 	var startTimeLabel = document.getElementById("start-time");
 	var endTimeLabel = document.getElementById("end-time");
+    var durationLabel = document.getElementById("duration");
 	var totalSeconds = 0;
 	var interval = null;
 	var startTime, endTime;
@@ -291,6 +296,9 @@ Session Profile Page
                 "_token": "{{ csrf_token() }}",
                 "session_id": '{{$session->session_recordid}}',
                 "session_end_time": endTime
+            },
+            success: function (response) {
+                durationLabel.innerHTML = response;
             }
         })
 
