@@ -200,7 +200,7 @@ class SessionController extends Controller
 
         $date1 = strtotime($session->session_start_datetime);  
         $date2 = strtotime(date("Y-m-d h:i:sa"));
-        $diff = abs($date2 - $date1);  
+        $diff = abs($date2 - $date1) - 1;  
         $years = floor($diff / (365*60*60*24));  
         $months = floor(($diff - $years * 365*60*60*24)/(30*60*60*24));
         $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/(60*60*24));
