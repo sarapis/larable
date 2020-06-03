@@ -98,11 +98,11 @@ Session Profile Page
                                     </h4> 
                                     <h4>
                                         <span class="badge bg-red pl-0 organize_font"><b>Start Time:</b></span>
-                                        <label id="start-time"></label>
+                                        <label id="start-time">{{$session->session_start}}</label>
                                     </h4>   
                                     <h4>
                                         <span class="badge bg-red pl-0 organize_font"><b>End Time:</b></span>
-                                        <label id="end-time"></label>
+                                        <label id="end-time">{{$session->session_end}}</label>
                                     </h4>
                                 </div>
                             </div>
@@ -246,7 +246,18 @@ Session Profile Page
 	    console.log('timer has been started');
 
 	    startTime = new Date();
+        console.log(startTime);
 		startTimeLabel.innerHTML = startTime;
+
+        $.ajax({
+            type: 'post',
+            url: '/session_start',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "session_id": '{{$session->session_recordid}}',
+                "session_start_time": startTime
+            }
+        })
 
 	    interval = setInterval(setTime, 1000);
 
@@ -272,6 +283,17 @@ Session Profile Page
 	    clearInterval(interval); // stop interval
 	    endTime = new Date();
 	    endTimeLabel.innerHTML = endTime;
+
+        $.ajax({
+            type: 'post',
+            url: '/session_end',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "session_id": '{{$session->session_recordid}}',
+                "session_end_time": endTime
+            }
+        })
+
   	});
 	
 </script>

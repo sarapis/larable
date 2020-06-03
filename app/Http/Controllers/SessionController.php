@@ -173,6 +173,34 @@ class SessionController extends Controller
         return view('frontEnd.session-edit', compact('session', 'map', 'session_status_list'));
     }
 
+    public function session_start(Request $request) 
+    {
+        $map = Map::find(1);
+        $id = $request->input('session_id');
+        $session = Session::where('session_recordid', '=', $id)->first();
+        $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
+        $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
+        $interaction_list = Sessioninteraction::where('interaction_session', '=', $id)->get();
+        $session_start_time = $request->input('session_start_time');
+        $session->session_start = $session_start_time;
+        $session->save();
+        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list', 'interaction_list'));
+    }
+
+    public function session_end(Request $request) 
+    {
+        $map = Map::find(1);
+        $id = $request->input('session_id');
+        $session = Session::where('session_recordid', '=', $id)->first();
+        $disposition_list = ['Success', 'Limited Success', 'Unable to Connect'];
+        $method_list = ['Web and Call', 'Web', 'Email', 'Call', 'SMS'];
+        $interaction_list = Sessioninteraction::where('interaction_session', '=', $id)->get();
+        $session_end_time = $request->input('session_end_time');
+        $session->session_end = $session_end_time;
+        $session->save();
+        return view('frontEnd.session', compact('session', 'map', 'disposition_list', 'method_list', 'interaction_list'));
+    }
+
     /**
      * Update the specified resource in storage.
      *

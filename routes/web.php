@@ -57,6 +57,8 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/session_info/{id}/update', 'SessionController@update');
     Route::get('/add_new_session_in_organization', 'SessionController@add_new_session_in_organization');
     Route::post('/add_interaction', 'SessionController@add_interaction');
+    Route::post('/session_start', 'SessionController@session_start');
+    Route::post('/session_end', 'SessionController@session_end');
 
     Route::resource('facilities', 'LocationController');
     Route::post('/get_all_facilities', 'LocationController@get_all_facilities');
