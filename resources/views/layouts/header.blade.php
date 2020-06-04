@@ -65,7 +65,7 @@
 					</li>
 					@endif
 					<li class="nav-item responsive_menu">
-						<a class="nav-link waves-effect waves-light waves-round" href="/suggest">Suggest</a>
+						<a class="nav-link waves-effect waves-light waves-round" href="/suggest_create">Suggest</a>
 					</li>
 					<li class="nav-item">
 						<a id="google_translate_element" class="nav-link waves-effect waves-light waves-round"></a>

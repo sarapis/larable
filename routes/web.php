@@ -30,8 +30,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
         'uses'          => 'ExploreController@filter_organization'
     ]);
 
-    Route::get('/about', ['uses' => 'HomeController@about']);
-    Route::get('/suggest', ['uses' => 'HomeController@suggest']);
+    Route::get('/about', ['uses' => 'HomeController@about']);    
     Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
     Route::get('/account/{id}', 'AccountController@account');
@@ -50,6 +49,9 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     Route::get('/add_new_service', 'ServiceController@add_new_service');
     Route::get('/add_new_service_in_organization', 'ServiceController@add_new_service_in_organization');
     Route::get('/add_new_service_in_facility', 'ServiceController@add_new_service_in_facility');
+
+    Route::get('/suggest_create', 'SuggestController@create');
+    Route::get('/add_new_suggestion', 'SuggestController@add_new_suggestion');
 
     Route::resource('sessions', 'SessionController');
     Route::get('/session/{id}', 'SessionController@session');
