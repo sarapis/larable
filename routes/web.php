@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
     ]);
 
     Route::get('/about', ['uses' => 'HomeController@about']);
+    Route::get('/suggest', ['uses' => 'HomeController@suggest']);
     Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
     Route::get('/account/{id}', 'AccountController@account');

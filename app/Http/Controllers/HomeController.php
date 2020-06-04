@@ -137,6 +137,20 @@ class HomeController extends Controller
         return view('frontEnd.about', compact('about', 'home', 'map', 'parent_taxonomy', 'child_taxonomy', 'checked_organizations', 'checked_insurances', 'checked_ages', 'checked_languages', 'checked_settings', 'checked_culturals', 'checked_transportations', 'checked_hours', 'taxonomy_tree'));
     }
 
+    public function suggest()
+    {
+        $map = Map::find(1);
+        $organization_names = Organization::select("organization_name")->distinct()->get();
+        $organization_name_list = [];
+        foreach ($organization_names as $key => $value) {
+            $org_names = explode(", ", trim($value->organization_name));
+            $organization_name_list = array_merge($organization_name_list, $org_names);
+        }
+        $organization_name_list = array_unique($organization_name_list);
+
+        return view('frontEnd.suggest', compact('map', 'organization_name_list'));
+    }
+
     public function feedback($value='')
     {
         $feedback = Page::where('name', 'Feedback')->first();
