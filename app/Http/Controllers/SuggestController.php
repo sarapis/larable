@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Map;
 use App\Organization;
 use App\Suggest;
+use App\Email;
 
 class SuggestController extends Controller
 {

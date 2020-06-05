@@ -161,6 +161,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
         Route::resource('login_register_edit', 'EditLoginRegisterController');
 
         Route::get('/contact_form', 'ContactFormController@index');
+        Route::post('/email_delete_filter', 'ContactFormController@delete_email');
 
         //users
         Route::resource('user', 'UserController');
