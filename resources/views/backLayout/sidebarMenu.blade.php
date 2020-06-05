@@ -56,6 +56,10 @@
             <li><a href="/export">Export</a></li>
           </ul>
         </li>
+        <li><a><i class="fa fa-envelope"></i> Contact Form <span class="fa fa-chevron-down"></span></a>
+          <ul class="nav child_menu">
+            <li><a href="/contact_form">Contact Form</a></li>
+          </ul>
         </li>
         <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">

@@ -160,6 +160,8 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
         Route::resource('pages', 'PagesController');
         Route::resource('login_register_edit', 'EditLoginRegisterController');
 
+        Route::get('/contact_form', 'ContactFormController@index');
+
         //users
         Route::resource('user', 'UserController');
         Route::get('user/{user}/permissions', ['uses' => 'UserController@permissions', 'as' => 'user.permissions']);
