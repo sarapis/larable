@@ -97,4 +97,14 @@ class ContactFormController extends Controller
             return redirect('contact_form');
         } 
     }
+
+    public function create_email(Request $request)
+    {
+        $email = new Email;  
+        $new_recordid = Email::max('email_recordid') + 1;
+        $email->email_recordid = $new_recordid;
+        $email->email_info = $request->input('contact_email');     
+        $email->save();
+        return redirect('contact_form');
+    }
 }

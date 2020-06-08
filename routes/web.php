@@ -162,6 +162,7 @@ Route::group(['middleware' => ['web', 'frontend'] ], function () {
 
         Route::get('/contact_form', 'ContactFormController@index');
         Route::post('/email_delete_filter', 'ContactFormController@delete_email');
+        Route::post('/email_create_filter', 'ContactFormController@create_email');
 
         //users
         Route::resource('user', 'UserController');

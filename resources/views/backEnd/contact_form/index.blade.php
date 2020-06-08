@@ -144,7 +144,7 @@ Contact Form
 	                    <label class="control-label sel-label-org pl-4">Email: </label>
 	                    <div class="col-md-12 col-sm-12 col-xs-12 contact-email-div">
 	                        <input class="form-control selectpicker" type="text" id="contact_email"
-	                            name="contact_email" value="">
+	                            name="contact_email" value="" required>
 	                    </div>
                     </div>
                     <div class="modal-footer" style="margin-top: 40px;">
