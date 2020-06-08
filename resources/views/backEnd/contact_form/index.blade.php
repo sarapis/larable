@@ -130,6 +130,33 @@ Contact Form
         </div>
     </div>
 
+    <div class="modal fade bs-create-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="/email_create_filter" method="POST" id="email_create_filter">
+                    {!! Form::token() !!}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Add a New Email</h4>
+                    </div>
+                    <div class="modal-body">
+	                    <label class="control-label sel-label-org pl-4">Email: </label>
+	                    <div class="col-md-12 col-sm-12 col-xs-12 contact-email-div">
+	                        <input class="form-control selectpicker" type="text" id="contact_email"
+	                            name="contact_email" value="">
+	                    </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 40px;">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                        <button type="submit" id="email_create_btn" class="btn btn-primary btn-create">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 @endsection
