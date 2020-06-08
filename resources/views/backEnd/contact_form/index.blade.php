@@ -11,6 +11,14 @@ Contact Form
         background-color: red !important;
         color: white;
     }
+    #btn_create {
+    	margin: 0 auto;
+    	width: 250px;
+    }
+    #btn_delete {
+    	margin: 0 auto;
+    	width: 150px;
+    }
 </style>
 @section('content')
 
@@ -64,8 +72,8 @@ Contact Form
         <h4>Forward submission to the following email addresses:</h4>
         <div class="clearfix"></div>  
       </div>
-      <div class="x_content" style="overflow: scroll;">
 
+      <div class="x_content" style="overflow: scroll;">
         <table id="email_table" class="display nowrap table-striped jambo_table table-bordered table-responsive" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -81,7 +89,7 @@ Contact Form
 	                  <td class="text-center">{{$key+1}}</td>
 	                  <td class="text-center">{{$email->email_info}}</td>
 	                  <td class="text-center">
-	                    <button id="btn_delete" class="btn btn-block btn-danger btn-sm open_modal" style="width: 100%;" data-toggle="modal" data-target=".bs-delete-modal-lg" style="color:#fb0c2df7;"><i class="fa fa-fw fa-trash"></i>Delete</button>
+	                    <button id="btn_delete" class="btn btn-block btn-danger btn-sm open_modal" data-toggle="modal" data-target=".bs-delete-modal-lg" ><i class="fa fa-fw fa-trash"></i>Delete</button>
 	                  </td>
 	                </tr>
 	            @endforeach  
@@ -89,6 +97,11 @@ Contact Form
             </tbody>
         </table>
       </div>
+
+      <div style="text-align: center;">
+        <button id="btn_create" class="btn btn-block btn-primary btn-sm open_modal" data-toggle="modal" data-target=".bs-create-modal-lg" >Add</button>
+      </div>
+
     </div>
   </div>
 
@@ -145,7 +158,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "paging": true,
+        "paging": false,
         "pageLength": 20,
         "lengthChange": false,
         "searching": false,
@@ -173,7 +186,7 @@ $(document).ready(function() {
                 }
             }
         },
-        "paging": true,
+        "paging": false,
         "pageLength": 20,
         "lengthChange": false,
         "searching": false,
