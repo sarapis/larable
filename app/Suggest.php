@@ -14,4 +14,9 @@ class Suggest extends Model
     {
         return $this->belongsTo('App\Organization', 'suggest_organization', 'organization_recordid');
     }
+
+    public function email()
+    {
+        return $this->belongsTo('App\Email', 'suggest_user_email', 'email_recordid');
+    }
 }

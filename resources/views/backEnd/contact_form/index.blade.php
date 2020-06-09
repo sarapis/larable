@@ -57,7 +57,7 @@ Contact Form
                   </td>
                   <td><span style="white-space:normal;">{{$suggest->suggest_content}}</span></td>
                   <td class="text-center">{{$suggest->suggest_username}}</td>
-                  <td class="text-center">{{$suggest->suggest_user_email}}</td>
+                  <td class="text-center">{{$suggest->email->email_info}}</td>
                   <td class="text-center">{{$suggest->suggest_user_phone}}</td>
                 </tr>
               @endforeach 
