@@ -44,14 +44,20 @@ class SuggestController extends Controller
         $date_time = date("Y-m-d h:i:sa");
 
         $suggest->suggest_organization = $request->suggest_organization;
+        $organization_info = Organization::where('organization_recordid', '=', $request->suggest_organization)->first();
         $suggest->suggest_content = $request->suggest_content;
         $suggest->suggest_username = $request->suggest_name;
         $suggest->suggest_user_email = $request->suggest_email;
         $suggest->suggest_user_phone = $request->suggest_phone;
         $suggest->suggest_created_at = $date_time;
         
-        $from = env('MAIL_FROM_ADDRESS');
-        $name = env('MAIL_FROM_NAME');
+        // $from = env('MAIL_FROM_ADDRESS');
+        // $name = env('MAIL_FROM_NAME');
+        // $from_phone = env('MAIL_FROM_PHONE');
+        $from = 'devin@sarapis.org';
+        $name = 'Devin';
+        $from_phone = '212.555.1212';
+
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($from, $name);
         $subject = 'Suggested Change Submission for Larable';
@@ -60,7 +66,19 @@ class SuggestController extends Controller
         $username = $request->suggest_name;
         $email->addTo($contact_email, $username);
         $body = $request->suggest_content;
-        $email->addContent("text/plain", $body);
+
+        $message = '<html><body>';
+        $message .= '<h1 style="color:#424242;">Thanks for your suggestion!</h1>';
+        $message .= '<p style="color:#424242;font-size:12px;">The following was submitted at Larable</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">ID: '. $new_recordid .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">Timestamp: '. $date_time .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">Organization: '. $organization_info->organization_name .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">Body: '. $body .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">From: '. $name .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">Phone: '. $from_phone .'</p>';
+        $message .= '</body></html>';
+
+        $email->addContent("text/html", $message);
         $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
         $response = $sendgrid->send($email);
 
