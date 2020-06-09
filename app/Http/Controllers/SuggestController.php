@@ -54,7 +54,7 @@ class SuggestController extends Controller
         
         $from = env('MAIL_FROM_ADDRESS');
         $name = env('MAIL_FROM_NAME');
-        $from_phone = env('MAIL_FROM_PHONE');        
+        // $from_phone = env('MAIL_FROM_PHONE');        
 
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($from, $name);
@@ -72,7 +72,7 @@ class SuggestController extends Controller
         $message .= '<p style="color:#424242;font-size:12px;">Body: '. $body .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">From: '. $name .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">Email: '. $from .'</p>';
-        $message .= '<p style="color:#424242;font-size:12px;">Phone: '. $from_phone .'</p>';
+        // $message .= '<p style="color:#424242;font-size:12px;">Phone: '. $from_phone .'</p>';
         $message .= '</body></html>';
 
         $email->addContent("text/html", $message);
