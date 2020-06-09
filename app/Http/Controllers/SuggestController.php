@@ -45,18 +45,23 @@ class SuggestController extends Controller
 
         $suggest->suggest_organization = $request->suggest_organization;
         $organization_info = Organization::where('organization_recordid', '=', $request->suggest_organization)->first();
-        $suggest->suggest_content = $request->suggest_content;
+        $suggest->suggest_content = $request->suggest_content;        
         $suggest->suggest_username = $request->suggest_name;
-        $suggest->suggest_user_email = $request->suggest_email;
+
+        $new_suggest_email_info = $request->suggest_email;
+        $existing_email_info = Email::where('email_info', '=', $new_suggest_email_info)->first();
+        if ($existing_email_info) {
+            $suggest->suggest_user_email = $existing_email_info->email_recordid;
+        } else {
+            $suggest->suggest_user_email = Email::max('email_recordid') + 1;
+        }
+
         $suggest->suggest_user_phone = $request->suggest_phone;
         $suggest->suggest_created_at = $date_time;
         
-        // $from = env('MAIL_FROM_ADDRESS');
-        // $name = env('MAIL_FROM_NAME');
-        // $from_phone = env('MAIL_FROM_PHONE');
-        $from = 'devin@sarapis.org';
-        $name = 'Devin';
-        $from_phone = '212.555.1212';
+        $from = env('MAIL_FROM_ADDRESS');
+        $name = env('MAIL_FROM_NAME');
+        $from_phone = env('MAIL_FROM_PHONE');        
 
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($from, $name);
@@ -69,12 +74,13 @@ class SuggestController extends Controller
 
         $message = '<html><body>';
         $message .= '<h1 style="color:#424242;">Thanks for your suggestion!</h1>';
-        $message .= '<p style="color:#424242;font-size:12px;">The following was submitted at Larable</p>';
+        $message .= '<p style="color:#424242;font-size:18px;">The following was submitted at Larable</p>';
         $message .= '<p style="color:#424242;font-size:12px;">ID: '. $new_recordid .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">Timestamp: '. $date_time .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">Organization: '. $organization_info->organization_name .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">Body: '. $body .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">From: '. $name .'</p>';
+        $message .= '<p style="color:#424242;font-size:12px;">Email: '. $from .'</p>';
         $message .= '<p style="color:#424242;font-size:12px;">Phone: '. $from_phone .'</p>';
         $message .= '</body></html>';
 
@@ -93,12 +99,14 @@ class SuggestController extends Controller
 
             $suggest->save();
 
-            $email = new Email;  
-            $new_recordid = Email::max('email_recordid') + 1;
-            $email->email_recordid = $new_recordid;
-            $email->email_info = $contact_email;     
-            $email->save();
-
+            $existing_email_list = Email::select('email_info')->pluck('email_info')->toArray();
+            if (!in_array($contact_email, $existing_email_list)) {
+                $email = new Email;  
+                $new_recordid = Email::max('email_recordid') + 1;
+                $email->email_recordid = $new_recordid;
+                $email->email_info = $contact_email;     
+                $email->save();
+            }
             return redirect('suggest_create')->with('success', 'Your suggestion has been received.');
         } else {
             return redirect()->back()->with('error', $error);

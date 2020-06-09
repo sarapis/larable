@@ -46,6 +46,7 @@ Contact Form
                 </tr>
             </thead>
             <tbody>
+            @if($suggests)
               @foreach($suggests as $key => $suggest)
                 <tr id="suggest{{$suggest->suggest_recordid}}">
                   <td class="text-center">{{$key+1}}</td>
@@ -59,7 +60,8 @@ Contact Form
                   <td class="text-center">{{$suggest->suggest_user_email}}</td>
                   <td class="text-center">{{$suggest->suggest_user_phone}}</td>
                 </tr>
-              @endforeach             
+              @endforeach 
+            @endif            
             </tbody>
         </table>
       </div>
@@ -83,7 +85,7 @@ Contact Form
                 </tr>
             </thead>
             <tbody>
-            @if ($emails)
+            @if (sizeof($emails) > 0)
               	@foreach($emails as $key => $email)
 	                <tr id="suggest{{$suggest->suggest_recordid}}">
 	                  <td class="text-center">{{$key+1}}</td>
@@ -123,7 +125,7 @@ Contact Form
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="email_delete_btn" class="btn btn-danger btn-delete" value="{{$email->email_recordid}}">Delete</button>
+                        <button type="submit" id="email_delete_btn" class="btn btn-danger btn-delete"  value="{{$email->email_recordid}}">Delete</button>
                     </div>
                 </form>
             </div>
