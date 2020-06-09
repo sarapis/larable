@@ -47,14 +47,7 @@ class SuggestController extends Controller
         $organization_info = Organization::where('organization_recordid', '=', $request->suggest_organization)->first();
         $suggest->suggest_content = $request->suggest_content;        
         $suggest->suggest_username = $request->suggest_name;
-
-        $new_suggest_email_info = $request->suggest_email;
-        $existing_email_info = Email::where('email_info', '=', $new_suggest_email_info)->first();
-        if ($existing_email_info) {
-            $suggest->suggest_user_email = $existing_email_info->email_recordid;
-        } else {
-            $suggest->suggest_user_email = Email::max('email_recordid') + 1;
-        }
+        $suggest->suggest_user_email = $request->suggest_email;
 
         $suggest->suggest_user_phone = $request->suggest_phone;
         $suggest->suggest_created_at = $date_time;
@@ -66,10 +59,8 @@ class SuggestController extends Controller
         $email = new \SendGrid\Mail\Mail();
         $email->setFrom($from, $name);
         $subject = 'Suggested Change Submission for Larable';
-        $email->setSubject($subject);
-        $contact_email = $request->suggest_email;
-        $username = $request->suggest_name;
-        $email->addTo($contact_email, $username);
+        $email->setSubject($subject);        
+
         $body = $request->suggest_content;
 
         $message = '<html><body>';
@@ -86,27 +77,32 @@ class SuggestController extends Controller
 
         $email->addContent("text/html", $message);
         $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
-        $response = $sendgrid->send($email);
-
-        // var_dump($response);
-        // exit;
 
         $error = '';
-        if ($response->statusCode() == 401) {
-            $error = json_decode($response->body());
+
+        $username = 'Larable Team';
+        $contact_email_list = Email::select('email_info')->pluck('email_info')->toArray();
+        foreach ($contact_email_list as $key => $contact_email) {
+            $email->addTo($contact_email, $username);
+            $response = $sendgrid->send($email);
+            if ($response->statusCode() == 401) {
+                $error = json_decode($response->body());
+            }
         }
+        
         if ($error == '') {
 
             $suggest->save();
 
-            $existing_email_list = Email::select('email_info')->pluck('email_info')->toArray();
-            if (!in_array($contact_email, $existing_email_list)) {
-                $email = new Email;  
-                $new_recordid = Email::max('email_recordid') + 1;
-                $email->email_recordid = $new_recordid;
-                $email->email_info = $contact_email;     
-                $email->save();
-            }
+            // $existing_email_list = Email::select('email_info')->pluck('email_info')->toArray();
+            // if (!in_array($contact_email, $existing_email_list)) {
+            //     $email = new Email;  
+            //     $new_recordid = Email::max('email_recordid') + 1;
+            //     $email->email_recordid = $new_recordid;
+            //     $email->email_info = $contact_email;     
+            //     $email->save();
+            // }
+
             return redirect('suggest_create')->with('success', 'Your suggestion has been received.');
         } else {
             return redirect()->back()->with('error', $error);
