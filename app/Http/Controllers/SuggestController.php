@@ -35,6 +35,7 @@ class SuggestController extends Controller
 
     public function add_new_suggestion(Request $request)
     {
+
         $suggest = new Suggest;
 
         $new_recordid = Suggest::max('suggest_recordid') + 1;
@@ -48,10 +49,42 @@ class SuggestController extends Controller
         $suggest->suggest_user_email = $request->suggest_email;
         $suggest->suggest_user_phone = $request->suggest_phone;
         $suggest->suggest_created_at = $date_time;
+        
+        $from = env('MAIL_FROM_ADDRESS');
+        $name = env('MAIL_FROM_NAME');
+        $email = new \SendGrid\Mail\Mail();
+        $email->setFrom($from, $name);
+        $subject = 'Suggested Change Submission for Larable';
+        $email->setSubject($subject);
+        $contact_email = $request->suggest_email;
+        $username = $request->suggest_name;
+        $email->addTo($contact_email, $username);
+        $body = $request->suggest_content;
+        $email->addContent("text/plain", $body);
+        $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+        $response = $sendgrid->send($email);
 
-        $suggest->save();
+        // var_dump($response);
+        // exit;
 
-        return redirect('suggest_create');
+        $error = '';
+        if ($response->statusCode() == 401) {
+            $error = json_decode($response->body());
+        }
+        if ($error == '') {
+
+            $suggest->save();
+
+            $email = new Email;  
+            $new_recordid = Email::max('email_recordid') + 1;
+            $email->email_recordid = $new_recordid;
+            $email->email_info = $contact_email;     
+            $email->save();
+
+            return redirect('suggest_create')->with('success', 'Your suggestion has been received.');
+        } else {
+            return redirect()->back()->with('error', $error);
+        }
     }
 
     /**
