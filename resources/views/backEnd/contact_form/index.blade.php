@@ -57,7 +57,7 @@ Contact Form
                   </td>
                   <td><span style="white-space:normal;">{{$suggest->suggest_content}}</span></td>
                   <td class="text-center">{{$suggest->suggest_username}}</td>
-                  <td class="text-center">{{$suggest->email->email_info}}</td>
+                  <td class="text-center">@if($suggest->email) {{$suggest->email->email_info}} @endif</td>
                   <td class="text-center">{{$suggest->suggest_user_phone}}</td>
                 </tr>
               @endforeach 
@@ -123,10 +123,12 @@ Contact Form
                         <h4>Are you sure to delete this email?</h4>
                         
                     </div>
+                    @if(!empty($email))
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                         <button type="submit" id="email_delete_btn" class="btn btn-danger btn-delete"  value="{{$email->email_recordid}}">Delete</button>
                     </div>
+                    @endif
                 </form>
             </div>
         </div>
